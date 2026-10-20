@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TMD - 科技與自主學習整合教案公開展示平台">
+  <title>TMD - 課程教學活動設計與教案平台</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-sans: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', Menlo, Monaco, monospace;
+      
+      --color-primary: #2563eb;
+      --color-primary-hover: #1d4ed8;
+      --color-primary-light: #eff6ff;
+      --color-bg: #f8fafc;
+      --color-surface: #ffffff;
+      --color-surface-muted: #f1f5f9;
+      --color-text: #0f172a;
+      --color-text-muted: #64748b;
+      --color-border: #e2e8f0;
+      --color-success: #10b981;
+      --color-tag-bg: #e0f2fe;
+      --color-tag-text: #0369a1;
+      
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --container-width: 1100px;
+    }
+
+    [data-theme="dark"] {
+      --color-primary: #3b82f6;
+      --color-primary-hover: #60a5fa;
+      --color-primary-light: #1e293b;
+      --color-bg: #0f172a;
+      --color-surface: #1e293b;
+      --color-surface-muted: #334155;
+      --color-text: #f8fafc;
+      --color-text-muted: #94a3b8;
+      --color-border: #334155;
+      --color-tag-bg: #075985;
+      --color-tag-text: #bae6fd;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background-color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    [data-theme="dark"] .navbar {
+      background-color: rgba(30, 41, 59, 0.85);
+    }
+
+    .nav-container {
+      max-width: var(--container-width);
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--color-text);
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+
+    .nav-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 9999px;
+      background-color: var(--color-tag-bg);
+      color: var(--color-tag-text);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border);
+      background-color: var(--color-surface);
+      color: var(--color-text);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .btn:hover {
+      background-color: var(--color-surface-muted);
+    }
+
+    .btn-primary {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--color-primary-hover);
+    }
+
+    /* Main Layout */
+    .layout-container {
+      max-width: var(--container-width);
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 2.5rem;
+    }
+
+    @media (max-width: 860px) {
+      .layout-container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+    }
+
+    /* Sidebar Navigation */
+    .sidebar {
+      position: sticky;
+      top: 5rem;
+      height: fit-content;
+    }
+
+    .toc-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .toc-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .toc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .toc-link {
+      color: var(--color-text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 0.35rem 0.6rem;
+      border-radius: var(--radius-sm);
+      transition: all 0.15s;
+    }
+
+    .toc-link:hover, .toc-link.active {
+      color: var(--color-primary);
+      background-color: var(--color-primary-light);
+      font-weight: 500;
+    }
+
+    /* Main Content */
+    .content-area {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .hero-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero-title {
+      font-size: 1.85rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 0.75rem;
+      color: var(--color-text);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--color-text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      padding: 1.25rem;
+      background-color: var(--color-surface-muted);
+      border-radius: var(--radius-md);
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .meta-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    /* Section Cards */
+    .section-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      scroll-margin-top: 5rem;
+    }
+
+    .section-heading {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--color-primary-light);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--color-text);
+    }
+
+    /* Lesson Tables */
+    .table-container {
+      overflow-x: auto;
+      margin: 1rem 0;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.925rem;
+    }
+
+    th {
+      background-color: var(--color-surface-muted);
+      color: var(--color-text);
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--color-border);
+      vertical-align: top;
+      color: var(--color-text);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background-color: var(--color-surface-muted);
+    }
+
+    /* Competencies & Badges */
+    .badge-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .badge-pill {
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      background-color: var(--color-surface-muted);
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--color-border);
+      padding: 2.5rem 1.5rem;
+      margin-top: 4rem;
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      .navbar, .sidebar, .nav-actions, footer {
+        display: none !important;
+      }
+      .layout-container {
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+      .hero-card, .section-card {
+        border: 1px solid #000000 !important;
+        box-shadow: none !important;
+        margin-bottom: 1.5rem !important;
+        page-break-inside: avoid;
+      }
+      table, th, td {
+        border: 1px solid #000000 !important;
+        color: #000000 !important;
+      }
+      th {
+        background: #f0f0f0 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-brand">
+        <span>📖 TMD 教案平台</span>
+        <span class="nav-badge">公開發布版</span>
+      </a>
+      <div class="nav-actions">
+        <button class="btn" onclick="window.print()" title="列印或輸出為 PDF">
+          🖨️ 列印 / 匯出 PDF
+        </button>
+        <button class="btn" id="theme-toggle" onclick="toggleTheme()" title="切換深淺模式">
+          🌙
+        </button>
+        <a id="github-link" href="https://github.com/leeonweng/TMD" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          GitHub Repo
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <nav class="toc-card">
+        <div class="toc-title">教案章節導覽</div>
+        <ul class="toc-list">
+          <li><a href="#overview" class="toc-link">課程基本資料</a></li>
+          <li><a href="#competencies" class="toc-link">核心素養與學習重點</a></li>
+          <li><a href="#objectives" class="toc-link">學習目標</a></li>
+          <li><a href="#period1" class="toc-link">第一節：問題界定與探究</a></li>
+          <li><a href="#period2" class="toc-link">第二節：成果產出與互評</a></li>
+          <li><a href="#rubrics" class="toc-link">學習評量規準</a></li>
+          <li><a href="#reflection" class="toc-link">備課與教學省思</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="content-area">
+      
+      <!-- Hero -->
+      <section class="hero-card" id="overview">
+        <h1 class="hero-title">科技與自主學習整合教案設計</h1>
+        <p class="hero-desc">以十二年國民基本教育課程綱要為指引，融合數位工具探究、結構化思維與公開成果展現之教學模組。</p>
+        
+        <div class="meta-grid">
+          <div class="meta-item">
+            <span class="meta-label">專案名稱</span>
+            <span class="meta-value">TMD 課程研發</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">實施對象</span>
+            <span class="meta-value">國高中階段自主學習</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">總節數</span>
+            <span class="meta-value">2 節（100 分鐘）</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">發布狀態</span>
+            <span class="meta-value" style="color: var(--color-success)">● 公開靜態網站</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Competencies -->
+      <section class="section-card" id="competencies">
+        <h2 class="section-heading">🎯 核心素養與學習重點</h2>
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          <div>
+            <strong>十二年國教核心素養對照：</strong>
+            <div class="badge-group">
+              <span class="badge-pill"><strong>A2 系統思考與解決問題</strong>：培養問題拆解與策略規劃能力</span>
+              <span class="badge-pill"><strong>B2 科技資訊與媒體素養</strong>：熟練數位工具檢索與辨讀</span>
+              <span class="badge-pill"><strong>C2 人際關係與團隊合作</strong>：實踐小組協作與建設性回饋</span>
+            </div>
+          </div>
+          <div style="margin-top: 0.5rem;">
+            <strong>學習重點：</strong>
+            <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--color-text-muted);">
+              <li><strong style="color: var(--color-text)">學習表現：</strong>能擬定探究架構、運用資訊工具蒐集並驗證資料，統整成果進行發表。</li>
+              <li><strong style="color: var(--color-text)">學習內容：</strong>資訊科技協作規範、數位自主學習流程（設定目標、執行、反思）。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Objectives -->
+      <section class="section-card" id="objectives">
+        <h2 class="section-heading">📌 學習目標</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+          <div style="background: var(--color-surface-muted); padding: 1rem; border-radius: var(--radius-sm);">
+            <strong>🧠 認知領域</strong>
+            <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-top: 0.25rem;">理解數位工具輔助自主學習的流程架構與資訊求證原則。</p>
+          </div>
+          <div style="background: var(--color-surface-muted); padding: 1rem; border-radius: var(--radius-sm);">
+            <strong>🛠️ 技能領域</strong>
+            <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-top: 0.25rem;">熟練運用協作平台組織資料，並能以結構化網頁呈現單元成果。</p>
+          </div>
+          <div style="background: var(--color-surface-muted); padding: 1rem; border-radius: var(--radius-sm);">
+            <strong>🌱 情意領域</strong>
+            <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-top: 0.25rem;">養成主動探究、開放溝通與互相觀摩分享之積極學習態度。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Period 1 -->
+      <section class="section-card" id="period1">
+        <h2 class="section-heading">⏱️ 第一節：問題界定與知識探究（50 分鐘）</h2>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 15%">教學階段</th>
+                <th style="width: 12%">時間</th>
+                <th>教學活動內容與師生互動</th>
+                <th style="width: 18%">教學資源</th>
+                <th style="width: 15%">評量方式</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>引起動機</strong></td>
+                <td>10 分鐘</td>
+                <td>
+                  <strong>情境引導與核心提問</strong><br>
+                  1. 展示真實生活案例或複雜主題任務。<br>
+                  2. 提問：「面對龐雜未知的資訊，如何利用數位工具迅速梳理脈絡？」<br>
+                  3. 彙整學生回應並聚焦本次單元探究核心。
+                </td>
+                <td>投影簡報、互動看板</td>
+                <td>課堂問答、口頭回饋</td>
+              </tr>
+              <tr>
+                <td><strong>發展活動</strong></td>
+                <td>30 分鐘</td>
+                <td>
+                  <strong>主題拆解與框架建構</strong><br>
+                  1. 教師示範主題樹狀拆解策略與精準關鍵字檢索技巧。<br>
+                  2. 學生以小組為單位實作，梳理出 3 個核心子題。<br>
+                  3. 指導學生記錄來源佐證，建立嚴謹資訊查證習慣。
+                </td>
+                <td>數位筆記工具、參考文件資料庫</td>
+                <td>實作歷程檢核、小組觀察</td>
+              </tr>
+              <tr>
+                <td><strong>綜合總結</strong></td>
+                <td>10 分鐘</td>
+                <td>
+                  <strong>小組快報與學習反思</strong><br>
+                  1. 各組以 1 分鐘快速陳述架構焦點。<br>
+                  2. 教師針對共通盲點給予具體指引。<br>
+                  3. 預告下一節的成果產出與同儕互評規準。
+                </td>
+                <td>成果檢核表</td>
+                <td>自評與回饋單</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Period 2 -->
+      <section class="section-card" id="period2">
+        <h2 class="section-heading">⏱️ 第二節：成果產出與同儕互評（50 分鐘）</h2>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 15%">教學階段</th>
+                <th style="width: 12%">時間</th>
+                <th>教學活動內容與師生互動</th>
+                <th style="width: 18%">教學資源</th>
+                <th style="width: 15%">評量方式</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>引起動機</strong></td>
+                <td>5 分鐘</td>
+                <td>
+                  <strong>評量規準說明與發布準備</strong><br>
+                  1. 說明成果發表檢核規準（Rubrics）。<br>
+                  2. 提醒公開發布時的數位著作權與引用規範。
+                </td>
+                <td>評量表規準</td>
+                <td>目標確認</td>
+              </tr>
+              <tr>
+                <td><strong>發展活動</strong></td>
+                <td>30 分鐘</td>
+                <td>
+                  <strong>結構化成果製作與發布</strong><br>
+                  1. 各組將探究成果轉為結構化 Markdown / 網頁格式。<br>
+                  2. 將單元內容上架至公開展示平台。<br>
+                  3. 實施走訪觀摩（Gallery Walk），記錄他組優點。
+                </td>
+                <td>TMD 靜態平台、協作筆記</td>
+                <td>實作成果檢核、同儕互評</td>
+              </tr>
+              <tr>
+                <td><strong>綜合活動</strong></td>
+                <td>15 分鐘</td>
+                <td>
+                  <strong>分享回饋與教師總結</strong><br>
+                  1. 挑選 2 組代表進行精準分享。<br>
+                  2. 實施建設性雙向回饋（讚美優點 + 1 項具體改進建議）。<br>
+                  3. 教師總結單元成果，安排課後延伸實踐任務。
+                </td>
+                <td>互評回饋單</td>
+                <td>總結性評量</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Rubrics -->
+      <section class="section-card" id="rubrics">
+        <h2 class="section-heading">📊 學習評量規準（Rubrics）</h2>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 20%">評量向度</th>
+                <th style="width: 26%">優秀（4分）</th>
+                <th style="width: 26%">良好（3分）</th>
+                <th style="width: 28%">待加強（2分）</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>主題結構與邏輯</strong></td>
+                <td>架構層次分明、脈絡嚴謹，能深入解析核心焦點。</td>
+                <td>架構完整，邏輯清楚順暢。</td>
+                <td>內容零散，缺乏明確架構與關聯。</td>
+              </tr>
+              <tr>
+                <td><strong>數位工具應用</strong></td>
+                <td>熟練運用工具並能創新呈現成果，排版清晰美觀。</td>
+                <td>能妥善運用工具呈現完整內容。</td>
+                <td>工具操作生疏，呈現不完整。</td>
+              </tr>
+              <tr>
+                <td><strong>思辨與批判論證</strong></td>
+                <td>能多角度分析並提出獨立見解與具體佐證。</td>
+                <td>能引用資料佐證並表達基本觀點。</td>
+                <td>僅拼湊摘抄，缺乏個人觀點。</td>
+              </tr>
+              <tr>
+                <td><strong>團隊合作與互動</strong></td>
+                <td>分工明確、討論熱烈，協同成效極佳。</td>
+                <td>多數成員積極參與，如期完成成果。</td>
+                <td>分工不均或溝通受阻，進度延宕。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Reflection -->
+      <section class="section-card" id="reflection">
+        <h2 class="section-heading">📝 備課與教學省思</h2>
+        <ul style="margin-left: 1.5rem; color: var(--color-text-muted); display: flex; flex-direction: column; gap: 0.5rem;">
+          <li><strong style="color: var(--color-text)">個別化差異支援：</strong>針對數位工具掌握程度不同的學生，提供基礎 Markdown 範本作為學習鷹架。</li>
+          <li><strong style="color: var(--color-text)">公開展示激勵：</strong>透過 GitHub Pages 公開存取，學生能看見自己的探究成果化身為正式網頁，大幅提升學習成就感。</li>
+          <li><strong style="color: var(--color-text)">持續更新機制：</strong>教案資料與網頁分離，教師可直接於 <code>content/lesson.md</code> 修改內容，實現敏捷備課。</li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>
+    <p>TMD 課程研發專案 · 基於 AntiGravity 2 與 GitHub Pages 構建</p>
+    <p style="margin-top: 0.25rem;">支援 A4 列印與 PDF 匯出 · 開放教育資源共享</p>
+  </footer>
+
+  <script>
+    // Theme toggle
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const target = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', target);
+      localStorage.setItem('theme', target);
+      document.getElementById('theme-toggle').textContent = target === 'dark' ? '☀️' : '🌙';
+    }
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    document.getElementById('theme-toggle').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+    // Highlight current active TOC link on scroll
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll('section[id]');
+      const scrollPos = window.scrollY + 120;
+      sections.forEach(section => {
+        const top = section.offsetTop;
+        const height = section.offsetHeight;
+        const id = section.getAttribute('id');
+        const link = document.querySelector(`.toc-link[href="#${id}"]`);
+        if (link) {
+          if (scrollPos >= top && scrollPos < top + height) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

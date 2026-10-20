@@ -5,7 +5,8 @@
 專案名稱：TMD
 專案用途：AntiGravity 專案
 主要工作目錄：/Users/liweiweng/Documents/AntiGravity/TMD
-GitHub repo：待設定
+GitHub repo：https://github.com/leeonweng/TMD
+公開網頁：https://leeonweng.github.io/TMD/
 預設 branch：main
 
 ## Obsidian 對應筆記
