@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="TMD - 科技與自主學習整合教案公開展示平台">
-  <title>TMD - 課程教學活動設計與教案平台</title>
+  <meta name="description" content="科技領域教材教法_張宗智、吳立安、黃勁允、翁苙維 - 拋物線上的科學家：投石戰車探究與角度大解密公開教案與互動遊戲">
+  <title>科技領域教材教法_張宗智、吳立安、黃勁允、翁苙維</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --font-sans: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -23,6 +23,7 @@
       --color-text-muted: #64748b;
       --color-border: #e2e8f0;
       --color-success: #10b981;
+      --color-warning: #f59e0b;
       --color-tag-bg: #e0f2fe;
       --color-tag-text: #0369a1;
       
@@ -32,7 +33,7 @@
       --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
       --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
       --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-      --container-width: 1100px;
+      --container-width: 1140px;
     }
 
     [data-theme="dark"] {
@@ -68,7 +69,7 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      background-color: rgba(255, 255, 255, 0.85);
+      background-color: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--color-border);
@@ -76,7 +77,7 @@
     }
 
     [data-theme="dark"] .navbar {
-      background-color: rgba(30, 41, 59, 0.85);
+      background-color: rgba(30, 41, 59, 0.9);
     }
 
     .nav-container {
@@ -86,6 +87,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 1rem;
     }
 
     .nav-brand {
@@ -95,7 +97,15 @@
       text-decoration: none;
       color: var(--color-text);
       font-weight: 700;
-      font-size: 1.25rem;
+      font-size: 1.15rem;
+      white-space: nowrap;
+    }
+
+    .nav-brand-title {
+      max-width: 420px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .nav-badge {
@@ -105,21 +115,23 @@
       border-radius: 9999px;
       background-color: var(--color-tag-bg);
       color: var(--color-tag-text);
+      white-space: nowrap;
     }
 
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.6rem;
+      flex-wrap: wrap;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      padding: 0.45rem 0.9rem;
+      padding: 0.45rem 0.85rem;
       font-size: 0.875rem;
-      font-weight: 500;
+      font-weight: 600;
       border-radius: var(--radius-sm);
       border: 1px solid var(--color-border);
       background-color: var(--color-surface);
@@ -127,10 +139,12 @@
       cursor: pointer;
       text-decoration: none;
       transition: all 0.15s ease;
+      white-space: nowrap;
     }
 
     .btn:hover {
       background-color: var(--color-surface-muted);
+      border-color: var(--color-primary);
     }
 
     .btn-primary {
@@ -141,24 +155,50 @@
 
     .btn-primary:hover {
       background-color: var(--color-primary-hover);
+      color: #ffffff;
     }
 
-    /* Main Layout */
+    .btn-game {
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+      font-weight: 700;
+    }
+
+    .btn-game:hover {
+      background: linear-gradient(135deg, #d97706, #dc2626);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(239, 68, 68, 0.4);
+    }
+
+    /* Views (Tab Navigation) */
+    .view-section {
+      display: none;
+    }
+    .view-section.active {
+      display: block;
+    }
+
+    /* Layout */
     .layout-container {
       max-width: var(--container-width);
       margin: 2rem auto;
       padding: 0 1.5rem;
       display: grid;
-      grid-template-columns: 240px 1fr;
+      grid-template-columns: 260px 1fr;
       gap: 2.5rem;
     }
 
-    @media (max-width: 860px) {
+    @media (max-width: 920px) {
       .layout-container {
         grid-template-columns: 1fr;
       }
       .sidebar {
         display: none;
+      }
+      .nav-brand-title {
+        max-width: 220px;
       }
     }
 
@@ -200,15 +240,16 @@
       padding: 0.35rem 0.6rem;
       border-radius: var(--radius-sm);
       transition: all 0.15s;
+      display: block;
     }
 
     .toc-link:hover, .toc-link.active {
       color: var(--color-primary);
       background-color: var(--color-primary-light);
-      font-weight: 500;
+      font-weight: 600;
     }
 
-    /* Main Content */
+    /* Content Area */
     .content-area {
       display: flex;
       flex-direction: column;
@@ -219,27 +260,44 @@
       background: var(--color-surface);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-lg);
-      padding: 2rem;
+      padding: 2.25rem;
       box-shadow: var(--shadow-sm);
+    }
+
+    .hero-pretitle {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-primary);
+      margin-bottom: 0.4rem;
     }
 
     .hero-title {
       font-size: 1.85rem;
-      font-weight: 700;
-      line-height: 1.3;
-      margin-bottom: 0.75rem;
+      font-weight: 800;
+      line-height: 1.35;
+      margin-bottom: 0.6rem;
       color: var(--color-text);
     }
 
+    .hero-subtitle {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: 1rem;
+    }
+
     .hero-desc {
-      font-size: 1.05rem;
+      font-size: 1rem;
       color: var(--color-text-muted);
       margin-bottom: 1.5rem;
+      line-height: 1.8;
     }
 
     .meta-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
       padding: 1.25rem;
       background-color: var(--color-surface-muted);
@@ -270,7 +328,7 @@
       background: var(--color-surface);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-md);
-      padding: 1.75rem;
+      padding: 2rem;
       box-shadow: var(--shadow-sm);
       scroll-margin-top: 5rem;
     }
@@ -287,10 +345,10 @@
       color: var(--color-text);
     }
 
-    /* Lesson Tables */
+    /* Tables */
     .table-container {
       overflow-x: auto;
-      margin: 1rem 0;
+      margin: 1.25rem 0;
       border: 1px solid var(--color-border);
       border-radius: var(--radius-sm);
     }
@@ -306,15 +364,22 @@
       background-color: var(--color-surface-muted);
       color: var(--color-text);
       font-weight: 600;
-      padding: 0.75rem 1rem;
+      padding: 0.85rem 1rem;
       border-bottom: 1px solid var(--color-border);
+      border-right: 1px solid var(--color-border);
     }
 
     td {
       padding: 0.85rem 1rem;
       border-bottom: 1px solid var(--color-border);
+      border-right: 1px solid var(--color-border);
       vertical-align: top;
       color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    th:last-child, td:last-child {
+      border-right: none;
     }
 
     tr:last-child td {
@@ -325,7 +390,7 @@
       background-color: var(--color-surface-muted);
     }
 
-    /* Competencies & Badges */
+    /* Badges & STEAM */
     .badge-group {
       display: flex;
       flex-wrap: wrap;
@@ -343,14 +408,253 @@
       color: var(--color-text);
     }
 
-    /* Footer */
-    footer {
-      border-top: 1px solid var(--color-border);
-      padding: 2.5rem 1.5rem;
-      margin-top: 4rem;
+    .steam-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .steam-card {
+      background: var(--color-surface-muted);
+      padding: 1.25rem;
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--color-primary);
+    }
+
+    .steam-card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+      color: var(--color-primary);
+    }
+
+    /* Flow Chart */
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 0.75rem;
+      margin: 1.25rem 0;
+    }
+
+    .flow-step {
+      background: var(--color-surface-muted);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
       text-align: center;
-      font-size: 0.875rem;
+      position: relative;
+    }
+
+    .flow-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .flow-step-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .flow-step-desc {
+      font-size: 0.8rem;
       color: var(--color-text-muted);
+    }
+
+    /* Banner for Interactive Game Callout */
+    .game-callout {
+      background: linear-gradient(135deg, #eff6ff 0%, #fef3c7 100%);
+      border: 2px dashed #f59e0b;
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    [data-theme="dark"] .game-callout {
+      background: linear-gradient(135deg, #1e293b 0%, #292524 100%);
+      border-color: #f59e0b;
+    }
+
+    /* Game Container View */
+    .game-view-container {
+      max-width: var(--container-width);
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .game-header-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .game-canvas-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    #catapultCanvas {
+      width: 100%;
+      height: 420px;
+      background: #f8fafc;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border);
+      touch-action: none;
+    }
+
+    .game-controls-panel {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .control-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .control-value-badge {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      color: var(--color-primary);
+      background: var(--color-primary-light);
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .preset-btns {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .preset-btn {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-surface-muted);
+      cursor: pointer;
+      color: var(--color-text);
+      transition: all 0.15s;
+    }
+
+    .preset-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .mode-btn, .proj-btn {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-surface);
+      cursor: pointer;
+      color: var(--color-text);
+      transition: all 0.15s;
+    }
+
+    .mode-btn.active, .proj-btn.active {
+      background: var(--color-primary);
+      color: #fff;
+      border-color: var(--color-primary);
+    }
+
+    .launch-btn {
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      color: #fff;
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 0.85rem 2rem;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+    }
+
+    .launch-btn:hover {
+      background: linear-gradient(135deg, #dc2626, #ea580c);
+      transform: scale(1.02);
+      box-shadow: 0 6px 14px rgba(239, 68, 68, 0.5);
+    }
+
+    .launch-btn:active {
+      transform: scale(0.98);
+    }
+
+    .scoreboard {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .score-badge {
+      background: var(--color-surface-muted);
+      border: 1px solid var(--color-border);
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .score-badge strong {
+      font-family: var(--font-mono);
+      font-size: 1.15rem;
+      color: var(--color-primary);
     }
 
     /* Print Styles */
@@ -359,8 +663,11 @@
         background: #ffffff !important;
         color: #000000 !important;
       }
-      .navbar, .sidebar, .nav-actions, footer {
+      .navbar, .sidebar, .nav-actions, footer, .game-callout, #gameView {
         display: none !important;
+      }
+      #lessonView {
+        display: block !important;
       }
       .layout-container {
         display: block !important;
@@ -389,11 +696,20 @@
   <!-- Top Navigation -->
   <header class="navbar">
     <div class="nav-container">
-      <a href="#" class="nav-brand">
-        <span>📖 TMD 教案平台</span>
-        <span class="nav-badge">公開發布版</span>
+      <a href="#" onclick="switchView('lesson')" class="nav-brand">
+        <span>🏹</span>
+        <span class="nav-brand-title">科技領域教材教法_張宗智、吳立安、黃勁允、翁苙維</span>
+        <span class="nav-badge">108 課綱教案</span>
       </a>
       <div class="nav-actions">
+        <!-- Switch to Lesson Plan View -->
+        <button class="btn" id="navLessonBtn" onclick="switchView('lesson')" title="檢視完整教案內文">
+          📖 完整教案檢視
+        </button>
+        <!-- Switch to Interactive Game View -->
+        <button class="btn btn-game" id="navGameBtn" onclick="switchView('game')" title="開啟投石戰車模擬小遊戲">
+          🎮 互動式小遊戲
+        </button>
         <button class="btn" onclick="window.print()" title="列印或輸出為 PDF">
           🖨️ 列印 / 匯出 PDF
         </button>
@@ -407,265 +723,700 @@
     </div>
   </header>
 
-  <div class="layout-container">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <nav class="toc-card">
-        <div class="toc-title">教案章節導覽</div>
-        <ul class="toc-list">
-          <li><a href="#overview" class="toc-link">課程基本資料</a></li>
-          <li><a href="#competencies" class="toc-link">核心素養與學習重點</a></li>
-          <li><a href="#objectives" class="toc-link">學習目標</a></li>
-          <li><a href="#period1" class="toc-link">第一節：問題界定與探究</a></li>
-          <li><a href="#period2" class="toc-link">第二節：成果產出與互評</a></li>
-          <li><a href="#rubrics" class="toc-link">學習評量規準</a></li>
-          <li><a href="#reflection" class="toc-link">備課與教學省思</a></li>
-        </ul>
-      </nav>
-    </aside>
+  <!-- ========================================== -->
+  <!-- VIEW 1: 完整教案檢視 (Lesson Plan View)     -->
+  <!-- ========================================== -->
+  <div id="lessonView" class="view-section active">
+    <div class="layout-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <nav class="toc-card">
+          <div class="toc-title">教案章節導覽</div>
+          <ul class="toc-list">
+            <li><a href="#overview" class="toc-link">教案概述與基本資料</a></li>
+            <li><a href="#matrix" class="toc-link">一、雙向細目表</a></li>
+            <li><a href="#summary" class="toc-link">二、專題摘要與核心素養</a></li>
+            <li><a href="#evaluation" class="toc-link">三、評量方式</a></li>
+            <li><a href="#framework" class="toc-link">四、5 節課 STEM PBL 架構</a></li>
+            <li><a href="#act1" class="toc-link">第 1 節：原理探索篇</a></li>
+            <li><a href="#act2" class="toc-link">第 2 節：數位模擬篇</a></li>
+            <li><a href="#act3" class="toc-link">第 3 節：實體組裝篇</a></li>
+            <li><a href="#act4" class="toc-link">第 4 節：彈性調校篇</a></li>
+            <li><a href="#act5" class="toc-link">第 5 節：數據發表篇</a></li>
+            <li><a href="#feedback" class="toc-link">六、教學回饋與參考資料</a></li>
+          </ul>
+        </nav>
+      </aside>
 
-    <!-- Main Content Area -->
-    <main class="content-area">
-      
-      <!-- Hero -->
-      <section class="hero-card" id="overview">
-        <h1 class="hero-title">科技與自主學習整合教案設計</h1>
-        <p class="hero-desc">以十二年國民基本教育課程綱要為指引，融合數位工具探究、結構化思維與公開成果展現之教學模組。</p>
+      <!-- Main Content Area -->
+      <main class="content-area">
         
-        <div class="meta-grid">
-          <div class="meta-item">
-            <span class="meta-label">專案名稱</span>
-            <span class="meta-value">TMD 課程研發</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">實施對象</span>
-            <span class="meta-value">國高中階段自主學習</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">總節數</span>
-            <span class="meta-value">2 節（100 分鐘）</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">發布狀態</span>
-            <span class="meta-value" style="color: var(--color-success)">● 公開靜態網站</span>
-          </div>
-        </div>
-      </section>
+        <!-- Hero Card -->
+        <section class="hero-card" id="overview">
+          <div class="hero-pretitle">國小科技領域教案 · 109 年 6 月 21 日修正版</div>
+          <h1 class="hero-title">科技領域教材教法_張宗智、吳立安、黃勁允、翁苙維</h1>
+          <div class="hero-subtitle">教案名稱：拋物線上的科學家：投石戰車探究與角度大解密</div>
+          <p class="hero-desc">
+            本課程旨在引導六年級學生透過投石戰車的動手實作與電腦虛擬模擬，理解彈性位能、動能轉換及槓桿原理。課程結合運算思維、數據記錄與折線圖分析，在團隊合作中探究最佳拋射角度與拋射距離優化。
+          </p>
 
-      <!-- Competencies -->
-      <section class="section-card" id="competencies">
-        <h2 class="section-heading">🎯 核心素養與學習重點</h2>
-        <div style="display: flex; flex-direction: column; gap: 1rem;">
-          <div>
-            <strong>十二年國教核心素養對照：</strong>
-            <div class="badge-group">
-              <span class="badge-pill"><strong>A2 系統思考與解決問題</strong>：培養問題拆解與策略規劃能力</span>
-              <span class="badge-pill"><strong>B2 科技資訊與媒體素養</strong>：熟練數位工具檢索與辨讀</span>
-              <span class="badge-pill"><strong>C2 人際關係與團隊合作</strong>：實踐小組協作與建設性回饋</span>
+          <!-- Interactive Game Banner Callout -->
+          <div class="game-callout">
+            <div>
+              <strong style="font-size: 1.05rem; color: #b45309; display: block; margin-bottom: 0.25rem;">🎮 內建教學互動式小遊戲</strong>
+              <span style="font-size: 0.9rem; color: var(--color-text-muted);">
+                已將教案中第二節「數位模擬篇」與第四節「彈性與角度實測」轉化為線上互動物理模擬與攻城挑戰！
+              </span>
+            </div>
+            <button class="btn btn-game" onclick="switchView('game')">
+              立即進入遊戲 ▶
+            </button>
+          </div>
+          
+          <div class="meta-grid">
+            <div class="meta-item">
+              <span class="meta-label">教學設計者</span>
+              <span class="meta-value">張宗智、吳立安、黃勁允、翁苙維</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">實施年級與對象</span>
+              <span class="meta-value">國小六年級</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">領域別與節數</span>
+              <span class="meta-value">自然科學（1節）+ 科技（4節）共 5 節 (200 分鐘)</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">教學設備</span>
+              <span class="meta-value">雷切木製投石器、電腦、學習單</span>
             </div>
           </div>
-          <div style="margin-top: 0.5rem;">
-            <strong>學習重點：</strong>
+        </section>
+
+        <!-- 一、雙向細目表 -->
+        <section class="section-card" id="matrix">
+          <h2 class="section-heading">📑 一、雙向細目表</h2>
+          <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 1rem;">
+            （以融入領綱學習重點及國小科技教育及資訊教育課程發展參考說明之學習重點，規劃與撰寫）
+          </p>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 25%">學習表現 \ 學習內容</th>
+                  <th style="width: 25%">科議 N-Ⅲ-1：科技的基本特性<br>自 INb-Ⅲ-4：力可藉由簡單機械傳遞</th>
+                  <th style="width: 25%">科議 P-Ⅲ-1：基本的造形與設計</th>
+                  <th style="width: 25%">科議 P-Ⅲ-2：工具與材料的使用方法</th>
+                  <th style="width: 25%">資議 D-Ⅲ-2：系統化資料管理方法</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>科議 k-Ⅲ-1</strong>：說明常見科技產品的用途與運作方式。</td>
+                  <td><strong>目標 1</strong>：學生能解釋彈性位能如何釋放，並理解其在投石戰車上的應用。</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>資議 t-Ⅲ-1</strong>：運用常見的資訊系統。<br>
+                    <strong>科議 s-Ⅲ-1</strong>：製作圖稿以呈現設計構想。
+                  </td>
+                  <td></td>
+                  <td><strong>目標 2</strong>：學生能利用電腦模擬拋射路徑，並根據結果思考改良投石戰車設計圖稿。</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>科議 c-Ⅲ-1</strong>：依據設計構想進行實作。<br>
+                    <strong>科議 s-Ⅲ-2</strong>：使用常見的手工具與材料。
+                  </td>
+                  <td></td>
+                  <td><strong>目標 3</strong>：學生能根據設計圖正確安全地完成投石戰車組裝，並測試其功能與角度影響。</td>
+                  <td><strong>目標 4</strong>：學生能在戰車上設定三種不同發射角度，透過不同材質材料與三段角度測試拋射距離，並微調結構。</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>自 po-Ⅲ-2</strong>：能初步辨別適合科學探究的問題，提出適宜探究之問題。<br>
+                    <strong>科議 c-Ⅲ-3</strong>：展現合作問題解決的能力。<br>
+                    <strong>資議 t-Ⅲ-3</strong>：運用運算思維解決問題。
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><strong>目標 5</strong>：學生能根據測試數據進行分析，並使用圖表呈現不同拉伸角度與拋射距離之間的關係。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 二、教案概述 -->
+        <section class="section-card" id="summary">
+          <h2 class="section-heading">💡 二、教案概述與 STEAM 架構</h2>
+          
+          <div class="steam-grid">
+            <div class="steam-card">
+              <div class="steam-card-title">S（科學 Science）</div>
+              <p style="font-size: 0.875rem; color: var(--color-text-muted);">彈性位能儲存與釋放、動能轉換歷程、槓桿原理（支點、施力點、負載點）。</p>
+            </div>
+            <div class="steam-card">
+              <div class="steam-card-title">T（技術 Technology）</div>
+              <p style="font-size: 0.875rem; color: var(--color-text-muted);">運用軟體/系統模擬拋射路徑、進行數據記錄與變因控制。</p>
+            </div>
+            <div class="steam-card">
+              <div class="steam-card-title">E（工程 Engineering）</div>
+              <p style="font-size: 0.875rem; color: var(--color-text-muted);">動手組裝投石戰車結構，測試不同材質彈力與結構微調對射程的影響。</p>
+            </div>
+            <div class="steam-card">
+              <div class="steam-card-title">A（藝術 Art）</div>
+              <p style="font-size: 0.875rem; color: var(--color-text-muted);">繪製改良投石戰車設計圖稿，並進行戰車外觀造型美化設計。</p>
+            </div>
+            <div class="steam-card">
+              <div class="steam-card-title">M（數學 Mathematics）</div>
+              <p style="font-size: 0.875rem; color: var(--color-text-muted);">量測投石臂角度、比較射程與高度，繪製折線圖分析最佳角度與比值。</p>
+            </div>
+          </div>
+
+          <div style="margin-top: 1.5rem;">
+            <strong>總綱核心素養：</strong>
+            <div class="badge-group">
+              <span class="badge-pill"><strong>A2 系統思考與解決問題</strong>：培養問題拆解、數位模擬與結構優化實踐能力</span>
+              <span class="badge-pill"><strong>C2 人際關係與團隊合作</strong>：小組動手共編組裝、實施測試與成果發表</span>
+            </div>
+          </div>
+
+          <div style="margin-top: 1.5rem;">
+            <strong>學生先備知識：</strong>
             <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--color-text-muted);">
-              <li><strong style="color: var(--color-text)">學習表現：</strong>能擬定探究架構、運用資訊工具蒐集並驗證資料，統整成果進行發表。</li>
-              <li><strong style="color: var(--color-text)">學習內容：</strong>資訊科技協作規範、數位自主學習流程（設定目標、執行、反思）。</li>
+              <li><strong>簡單機械與槓桿知識</strong>：了解槓桿的三要素（支點、施力點、負載點）及其生活應用。</li>
+              <li><strong>基礎數據記錄與圖表閱讀</strong>：具備記錄數據及讀取簡單圖表（如折線圖）的能力。</li>
+              <li><strong>基礎電腦操作</strong>：具備基本電腦操作技能，能操作模擬程式與記錄數據。</li>
             </ul>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- Objectives -->
-      <section class="section-card" id="objectives">
-        <h2 class="section-heading">📌 學習目標</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
-          <div style="background: var(--color-surface-muted); padding: 1rem; border-radius: var(--radius-sm);">
-            <strong>🧠 認知領域</strong>
-            <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-top: 0.25rem;">理解數位工具輔助自主學習的流程架構與資訊求證原則。</p>
+        <!-- 三、評量方式 -->
+        <section class="section-card" id="evaluation">
+          <h2 class="section-heading">📊 三、評量方式</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 8%">項次</th>
+                  <th style="width: 32%">以學習表現作為評量標準</th>
+                  <th style="width: 30%">對應之學習內容類別</th>
+                  <th style="width: 30%">具體評量方式與評量依據</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1</strong></td>
+                  <td><strong>自 po-Ⅲ-2</strong>：能初步辨別適合科學探究的問題，提出適宜探究之問題。</td>
+                  <td>自 INb-Ⅲ-4：力可藉由簡單機械傳遞。<br>科議 N-Ⅲ-1：科技的基本特性。</td>
+                  <td><strong>評量工具</strong>：學習單探究提問、小組討論紀錄。<br><strong>評量依據</strong>：觀察學生能否透過觀察投石戰車運作與資料蒐集，提出適宜探究的問題。</td>
+                </tr>
+                <tr>
+                  <td><strong>2</strong></td>
+                  <td><strong>科議 k-Ⅲ-1</strong>：說明常見科技產品的用途與運作方式。</td>
+                  <td>科議 N-Ⅲ-1：科技的基本特性。<br>自 INb-Ⅲ-4：力可藉由簡單機械傳遞。</td>
+                  <td><strong>評量工具</strong>：引導式問答、口頭報告。<br><strong>評量依據</strong>：觀察是否能清楚解釋投石戰車的功能及運作原理（如槓桿與彈性位能），並能聯繫生活應用。</td>
+                </tr>
+                <tr>
+                  <td><strong>3</strong></td>
+                  <td><strong>科議 s-Ⅲ-1</strong>：製作圖稿以呈現設計構想。<br><strong>資議 t-Ⅲ-1</strong>：運用常見的資訊系統。</td>
+                  <td>科議 P-Ⅲ-1：基本的造形與設計。<br>資議 D-Ⅲ-2：系統化資料管理方法。</td>
+                  <td><strong>評量工具</strong>：設計圖稿、電腦模擬紀錄。<br><strong>評量依據</strong>：檢查圖稿是否清晰呈現設計構想，並觀察是否能操作電腦軟體模擬拋射路徑與記錄數據。</td>
+                </tr>
+                <tr>
+                  <td><strong>4</strong></td>
+                  <td><strong>科議 s-Ⅲ-2</strong>：使用常見的手工具與材料。<br><strong>科議 c-Ⅲ-1</strong>：依據設計構想進行實作。</td>
+                  <td>科議 P-Ⅲ-2：工具與材料的使用方法。<br>科議 P-Ⅲ-1：基本的造形與設計。</td>
+                  <td><strong>評量工具</strong>：教師觀察、作品檢查、實驗記錄表。<br><strong>評量依據</strong>：確認學生是否能安全、正確地使用工具與材料組裝戰車，作品是否可正常運作發射。</td>
+                </tr>
+                <tr>
+                  <td><strong>5</strong></td>
+                  <td><strong>資議 t-Ⅲ-3</strong>：運用運算思維解決問題。<br><strong>科議 c-Ⅲ-3</strong>：展現合作問題解決的能力。</td>
+                  <td>資議 D-Ⅲ-2：系統化資料管理方法。</td>
+                  <td><strong>評量工具</strong>：電腦圖表、數據表格檢核表、同儕互評表。<br><strong>評量依據</strong>：檢視能否將測試數據匯入電腦繪製折線圖，進行角度與距離分析，展現問題解決能力。</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div style="background: var(--color-surface-muted); padding: 1rem; border-radius: var(--radius-sm);">
-            <strong>🛠️ 技能領域</strong>
-            <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-top: 0.25rem;">熟練運用協作平台組織資料，並能以結構化網頁呈現單元成果。</p>
+        </section>
+
+        <!-- 四、課程設計架構圖 -->
+        <section class="section-card" id="framework">
+          <h2 class="section-heading">🗺️ 四、投石戰車 5 節課 STEM PBL 課程流程</h2>
+          <div class="flow-grid">
+            <div class="flow-step">
+              <div class="flow-step-num">1</div>
+              <div class="flow-step-title">第 1 節：原理探索篇</div>
+              <div class="flow-step-desc">能量與槓桿原理探究<br>（位能轉動能、槓桿三要素）</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">2</div>
+              <div class="flow-step-title">第 2 節：數位模擬篇</div>
+              <div class="flow-step-desc">電腦模擬拋射路徑<br>戰車設計圖繪製</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">3</div>
+              <div class="flow-step-title">第 3 節：實體組裝篇</div>
+              <div class="flow-step-desc">手工具安全規範<br>戰車底盤與支架組裝</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">4</div>
+              <div class="flow-step-title">第 4 節：彈性調校篇</div>
+              <div class="flow-step-desc">橡皮筋材質與三角度測試<br>發射距離與結構微調</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-num">5</div>
+              <div class="flow-step-title">第 5 節：數據發表篇</div>
+              <div class="flow-step-desc">折線圖繪製與數據分析<br>小組成果報告與互評</div>
+            </div>
           </div>
-          <div style="background: var(--color-surface-muted); padding: 1rem; border-radius: var(--radius-sm);">
-            <strong>🌱 情意領域</strong>
-            <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-top: 0.25rem;">養成主動探究、開放溝通與互相觀摩分享之積極學習態度。</p>
+        </section>
+
+        <!-- 五、教學活動步驟 -->
+        <section class="section-card" id="act1">
+          <h2 class="section-heading">⏱️ 活動一：科學偵探的力學檔案 – 槓桿與位能大解密（第 1 節，40 分鐘）</h2>
+          <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 1rem;">
+            <strong>活動簡述</strong>：透過彈性物品展示彈性位能儲存與釋放，並以生活工具解釋槓桿原理；引導學生觀察投石戰車運作，提出適宜探究的科學問題。
+          </p>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 28%">教學活動 (名稱)</th>
+                  <th>活動內容 (含時間分配)</th>
+                  <th style="width: 25%">評量方式與依據</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1. 能量線索蒐集 – 位能儲存與釋放</strong></td>
+                  <td>
+                    1. 教師使用橡皮筋與彈性玩具示範「拉開➔釋放」過程，引導觀察物體形變與運動。<br>
+                    2. 引導學生像科學偵探般推理「彈性位能」儲存與轉換為動能的過程。(5 min)<br>
+                    3. 展示投石戰車實物發射影片。<br>
+                    4. 引導思考提問（如：「橡皮筋拉越緊飛越遠嗎？」、「角度如何影響拋射距離？」）。(5 min)
+                  </td>
+                  <td>口頭問答、教師觀察。<br><strong>評量依據</strong>：能觀察現象並提出適宜探究的科學問題。</td>
+                </tr>
+                <tr>
+                  <td><strong>2. 偵探工具箱 – 槓桿原理大解密</strong></td>
+                  <td>
+                    1. 以翹翹板、剪刀、開瓶器為例，說明槓桿三要素：支點、施力點、負載點。(7 min)<br>
+                    2. 邀請學生示範不同施力點位置對省力/費力的影響。<br>
+                    3. 指導拆解投石戰車結構，找出支點（轉軸）、施力點（橡皮筋連接處）與負載點（拋射籃）。(8 min)
+                  </td>
+                  <td>口頭問答、學生舉手發表。<br><strong>評量依據</strong>：能清楚解釋槓桿原理與彈性位能，說明其在戰車上的運作方式。</td>
+                </tr>
+                <tr>
+                  <td><strong>3. 偵查腦力激盪 – 破解射程</strong></td>
+                  <td>
+                    1. 列舉生活中其他運用槓桿的工具（如指甲剪、開瓶器）。<br>
+                    2. 小組討論：如何利用槓桿原理與橡皮筋位能讓戰車拋得更遠？(10 min)
+                  </td>
+                  <td>引導式問答、小組討論紀錄。<br><strong>評量依據</strong>：能清楚解釋槓桿原理與彈性位能並思考改良。</td>
+                </tr>
+                <tr>
+                  <td><strong>4. 偵探推理總結 – 核心概念梳理</strong></td>
+                  <td>
+                    1. 歸納彈性位能轉換與槓桿原理，澄清常見迷思。<br>
+                    2. 學生填寫「第一節偵探探究日誌」（記錄提出的探究問題與槓桿結構圖）。<br>
+                    3. 下節預告：說明下節進入「數位線索實驗室」透過電腦模擬驗證假設！(5 min)
+                  </td>
+                  <td>口頭問答、學習單檢核。<br><strong>評量依據</strong>：能將觀察與討論記錄於學習單中。</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- Period 1 -->
-      <section class="section-card" id="period1">
-        <h2 class="section-heading">⏱️ 第一節：問題界定與知識探究（50 分鐘）</h2>
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th style="width: 15%">教學階段</th>
-                <th style="width: 12%">時間</th>
-                <th>教學活動內容與師生互動</th>
-                <th style="width: 18%">教學資源</th>
-                <th style="width: 15%">評量方式</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>引起動機</strong></td>
-                <td>10 分鐘</td>
-                <td>
-                  <strong>情境引導與核心提問</strong><br>
-                  1. 展示真實生活案例或複雜主題任務。<br>
-                  2. 提問：「面對龐雜未知的資訊，如何利用數位工具迅速梳理脈絡？」<br>
-                  3. 彙整學生回應並聚焦本次單元探究核心。
-                </td>
-                <td>投影簡報、互動看板</td>
-                <td>課堂問答、口頭回饋</td>
-              </tr>
-              <tr>
-                <td><strong>發展活動</strong></td>
-                <td>30 分鐘</td>
-                <td>
-                  <strong>主題拆解與框架建構</strong><br>
-                  1. 教師示範主題樹狀拆解策略與精準關鍵字檢索技巧。<br>
-                  2. 學生以小組為單位實作，梳理出 3 個核心子題。<br>
-                  3. 指導學生記錄來源佐證，建立嚴謹資訊查證習慣。
-                </td>
-                <td>數位筆記工具、參考文件資料庫</td>
-                <td>實作歷程檢核、小組觀察</td>
-              </tr>
-              <tr>
-                <td><strong>綜合總結</strong></td>
-                <td>10 分鐘</td>
-                <td>
-                  <strong>小組快報與學習反思</strong><br>
-                  1. 各組以 1 分鐘快速陳述架構焦點。<br>
-                  2. 教師針對共通盲點給予具體指引。<br>
-                  3. 預告下一節的成果產出與同儕互評規準。
-                </td>
-                <td>成果檢核表</td>
-                <td>自評與回饋單</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+        <section class="section-card" id="act2">
+          <h2 class="section-heading">💻 活動二：數位線索實驗室 – 電腦模擬拋射路徑與設計圖繪製（第 2 節，40 分鐘）</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 28%">教學活動 (名稱)</th>
+                  <th>活動內容 (含時間分配)</th>
+                  <th style="width: 25%">評量方式與依據</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1. 數位裝備點睛 – 拋射參數模擬示範</strong></td>
+                  <td>
+                    1. 示範模擬軟體操作，引導觀察不同角度、初速對物體拋射軌跡與距離的影響。(8 min)<br>
+                    2. 以生活中投籃經驗輔助解釋角度與落點關係。
+                  </td>
+                  <td>口頭評量。<br><strong>評量依據</strong>：學生能理解並解釋拋射角與初始速度的概念。</td>
+                </tr>
+                <tr>
+                  <td><strong>2. 偵探實操測試 – 拋射數據線索交驗</strong></td>
+                  <td>
+                    1. 學生在模擬軟體上，固定初速度測試不同拋射角（70°、80°、90° 等）的射程。(6 min)<br>
+                    2. 固定拋射角度，測試初速度對拋射距離的影響。(6 min)
+                  </td>
+                  <td>紀錄表。<br><strong>評量依據</strong>：檢查學生的紀錄是否有不同角度與對應拋射結果。</td>
+                </tr>
+                <tr>
+                  <td><strong>3. 線索交集與戰車藍圖繪製</strong></td>
+                  <td>
+                    1. 小組討論模擬結果（預測最佳角度約 45°，初速越大距離越遠）。(5 min)<br>
+                    2. 結合模擬線索與參考圖片，繪製小組投石戰車構想設計圖。(10 min)
+                  </td>
+                  <td>設計圖稿檢核。<br><strong>評量依據</strong>：設計圖能依據模擬數據清晰呈現構想。</td>
+                </tr>
+                <tr>
+                  <td><strong>4. 模擬線索總結 – 成果盤點</strong></td>
+                  <td>
+                    1. 統整模擬結論，確認拋射角度與距離的規律。(3 min)<br>
+                    2. 說明下節實體製作注意事項與材料配給。(2 min)
+                  </td>
+                  <td>教師觀察。<br><strong>評量依據</strong>：能依據模擬數據調整設計構想。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
 
-      <!-- Period 2 -->
-      <section class="section-card" id="period2">
-        <h2 class="section-heading">⏱️ 第二節：成果產出與同儕互評（50 分鐘）</h2>
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th style="width: 15%">教學階段</th>
-                <th style="width: 12%">時間</th>
-                <th>教學活動內容與師生互動</th>
-                <th style="width: 18%">教學資源</th>
-                <th style="width: 15%">評量方式</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>引起動機</strong></td>
-                <td>5 分鐘</td>
-                <td>
-                  <strong>評量規準說明與發布準備</strong><br>
-                  1. 說明成果發表檢核規準（Rubrics）。<br>
-                  2. 提醒公開發布時的數位著作權與引用規範。
-                </td>
-                <td>評量表規準</td>
-                <td>目標確認</td>
-              </tr>
-              <tr>
-                <td><strong>發展活動</strong></td>
-                <td>30 分鐘</td>
-                <td>
-                  <strong>結構化成果製作與發布</strong><br>
-                  1. 各組將探究成果轉為結構化 Markdown / 網頁格式。<br>
-                  2. 將單元內容上架至公開展示平台。<br>
-                  3. 實施走訪觀摩（Gallery Walk），記錄他組優點。
-                </td>
-                <td>TMD 靜態平台、協作筆記</td>
-                <td>實作成果檢核、同儕互評</td>
-              </tr>
-              <tr>
-                <td><strong>綜合活動</strong></td>
-                <td>15 分鐘</td>
-                <td>
-                  <strong>分享回饋與教師總結</strong><br>
-                  1. 挑選 2 組代表進行精準分享。<br>
-                  2. 實施建設性雙向回饋（讚美優點 + 1 項具體改進建議）。<br>
-                  3. 教師總結單元成果，安排課後延伸實踐任務。
-                </td>
-                <td>互評回饋單</td>
-                <td>總結性評量</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+        <section class="section-card" id="act3">
+          <h2 class="section-heading">🔨 活動三：實體工坊手作 – 工具安全與投石戰車主體組裝（第 3 節，40 分鐘）</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 28%">教學活動 (名稱)</th>
+                  <th>活動內容 (含時間分配)</th>
+                  <th style="width: 25%">評量方式與依據</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1. 工坊防護手冊 – 工具與材料安全</strong></td>
+                  <td>
+                    1. 宣導剪刀、熱熔膠及木條等手工具的使用安全事項（熱熔膠槍防燙）。(5 min)<br>
+                    2. 展示材料包內容並說明底盤與支架結構組裝要點。(3 min)
+                  </td>
+                  <td>教師觀察。<br><strong>評量依據</strong>：確認學生能遵守工具使用與課堂安全規範。</td>
+                </tr>
+                <tr>
+                  <td><strong>2. 實體造車開工 – 底盤與支架組裝</strong></td>
+                  <td>
+                    1. 依設計圖使用木條與熱熔膠固定戰車底盤矩形結構。(12 min)<br>
+                    2. 建立垂直支架與水平轉軸，確保結構穩固。(10 min)
+                  </td>
+                  <td>過程檢核。<br><strong>評量依據</strong>：確認能否安全、正確地使用工具材料進行組裝。</td>
+                </tr>
+                <tr>
+                  <td><strong>3. 機構運作檢查 – 拋射臂與軸心</strong></td>
+                  <td>
+                    1. 組裝投石臂與旋轉軸心，確認動態旋轉順暢。(7 min)<br>
+                    2. 教師隨堂巡視並提供組裝輔導協助。(3 min)
+                  </td>
+                  <td>階段檢核。<br><strong>評量依據</strong>：投石臂機構能順暢轉動。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
 
-      <!-- Rubrics -->
-      <section class="section-card" id="rubrics">
-        <h2 class="section-heading">📊 學習評量規準（Rubrics）</h2>
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th style="width: 20%">評量向度</th>
-                <th style="width: 26%">優秀（4分）</th>
-                <th style="width: 26%">良好（3分）</th>
-                <th style="width: 28%">待加強（2分）</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>主題結構與邏輯</strong></td>
-                <td>架構層次分明、脈絡嚴謹，能深入解析核心焦點。</td>
-                <td>架構完整，邏輯清楚順暢。</td>
-                <td>內容零散，缺乏明確架構與關聯。</td>
-              </tr>
-              <tr>
-                <td><strong>數位工具應用</strong></td>
-                <td>熟練運用工具並能創新呈現成果，排版清晰美觀。</td>
-                <td>能妥善運用工具呈現完整內容。</td>
-                <td>工具操作生疏，呈現不完整。</td>
-              </tr>
-              <tr>
-                <td><strong>思辨與批判論證</strong></td>
-                <td>能多角度分析並提出獨立見解與具體佐證。</td>
-                <td>能引用資料佐證並表達基本觀點。</td>
-                <td>僅拼湊摘抄，缺乏個人觀點。</td>
-              </tr>
-              <tr>
-                <td><strong>團隊合作與互動</strong></td>
-                <td>分工明確、討論熱烈，協同成效極佳。</td>
-                <td>多數成員積極參與，如期完成成果。</td>
-                <td>分工不均或溝通受阻，進度延宕。</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+        <section class="section-card" id="act4">
+          <h2 class="section-heading">🎯 活動四：彈性極限試煉 – 材質測試與結構微調（第 4 節，40 分鐘）</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 28%">教學活動 (名稱)</th>
+                  <th>活動內容 (含時間分配)</th>
+                  <th style="width: 25%">評量方式與依據</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1. 彈性線索測試 – 橡皮筋材質影響</strong></td>
+                  <td>
+                    1. 測試不同粗細與強度之橡皮筋對投射距離的影響。(10 min)<br>
+                    2. 引導體會材料選擇在工程設計中的關鍵作用。
+                  </td>
+                  <td>教師觀察。<br><strong>評量依據</strong>：能正確選用並安裝適當強度之橡皮筋。</td>
+                </tr>
+                <tr>
+                  <td><strong>2. 角度極限挑戰 – 實體發射與紀錄</strong></td>
+                  <td>
+                    1. 調整投石臂拉伸角度（如 30°、45°、90° 或 80°、65°、50°），進行交叉測試。(15 min)<br>
+                    2. 使用乒乓球、彈珠、黏土球記錄對應拋射距離至紀錄表。(5 min)
+                  </td>
+                  <td>實驗記錄表。<br><strong>評量依據</strong>：檢查戰車是否正常運行並詳實完成記錄。</td>
+                </tr>
+                <tr>
+                  <td><strong>3. 戰車結構強化 – 測試回饋與微調</strong></td>
+                  <td>
+                    1. 根據實體發射結果與數據，對鬆脫或偏斜處進行補強與修正。(7 min)<br>
+                    2. 整理實驗區域，維持場地安全與整潔。(3 min)
+                  </td>
+                  <td>作品檢查。<br><strong>評量依據</strong>：能根據測試數據微調戰車結構。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
 
-      <!-- Reflection -->
-      <section class="section-card" id="reflection">
-        <h2 class="section-heading">📝 備課與教學省思</h2>
-        <ul style="margin-left: 1.5rem; color: var(--color-text-muted); display: flex; flex-direction: column; gap: 0.5rem;">
-          <li><strong style="color: var(--color-text)">個別化差異支援：</strong>針對數位工具掌握程度不同的學生，提供基礎 Markdown 範本作為學習鷹架。</li>
-          <li><strong style="color: var(--color-text)">公開展示激勵：</strong>透過 GitHub Pages 公開存取，學生能看見自己的探究成果化身為正式網頁，大幅提升學習成就感。</li>
-          <li><strong style="color: var(--color-text)">持續更新機制：</strong>教案資料與網頁分離，教師可直接於 <code>content/lesson.md</code> 修改內容，實現敏捷備課。</li>
-        </ul>
-      </section>
+        <section class="section-card" id="act5">
+          <h2 class="section-heading">📈 活動五：數據密碼解碼者 – 數據統計分析與成果發表（第 5 節，40 分鐘）</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 28%">教學活動 (名稱)</th>
+                  <th>活動內容 (含時間分配)</th>
+                  <th style="width: 25%">評量方式與依據</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1. 數據圖像化 – 電腦折線圖繪製</strong></td>
+                  <td>
+                    1. 將三角度與多材質測試數據輸入 Excel/Google Sheets。(10 min)<br>
+                    2. 繪製「角度-距離交叉分析折線圖」，視覺化呈現射程表現。(10 min)
+                  </td>
+                  <td>電腦圖表。<br><strong>評量依據</strong>：能在電腦上記錄數據並正確製作統計折線圖。</td>
+                </tr>
+                <tr>
+                  <td><strong>2. 最佳組合大揭密 – 數據比較歸納</strong></td>
+                  <td>
+                    1. 學生觀察折線圖，討論在何種材質與角度下射程最遠。(5 min)<br>
+                    2. 引導理解 45°-60° 角度與彈性材質搭配之物理規律。(5 min)
+                  </td>
+                  <td>表格檢核。<br><strong>評量依據</strong>：能利用數據分析比較不同角度與材質差異。</td>
+                </tr>
+                <tr>
+                  <td><strong>3. 偵探成果發表 – 小組分享與互評</strong></td>
+                  <td>
+                    1. 各組依據探究日誌、戰車作品與統計圖上台進行成果報告。(6 min)<br>
+                    2. 進行組間互評與自評，填寫『自評與互評表』。(4 min)
+                  </td>
+                  <td>同儕互評表。<br><strong>評量依據</strong>：展現小組團隊合作與口頭溝通能力。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
 
-    </main>
+        <!-- 六、教學回饋與參考資料 -->
+        <section class="section-card" id="feedback">
+          <h2 class="section-heading">📌 六、教學回饋與參考資料</h2>
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div>
+              <strong style="color: var(--color-primary)">🛡️ 手工具與課堂安全防護：</strong>
+              <ul style="margin-left: 1.5rem; margin-top: 0.35rem; color: var(--color-text-muted);">
+                <li>操作剪刀與熱熔膠槍時，須嚴格宣導安全規範，熱熔膠槍不用時須放置於防燙墊上。</li>
+                <li>進行戰車發射測試時，教室前方須劃設<strong>『拋射安全區域』</strong>，禁止學生進入發射彈道範圍內，避免彈珠或乒乓球擊傷他人。</li>
+              </ul>
+            </div>
+            <div>
+              <strong style="color: var(--color-primary)">⚙️ 機構角度誤差調校：</strong>
+              <p style="margin-top: 0.35rem; color: var(--color-text-muted); line-height: 1.6;">
+                實體戰車的三段角度卡榫若因木條切割誤差導致角度不準，教師可提供角度量角器輔助學生貼上角度標籤紙予以修正。
+              </p>
+            </div>
+            <div>
+              <strong style="color: var(--color-primary)">📚 參考資料：</strong>
+              <p style="margin-top: 0.35rem; color: var(--color-text-muted); font-size: 0.9rem;">
+                教育部國民及學前教育署（2020）。國民小學科技與資訊教育教案設計模組。國家教育研究院。
+              </p>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
   </div>
 
+
+  <!-- ========================================== -->
+  <!-- VIEW 2: 互動式小遊戲 (Interactive Game View) -->
+  <!-- ========================================== -->
+  <div id="gameView" class="view-section">
+    <div class="game-view-container">
+      
+      <!-- Top Status Card -->
+      <div class="game-header-card">
+        <div>
+          <h2 style="font-size: 1.4rem; font-weight: 800; display:flex; align-items:center; gap:0.5rem;">
+            <span>🏹 投石戰車拋物線攻城挑戰</span>
+          </h2>
+          <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-top: 0.25rem;">
+            呼應教案「數位線索實驗室」：調整發射角度、橡皮筋彈力與彈丸材質，觀察軌跡並擊中城堡靶心！
+          </p>
+        </div>
+
+        <!-- Mode Toggle & Scoreboard -->
+        <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
+          <div style="display:flex; gap:0.35rem; background:var(--color-surface-muted); padding:0.25rem; border-radius:var(--radius-sm);">
+            <button class="mode-btn active" data-mode="challenge" onclick="game.setMode('challenge')">🎯 攻城挑戰模式</button>
+            <button class="mode-btn" data-mode="lab" onclick="game.setMode('lab')">🔬 自由探究實驗室</button>
+          </div>
+
+          <div id="challengeInfo" class="scoreboard">
+            <div class="score-badge">第 <strong id="gameLevel">1</strong> 關</div>
+            <div class="score-badge">剩餘砲彈：<strong id="gameShots">5</strong></div>
+            <div class="score-badge">累計得分：<strong id="gameScore" style="color:var(--color-warning)">0</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Canvas Card -->
+      <div class="game-canvas-card">
+        <canvas id="catapultCanvas"></canvas>
+      </div>
+
+      <!-- Controls Panel -->
+      <div class="game-controls-panel">
+        
+        <!-- Control 1: Angle -->
+        <div class="control-group">
+          <div class="control-label-row">
+            <span>📐 拋射角度（θ）</span>
+            <span class="control-value-badge" id="angleVal">45°</span>
+          </div>
+          <input type="range" id="angleInput" min="10" max="85" value="45" style="width: 100%" oninput="game.setAngle(this.value)">
+          <div class="preset-btns">
+            <span style="font-size: 0.75rem; color:var(--color-text-muted); margin-right:0.25rem">教案角度：</span>
+            <button class="preset-btn" onclick="game.setAngle(30)">30°</button>
+            <button class="preset-btn" onclick="game.setAngle(45)" style="color:var(--color-primary); font-weight:700">45° (最佳)</button>
+            <button class="preset-btn" onclick="game.setAngle(50)">50°</button>
+            <button class="preset-btn" onclick="game.setAngle(65)">65°</button>
+            <button class="preset-btn" onclick="game.setAngle(80)">80°</button>
+          </div>
+        </div>
+
+        <!-- Control 2: Elastic Power -->
+        <div class="control-group">
+          <div class="control-label-row">
+            <span>⚡ 橡皮筋彈力（初速度）</span>
+            <span class="control-value-badge" id="powerVal">25 m/s</span>
+          </div>
+          <input type="range" id="powerInput" min="10" max="45" value="25" style="width: 100%" oninput="game.setPower(this.value)">
+          <div class="preset-btns">
+            <span style="font-size: 0.75rem; color:var(--color-text-muted); margin-right:0.25rem">橡皮筋：</span>
+            <button class="preset-btn" onclick="game.setPower(18)">細橡皮筋 (18)</button>
+            <button class="preset-btn" onclick="game.setPower(26)">標準橡皮筋 (26)</button>
+            <button class="preset-btn" onclick="game.setPower(36)">粗橡皮筋 (36)</button>
+          </div>
+        </div>
+
+        <!-- Control 3: Projectile Material -->
+        <div class="control-group">
+          <div class="control-label-row">
+            <span>⚾ 拋射物材質</span>
+          </div>
+          <div style="display:flex; gap:0.4rem;">
+            <button class="proj-btn" data-type="pingpong" onclick="game.setProjectile('pingpong')" title="質量輕，受空氣阻力大">
+              ⚪ 乒乓球
+            </button>
+            <button class="proj-btn active" data-type="clay" onclick="game.setProjectile('clay')" title="中等質量，標準拋射">
+              🟠 黏土球
+            </button>
+            <button class="proj-btn" data-type="marble" onclick="game.setProjectile('marble')" title="質量大，穿透力強，抗阻力">
+              🔵 彈珠
+            </button>
+          </div>
+          <span style="font-size:0.75rem; color:var(--color-text-muted)">
+            *不同材質具有不同質量與空氣阻力係數
+          </span>
+        </div>
+
+        <!-- Launch & Reset Actions -->
+        <div class="control-group" style="justify-content: flex-end;">
+          <div style="display:flex; gap:0.6rem;">
+            <button class="launch-btn" onclick="game.launch()">
+              <span>🚀 發射投石！</span>
+            </button>
+            <button class="btn" onclick="game.resetGame()" title="重設遊戲關卡與分數" style="padding: 0 1rem;">
+              🔄 重設
+            </button>
+            <button class="btn" onclick="game.clearTrails()" title="清除實驗室軌跡線" style="padding: 0 1rem;">
+              🧹 清除軌跡
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Data Table Card (Corresponding to Activity 5) -->
+      <div class="section-card" style="margin-top: 0.5rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.75rem;">
+          <h3 style="font-size: 1.15rem; font-weight:700;">📊 實體與模擬測試數據記錄表（對應活動五）</h3>
+          <span style="font-size: 0.8rem; color:var(--color-text-muted)">每次發射均自動記錄物理數據</span>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 10%">測試次數</th>
+                <th style="width: 12%">發射角度</th>
+                <th style="width: 14%">初始速度</th>
+                <th style="width: 14%">彈丸材質</th>
+                <th style="width: 15%">拋射距離</th>
+                <th style="width: 15%">最高高度</th>
+                <th style="width: 10%">飛行時間</th>
+                <th>測試結果</th>
+              </tr>
+            </thead>
+            <tbody id="recordTableBody">
+              <tr>
+                <td colspan="8" style="text-align: center; color: var(--color-text-muted); padding: 1.5rem;">
+                  尚未進行發射。請調整上方角度與彈力，點擊「🚀 發射投石」開始產生數據！
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
   <footer>
-    <p>TMD 課程研發專案 · 基於 AntiGravity 2 與 GitHub Pages 構建</p>
-    <p style="margin-top: 0.25rem;">支援 A4 列印與 PDF 匯出 · 開放教育資源共享</p>
+    <p>科技領域教材教法 · 張宗智、吳立安、黃勁允、翁苙維</p>
+    <p style="margin-top: 0.25rem;">國小科技領域「拋物線上的科學家：投石戰車探究與角度大解密」教案與互動教學平台</p>
   </footer>
 
+  <!-- Scripts -->
+  <script src="game.js"></script>
   <script>
+    // View Switcher
+    function switchView(viewName) {
+      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+      const targetView = document.getElementById(viewName === 'game' ? 'gameView' : 'lessonView');
+      if (targetView) targetView.classList.add('active');
+
+      // Update button styles
+      const lessonBtn = document.getElementById('navLessonBtn');
+      const gameBtn = document.getElementById('navGameBtn');
+      if (viewName === 'game') {
+        lessonBtn.classList.remove('btn-primary');
+        gameBtn.classList.add('btn-primary');
+        // Initialize or resize game canvas
+        initCatapultGame();
+        setTimeout(() => {
+          if (game) game.resize();
+        }, 50);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        lessonBtn.classList.add('btn-primary');
+        gameBtn.classList.remove('btn-primary');
+      }
+    }
+
     // Theme toggle
     function toggleTheme() {
       const current = document.documentElement.getAttribute('data-theme');
@@ -697,6 +1448,11 @@
           }
         }
       });
+    });
+
+    // Default to lesson view
+    document.addEventListener('DOMContentLoaded', () => {
+      switchView('lesson');
     });
   </script>
 </body>
