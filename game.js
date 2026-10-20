@@ -258,6 +258,10 @@ class CatapultGame {
       this.shotsLeft--;
       this.updateUI();
     }
+
+    if (typeof showToast === 'function') {
+      showToast(`🚀 投石發射！初速 ${this.power} m/s · 角度 ${this.angle}° (${label})`);
+    }
   }
 
   createExplosion(x, y, color = '#f97316') {
@@ -313,11 +317,16 @@ class CatapultGame {
         // Hit target!
         this.target.active = false;
         p.alive = false;
-        this.score += 100 * this.level;
+        const addScore = 100 * this.level;
+        this.score += addScore;
         this.createExplosion(p.x, p.y, '#22c55e');
         this.playHitSound();
         this.playWinSound();
         this.logTrial(p, true);
+
+        if (typeof showToast === 'function') {
+          showToast(`🎯 完美命中靶心！得分 +${addScore}，晉級下一關！`);
+        }
         
         setTimeout(() => {
           this.level++;
@@ -396,6 +405,9 @@ class CatapultGame {
     this.trails = [];
     this.records = [];
     this.updateRecordTable();
+    if (typeof showToast === 'function') {
+      showToast('🧹 實驗室軌跡與測試數據已清空');
+    }
   }
 
   resetGame() {
@@ -407,6 +419,9 @@ class CatapultGame {
     this.isLaunching = false;
     this.setNewTarget();
     this.updateUI();
+    if (typeof showToast === 'function') {
+      showToast('🔄 遊戲關卡已重設為第 1 關');
+    }
   }
 
   updateUI() {
@@ -546,16 +561,22 @@ class CatapultGame {
 
   drawEnvironment() {
     const ctx = this.ctx;
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
 
     // Sky gradient
     const sky = ctx.createLinearGradient(0, 0, 0, this.groundY);
-    sky.addColorStop(0, '#e0f2fe');
-    sky.addColorStop(1, '#f8fafc');
+    if (isDark) {
+      sky.addColorStop(0, '#0b1329');
+      sky.addColorStop(1, '#1e293b');
+    } else {
+      sky.addColorStop(0, '#e0f2fe');
+      sky.addColorStop(1, '#f8fafc');
+    }
     ctx.fillStyle = sky;
     ctx.fillRect(0, 0, this.width, this.groundY);
 
     // Distance Grid lines (every 10 meters)
-    ctx.strokeStyle = '#e2e8f0';
+    ctx.strokeStyle = isDark ? '#334155' : '#e2e8f0';
     ctx.lineWidth = 1;
     ctx.setLineDash([4, 4]);
     for (let d = 10; d <= 150; d += 10) {
@@ -566,7 +587,7 @@ class CatapultGame {
       ctx.lineTo(px, this.groundY);
       ctx.stroke();
 
-      ctx.fillStyle = '#94a3b8';
+      ctx.fillStyle = isDark ? '#64748b' : '#94a3b8';
       ctx.font = '10px monospace';
       ctx.textAlign = 'center';
       ctx.fillText(`${d}m`, px, this.groundY + 16);
@@ -574,10 +595,10 @@ class CatapultGame {
     ctx.setLineDash([]);
 
     // Ground
-    ctx.fillStyle = '#86efac';
-    ctx.fillRect(0, this.groundY, this.width, 10);
-    ctx.fillStyle = '#64748b';
-    ctx.fillRect(0, this.groundY + 10, this.width, this.height - this.groundY - 10);
+    ctx.fillStyle = isDark ? '#166534' : '#86efac';
+    ctx.fillRect(0, this.groundY, this.width, 8);
+    ctx.fillStyle = isDark ? '#1e293b' : '#64748b';
+    ctx.fillRect(0, this.groundY + 8, this.width, this.height - this.groundY - 8);
   }
 
   render() {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,47 +7,73 @@
   <title>科技領域教材教法_張宗智、吳立安、黃勁允、翁苙維</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    /* ==========================================================================
+       1. Design Tokens (Day & Night Themes)
+       ========================================================================== */
     :root {
       --font-sans: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --font-mono: 'JetBrains Mono', Menlo, Monaco, monospace;
       
+      /* Day Theme Colors */
       --color-primary: #2563eb;
       --color-primary-hover: #1d4ed8;
       --color-primary-light: #eff6ff;
       --color-bg: #f8fafc;
       --color-surface: #ffffff;
       --color-surface-muted: #f1f5f9;
+      --color-surface-card: #ffffff;
       --color-text: #0f172a;
       --color-text-muted: #64748b;
       --color-border: #e2e8f0;
+      --color-border-subtle: #f1f5f9;
       --color-success: #10b981;
       --color-warning: #f59e0b;
+      --color-danger: #ef4444;
       --color-tag-bg: #e0f2fe;
       --color-tag-text: #0369a1;
+      --color-tooltip-bg: #1e293b;
+      --color-tooltip-text: #ffffff;
       
       --radius-sm: 6px;
       --radius-md: 10px;
       --radius-lg: 16px;
+      --radius-full: 9999px;
+      
       --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+      --shadow-lg: 0 10px 25px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+      --shadow-drawer: -10px 0 25px -5px rgb(0 0 0 / 0.15);
+      
       --container-width: 1140px;
     }
 
     [data-theme="dark"] {
-      --color-primary: #3b82f6;
-      --color-primary-hover: #60a5fa;
-      --color-primary-light: #1e293b;
-      --color-bg: #0f172a;
-      --color-surface: #1e293b;
-      --color-surface-muted: #334155;
-      --color-text: #f8fafc;
-      --color-text-muted: #94a3b8;
-      --color-border: #334155;
-      --color-tag-bg: #075985;
-      --color-tag-text: #bae6fd;
+      /* Night Theme Colors */
+      --color-primary: #38bdf8;
+      --color-primary-hover: #7dd3fc;
+      --color-primary-light: #0c4a6e;
+      --color-bg: #090d16;
+      --color-surface: #111827;
+      --color-surface-muted: #1f2937;
+      --color-surface-card: #141e33;
+      --color-text: #f9fafb;
+      --color-text-muted: #9ca3af;
+      --color-border: #1f293d;
+      --color-border-subtle: #172033;
+      --color-success: #34d399;
+      --color-warning: #fbbf24;
+      --color-danger: #f87171;
+      --color-tag-bg: #0369a1;
+      --color-tag-text: #e0f2fe;
+      --color-tooltip-bg: #0f172a;
+      --color-tooltip-text: #f8fafc;
+      
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+      --shadow-lg: 0 10px 25px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+      --shadow-drawer: -10px 0 30px 0 rgb(0 0 0 / 0.6);
     }
 
     * {
@@ -62,47 +88,180 @@
       color: var(--color-text);
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
 
-    /* Navbar */
+    /* ==========================================================================
+       2. Buttons & Frameless / Ghost Buttons (無外框按鈕)
+       ========================================================================== */
+    /* Base Button */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    /* Frameless / Ghost Button (無外框按鈕) */
+    .btn-frameless {
+      border: none;
+      background: transparent;
+      color: var(--color-text);
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background-color 0.2s, color 0.2s, transform 0.1s;
+    }
+
+    .btn-frameless:hover {
+      background-color: var(--color-surface-muted);
+      color: var(--color-primary);
+    }
+
+    .btn-frameless:active {
+      transform: scale(0.96);
+    }
+
+    .btn-icon-frameless {
+      border: none;
+      background: transparent;
+      color: var(--color-text);
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+      transition: background-color 0.2s, transform 0.15s;
+    }
+
+    .btn-icon-frameless:hover {
+      background-color: var(--color-surface-muted);
+    }
+
+    .btn-icon-frameless:active {
+      transform: scale(0.92);
+    }
+
+    .btn-primary {
+      background-color: var(--color-primary);
+      border: 1px solid var(--color-primary);
+      color: #ffffff !important;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--color-primary-hover);
+      border-color: var(--color-primary-hover);
+    }
+
+    .btn-game-accent {
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      color: #ffffff !important;
+      border: none;
+      border-radius: var(--radius-full);
+      padding: 0.45rem 1rem;
+      box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+      font-weight: 700;
+    }
+
+    .btn-game-accent:hover {
+      background: linear-gradient(135deg, #d97706, #dc2626);
+      box-shadow: 0 4px 10px rgba(239, 68, 68, 0.45);
+      transform: translateY(-1px);
+    }
+
+    /* ==========================================================================
+       3. Navbar & Hamburger Menu (抽屜導覽列)
+       ========================================================================== */
     .navbar {
       position: sticky;
       top: 0;
-      z-index: 50;
-      background-color: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      z-index: 100;
+      background-color: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--color-border);
-      transition: background-color 0.2s, border-color 0.2s;
+      transition: background-color 0.25s, border-color 0.25s;
     }
 
     [data-theme="dark"] .navbar {
-      background-color: rgba(30, 41, 59, 0.9);
+      background-color: rgba(17, 24, 39, 0.88);
     }
 
     .nav-container {
       max-width: var(--container-width);
       margin: 0 auto;
-      padding: 0.75rem 1.5rem;
+      padding: 0.65rem 1.25rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
     }
 
-    .nav-brand {
+    .nav-left {
       display: flex;
       align-items: center;
       gap: 0.75rem;
+    }
+
+    /* Animated Hamburger Icon Button */
+    .hamburger-btn {
+      border: none;
+      background: transparent;
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      transition: background-color 0.2s;
+    }
+
+    .hamburger-btn:hover {
+      background-color: var(--color-surface-muted);
+    }
+
+    .hamburger-bar {
+      width: 22px;
+      height: 2px;
+      background-color: var(--color-text);
+      border-radius: 2px;
+      transition: transform 0.25s, opacity 0.25s;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
       text-decoration: none;
       color: var(--color-text);
       font-weight: 700;
-      font-size: 1.15rem;
-      white-space: nowrap;
+      font-size: 1.1rem;
     }
 
-    .nav-brand-title {
-      max-width: 420px;
+    .nav-title-text {
+      max-width: 480px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -110,69 +269,311 @@
 
     .nav-badge {
       font-size: 0.75rem;
-      font-weight: 600;
-      padding: 0.2rem 0.5rem;
-      border-radius: 9999px;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-full);
       background-color: var(--color-tag-bg);
       color: var(--color-tag-text);
       white-space: nowrap;
     }
 
-    .nav-actions {
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Hamburger Drawer (Off-Canvas Menu) */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .drawer-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .drawer-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 320px;
+      max-width: 85vw;
+      background-color: var(--color-surface);
+      z-index: 201;
+      box-shadow: var(--shadow-drawer);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .drawer-menu.active {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .drawer-header-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .drawer-body {
+      padding: 1.25rem 1.5rem;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .drawer-group-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .drawer-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .drawer-nav-link {
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      flex-wrap: wrap;
+      padding: 0.6rem 0.85rem;
+      color: var(--color-text);
+      text-decoration: none;
+      font-size: 0.925rem;
+      font-weight: 500;
+      border-radius: var(--radius-sm);
+      transition: background-color 0.15s, color 0.15s;
     }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.45rem 0.85rem;
-      font-size: 0.875rem;
+    .drawer-nav-link:hover, .drawer-nav-link.active {
+      background-color: var(--color-primary-light);
+      color: var(--color-primary);
       font-weight: 600;
+    }
+
+    .drawer-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--color-border);
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+    }
+
+    /* ==========================================================================
+       4. Tooltips (現代 CSS Tooltip)
+       ========================================================================== */
+    [data-tooltip] {
+      position: relative;
+    }
+
+    [data-tooltip]::before {
+      content: '';
+      position: absolute;
+      bottom: calc(100% + 4px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      border-width: 5px;
+      border-style: solid;
+      border-color: var(--color-tooltip-bg) transparent transparent transparent;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+      pointer-events: none;
+      z-index: 500;
+    }
+
+    [data-tooltip]::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 14px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      background-color: var(--color-tooltip-bg);
+      color: var(--color-tooltip-text);
+      font-size: 0.775rem;
+      font-weight: 500;
+      line-height: 1.4;
+      padding: 0.4rem 0.7rem;
       border-radius: var(--radius-sm);
+      white-space: pre-wrap;
+      max-width: 240px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+      pointer-events: none;
+      z-index: 500;
+    }
+
+    [data-tooltip]:hover::before,
+    [data-tooltip]:hover::after,
+    [data-tooltip]:focus-visible::before,
+    [data-tooltip]:focus-visible::after {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Tooltip positioned below if needed */
+    [data-tooltip-pos="bottom"]::before {
+      bottom: auto;
+      top: calc(100% + 4px);
+      border-color: transparent transparent var(--color-tooltip-bg) transparent;
+      transform: translateX(-50%) translateY(-4px);
+    }
+    [data-tooltip-pos="bottom"]::after {
+      bottom: auto;
+      top: calc(100% + 14px);
+      transform: translateX(-50%) translateY(-4px);
+    }
+    [data-tooltip-pos="bottom"]:hover::before,
+    [data-tooltip-pos="bottom"]:hover::after {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ==========================================================================
+       5. Toast Notifications (浮動通知)
+       ========================================================================== */
+    #toastContainer {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      pointer-events: none;
+    }
+
+    .toast {
+      pointer-events: auto;
+      background: var(--color-surface);
+      color: var(--color-text);
       border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1.25rem;
+      box-shadow: var(--shadow-lg);
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      min-width: 260px;
+      max-width: 380px;
+      transform: translateY(20px) scale(0.95);
+      opacity: 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s;
+    }
+
+    .toast.show {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .toast-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .toast-body {
+      flex: 1;
+    }
+
+    /* ==========================================================================
+       6. Modals (現代原生 <dialog> 彈窗)
+       ========================================================================== */
+    dialog.modal-dialog {
+      margin: auto;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
       background-color: var(--color-surface);
       color: var(--color-text);
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.15s ease;
-      white-space: nowrap;
+      max-width: 650px;
+      width: 90vw;
+      box-shadow: var(--shadow-lg);
+      padding: 0;
+      overflow: hidden;
+      transform: scale(0.95);
+      opacity: 0;
+      transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .btn:hover {
-      background-color: var(--color-surface-muted);
-      border-color: var(--color-primary);
+    dialog.modal-dialog[open] {
+      transform: scale(1);
+      opacity: 1;
     }
 
-    .btn-primary {
-      background-color: var(--color-primary);
-      border-color: var(--color-primary);
-      color: #ffffff;
+    dialog.modal-dialog::backdrop {
+      background-color: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
-    .btn-primary:hover {
-      background-color: var(--color-primary-hover);
-      color: #ffffff;
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--color-surface-muted);
     }
 
-    .btn-game {
-      background: linear-gradient(135deg, #f59e0b, #ef4444);
-      color: #ffffff;
-      border: none;
-      box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+    .modal-title {
+      font-size: 1.15rem;
       font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .btn-game:hover {
-      background: linear-gradient(135deg, #d97706, #dc2626);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 8px rgba(239, 68, 68, 0.4);
+    .modal-body {
+      padding: 1.5rem;
+      max-height: 70vh;
+      overflow-y: auto;
+      line-height: 1.7;
     }
 
-    /* Views (Tab Navigation) */
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      background: var(--color-surface-muted);
+    }
+
+    /* ==========================================================================
+       7. Content Views & Layout
+       ========================================================================== */
     .view-section {
       display: none;
     }
@@ -180,25 +581,24 @@
       display: block;
     }
 
-    /* Layout */
     .layout-container {
       max-width: var(--container-width);
       margin: 2rem auto;
-      padding: 0 1.5rem;
+      padding: 0 1.25rem;
       display: grid;
       grid-template-columns: 260px 1fr;
-      gap: 2.5rem;
+      gap: 2.25rem;
     }
 
-    @media (max-width: 920px) {
+    @media (max-width: 960px) {
       .layout-container {
         grid-template-columns: 1fr;
       }
       .sidebar {
         display: none;
       }
-      .nav-brand-title {
-        max-width: 220px;
+      .nav-title-text {
+        max-width: 260px;
       }
     }
 
@@ -218,7 +618,7 @@
     }
 
     .toc-title {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
@@ -230,13 +630,13 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
+      gap: 0.3rem;
     }
 
     .toc-link {
       color: var(--color-text-muted);
       text-decoration: none;
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       padding: 0.35rem 0.6rem;
       border-radius: var(--radius-sm);
       transition: all 0.15s;
@@ -390,7 +790,7 @@
       background-color: var(--color-surface-muted);
     }
 
-    /* Badges & STEAM */
+    /* Badges */
     .badge-group {
       display: flex;
       flex-wrap: wrap;
@@ -402,10 +802,11 @@
       font-size: 0.8rem;
       font-weight: 500;
       padding: 0.35rem 0.75rem;
-      border-radius: 9999px;
+      border-radius: var(--radius-full);
       background-color: var(--color-surface-muted);
       border: 1px solid var(--color-border);
       color: var(--color-text);
+      cursor: help;
     }
 
     .steam-grid {
@@ -429,7 +830,7 @@
       color: var(--color-primary);
     }
 
-    /* Flow Chart */
+    /* Flow Grid */
     .flow-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -473,8 +874,8 @@
 
     /* Banner for Interactive Game Callout */
     .game-callout {
-      background: linear-gradient(135deg, #eff6ff 0%, #fef3c7 100%);
-      border: 2px dashed #f59e0b;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(245, 158, 11, 0.12) 100%);
+      border: 2px dashed var(--color-warning);
       border-radius: var(--radius-md);
       padding: 1.5rem;
       display: flex;
@@ -484,16 +885,11 @@
       margin: 1.5rem 0;
     }
 
-    [data-theme="dark"] .game-callout {
-      background: linear-gradient(135deg, #1e293b 0%, #292524 100%);
-      border-color: #f59e0b;
-    }
-
     /* Game Container View */
     .game-view-container {
       max-width: var(--container-width);
       margin: 2rem auto;
-      padding: 0 1.5rem;
+      padding: 0 1.25rem;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
@@ -657,13 +1053,23 @@
       color: var(--color-primary);
     }
 
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--color-border);
+      padding: 2.5rem 1.5rem;
+      margin-top: 4rem;
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+    }
+
     /* Print Styles */
     @media print {
       body {
         background: #ffffff !important;
         color: #000000 !important;
       }
-      .navbar, .sidebar, .nav-actions, footer, .game-callout, #gameView {
+      .navbar, .sidebar, .nav-right, footer, .game-callout, #gameView, .drawer-overlay, .drawer-menu, #toastContainer {
         display: none !important;
       }
       #lessonView {
@@ -693,49 +1099,309 @@
 </head>
 <body>
 
-  <!-- Top Navigation -->
+  <!-- ==========================================================================
+       Top Navigation Bar
+       ========================================================================== -->
   <header class="navbar">
     <div class="nav-container">
-      <a href="#" onclick="switchView('lesson')" class="nav-brand">
-        <span>🏹</span>
-        <span class="nav-brand-title">科技領域教材教法_張宗智、吳立安、黃勁允、翁苙維</span>
-        <span class="nav-badge">108 課綱教案</span>
-      </a>
-      <div class="nav-actions">
-        <!-- Switch to Lesson Plan View -->
-        <button class="btn" id="navLessonBtn" onclick="switchView('lesson')" title="檢視完整教案內文">
-          📖 完整教案檢視
+      
+      <!-- Left: Hamburger Menu Button + Title -->
+      <div class="nav-left">
+        <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleDrawer()" aria-label="打開導覽選單" data-tooltip="打開功能選單" data-tooltip-pos="bottom">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
         </button>
-        <!-- Switch to Interactive Game View -->
-        <button class="btn btn-game" id="navGameBtn" onclick="switchView('game')" title="開啟投石戰車模擬小遊戲">
-          🎮 互動式小遊戲
-        </button>
-        <button class="btn" onclick="window.print()" title="列印或輸出為 PDF">
-          🖨️ 列印 / 匯出 PDF
-        </button>
-        <button class="btn" id="theme-toggle" onclick="toggleTheme()" title="切換深淺模式">
-          🌙
-        </button>
-        <a id="github-link" href="https://github.com/leeonweng/TMD" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-          GitHub Repo
+
+        <a href="#" onclick="switchView('lesson')" class="nav-brand">
+          <span style="font-size:1.3rem">🏹</span>
+          <span class="nav-title-text">科技領域教材教法_張宗智、吳立安、黃勁允、翁苙維</span>
+          <span class="nav-badge">108 課綱</span>
         </a>
       </div>
+
+      <!-- Right: Frameless Action Buttons (無外框按鈕) & Game Trigger -->
+      <div class="nav-right">
+        <!-- Switch to Lesson Plan (Frameless) -->
+        <button class="btn-frameless" id="navLessonBtn" onclick="switchView('lesson')" data-tooltip="瀏覽完整教案內文" data-tooltip-pos="bottom">
+          📖 完整教案
+        </button>
+
+        <!-- Switch to Game (Pill Accent) -->
+        <button class="btn btn-game-accent" id="navGameBtn" onclick="switchView('game')" data-tooltip="進入投石戰車拋射小遊戲" data-tooltip-pos="bottom">
+          🎮 互動式小遊戲
+        </button>
+
+        <!-- Day / Night Frameless Switcher Button (無外框按鈕) -->
+        <button class="btn-icon-frameless" id="themeToggleBtn" onclick="toggleTheme()" aria-label="切換深淺模式" data-tooltip="切換白天 / 黑夜主題" data-tooltip-pos="bottom">
+          ☀️
+        </button>
+
+        <!-- Print Action (Frameless) -->
+        <button class="btn-icon-frameless" onclick="triggerPrint()" aria-label="列印或輸出 PDF" data-tooltip="列印 / 匯出 PDF" data-tooltip-pos="bottom">
+          🖨️
+        </button>
+
+        <!-- Info Modal Trigger (Frameless) -->
+        <button class="btn-icon-frameless" onclick="openModal('infoModal')" aria-label="課程資訊" data-tooltip="團隊與課程簡介" data-tooltip-pos="bottom">
+          ℹ️
+        </button>
+      </div>
+
     </div>
   </header>
 
-  <!-- ========================================== -->
-  <!-- VIEW 1: 完整教案檢視 (Lesson Plan View)     -->
-  <!-- ========================================== -->
+  <!-- ==========================================================================
+       Off-Canvas Drawer (Hamburger Menu)
+       ========================================================================== -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer(false)"></div>
+  <aside class="drawer-menu" id="drawerMenu" aria-label="導覽選單">
+    <div class="drawer-header">
+      <div class="drawer-header-title">
+        <span>📖 功能導覽選單</span>
+      </div>
+      <button class="btn-icon-frameless" onclick="toggleDrawer(false)" aria-label="關閉選單">
+        ✕
+      </button>
+    </div>
+
+    <div class="drawer-body">
+      <!-- Section 1: 主要功能切換 -->
+      <div>
+        <div class="drawer-group-title">🎯 核心檢視切換</div>
+        <ul class="drawer-nav-list">
+          <li>
+            <a href="#" class="drawer-nav-link active" id="drawerLessonLink" onclick="switchView('lesson'); toggleDrawer(false)">
+              <span>📖</span> 完整教案檢視
+            </a>
+          </li>
+          <li>
+            <a href="#" class="drawer-nav-link" id="drawerGameLink" onclick="switchView('game'); toggleDrawer(false)">
+              <span>🎮</span> 投石戰車互動小遊戲
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Section 2: 教學彈窗 (Modals) -->
+      <div>
+        <div class="drawer-group-title">💡 輔助速查彈窗 (Modals)</div>
+        <ul class="drawer-nav-list">
+          <li>
+            <a href="#" class="drawer-nav-link" onclick="openModal('infoModal'); toggleDrawer(false)">
+              <span>ℹ️</span> 課程簡介與研發團隊
+            </a>
+          </li>
+          <li>
+            <a href="#" class="drawer-nav-link" onclick="openModal('gameGuideModal'); toggleDrawer(false)">
+              <span>🏹</span> 遊戲玩法與物理原理攻略
+            </a>
+          </li>
+          <li>
+            <a href="#" class="drawer-nav-link" onclick="openModal('rubricsModal'); toggleDrawer(false)">
+              <span>📊</span> 5 階段評量規準（Rubrics）
+            </a>
+          </li>
+          <li>
+            <a href="#" class="drawer-nav-link" onclick="openModal('exportModal'); toggleDrawer(false)">
+              <span>📥</span> 測試數據預覽與匯出
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Section 3: 教案章節跳轉 -->
+      <div>
+        <div class="drawer-group-title">📑 教案章節速覽</div>
+        <ul class="drawer-nav-list">
+          <li><a href="#overview" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">基本資料與專案摘要</a></li>
+          <li><a href="#matrix" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">一、雙向細目表</a></li>
+          <li><a href="#summary" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">二、專題摘要與 STEAM</a></li>
+          <li><a href="#evaluation" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">三、評量方式</a></li>
+          <li><a href="#framework" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">四、5 節課 STEM PBL 架構</a></li>
+          <li><a href="#act1" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">第 1 節：原理探索篇</a></li>
+          <li><a href="#act2" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">第 2 節：數位模擬篇</a></li>
+          <li><a href="#act3" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">第 3 節：實體組裝篇</a></li>
+          <li><a href="#act4" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">第 4 節：彈性調校篇</a></li>
+          <li><a href="#act5" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">第 5 節：數據發表篇</a></li>
+          <li><a href="#feedback" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">六、教學回饋與參考資料</a></li>
+        </ul>
+      </div>
+
+      <!-- Section 4: 外部連結 -->
+      <div>
+        <div class="drawer-group-title">🔗 外部專案與原始碼</div>
+        <ul class="drawer-nav-list">
+          <li>
+            <a href="https://github.com/leeonweng/TMD" target="_blank" rel="noopener noreferrer" class="drawer-nav-link">
+              <span>🐙</span> GitHub 儲存庫
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="drawer-footer">
+      <div>科技領域教材教法 · 108 課綱</div>
+      <div style="font-size:0.75rem; margin-top:2px;">張宗智、吳立安、黃勁允、翁苙維</div>
+    </div>
+  </aside>
+
+  <!-- ==========================================================================
+       Floating Toast Notifications Container
+       ========================================================================== -->
+  <div id="toastContainer" aria-live="polite"></div>
+
+  <!-- ==========================================================================
+       Modals (<dialog> Elements)
+       ========================================================================== -->
+  
+  <!-- Modal 1: 課程簡介與研發團隊 -->
+  <dialog id="infoModal" class="modal-dialog">
+    <div class="modal-header">
+      <div class="modal-title">ℹ️ 課程簡介與教學設計團隊</div>
+      <button class="btn-icon-frameless" onclick="closeModal('infoModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--color-primary)">
+        科技領域教材教法：拋物線上的科學家
+      </h3>
+      <p style="color: var(--color-text-muted); margin-bottom: 1rem;">
+        本教案為國小六年級科技領域與自然科學領域之跨領域整合 STEM PBL 教案，榮獲教學設計優質模組。
+      </p>
+      <div style="background: var(--color-surface-muted); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1rem;">
+        <p><strong>👥 教學設計團隊：</strong>張宗智、吳立安、黃勁允、翁苙維</p>
+        <p><strong>📅 版本日期：</strong>109 年 6 月 21 日修正版</p>
+        <p><strong>⏱️ 課程節數：</strong>自然領域 1 節 + 科技領域 4 節，共 5 節（200 分鐘）</p>
+        <p><strong>🎯 核心素養：</strong>A2 系統思考與解決問題、C2 人際關係與團隊合作</p>
+      </div>
+      <p style="font-size: 0.9rem; color: var(--color-text-muted);">
+        結合動手雷切木造組裝、電腦物理拋射模擬與折線圖數據分析，讓學生以「科學偵探」身份掌握能量守恆與槓桿力學原理。
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" onclick="closeModal('infoModal')">我知道了</button>
+    </div>
+  </dialog>
+
+  <!-- Modal 2: 遊戲攻略與物理原理 -->
+  <dialog id="gameGuideModal" class="modal-dialog">
+    <div class="modal-header">
+      <div class="modal-title">🏹 投石戰車玩法攻略與物理原理解析</div>
+      <button class="btn-icon-frameless" onclick="closeModal('gameGuideModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        <div>
+          <strong style="color:var(--color-primary)">1. 拋射角度與理論極值：</strong>
+          <p style="font-size:0.9rem; color:var(--color-text-muted); margin-top:0.25rem;">
+            根據物理拋體運動方程式，在無空氣阻力理想狀態下，水平拋射距離為 \( R = \frac{v_0^2 \sin(2\theta)}{g} \)。當發射角度為 <strong>45°</strong> 時，\( \sin(90^\circ) = 1 \)，射程達到理論最大值！
+          </p>
+        </div>
+        <div>
+          <strong style="color:var(--color-primary)">2. 橡皮筋彈性位能與初速度：</strong>
+          <p style="font-size:0.9rem; color:var(--color-text-muted); margin-top:0.25rem;">
+            橡皮筋拉長時儲存彈性位能 \( E_p = \frac{1}{2}kx^2 \)，釋放瞬間轉換為拋射物動能 \( E_k = \frac{1}{2}mv^2 \)。拉力越強或彈力係數越大，出膛初速度 \( v_0 \) 越快。
+          </p>
+        </div>
+        <div>
+          <strong style="color:var(--color-primary)">3. 拋射材質與空氣阻力差異：</strong>
+          <p style="font-size:0.9rem; color:var(--color-text-muted); margin-top:0.25rem;">
+            - <strong>⚪ 乒乓球</strong>：質量極輕（約 2.7g），受空氣阻力顯著，拋物線快速墜落。<br>
+            - <strong>🟠 黏土球</strong>：質量適中，軌跡平穩，適合基準實驗。<br>
+            - <strong>🔵 彈珠</strong>：質量高且密實，穿透力最強，受風阻影響最小，飛行最遠。
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" onclick="closeModal('gameGuideModal')">開始挑戰！</button>
+    </div>
+  </dialog>
+
+  <!-- Modal 3: 評量規準速查 (Rubrics) -->
+  <dialog id="rubricsModal" class="modal-dialog">
+    <div class="modal-header">
+      <div class="modal-title">📊 5 向度學習評量規準（Rubrics）</div>
+      <button class="btn-icon-frameless" onclick="closeModal('rubricsModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 20%">評量向度</th>
+              <th style="width: 27%">優秀（4分）</th>
+              <th style="width: 27%">良好（3分）</th>
+              <th>待加強（2分）</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>主題結構與邏輯</strong></td>
+              <td>架構層次分明、脈絡嚴謹，能深入解析核心焦點。</td>
+              <td>架構完整，邏輯清楚順暢。</td>
+              <td>內容零散，缺乏明確架構與關聯。</td>
+            </tr>
+            <tr>
+              <td><strong>數位工具應用</strong></td>
+              <td>熟練運用工具並能創新呈現成果，排版清晰美觀。</td>
+              <td>能妥善運用工具呈現完整內容。</td>
+              <td>工具操作生疏，呈現不完整。</td>
+            </tr>
+            <tr>
+              <td><strong>思辨與批判論證</strong></td>
+              <td>能多角度分析並提出獨立見解與具體佐證。</td>
+              <td>能引用資料佐證並表達基本觀點。</td>
+              <td>僅拼湊摘抄，缺乏個人觀點。</td>
+            </tr>
+            <tr>
+              <td><strong>團隊合作與互動</strong></td>
+              <td>分工明確、討論熱烈，協同成效極佳。</td>
+              <td>多數成員積極參與，如期完成成果。</td>
+              <td>分工不均或溝通受阻，進度延宕。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" onclick="closeModal('rubricsModal')">關閉</button>
+    </div>
+  </dialog>
+
+  <!-- Modal 4: 數據匯出預覽 -->
+  <dialog id="exportModal" class="modal-dialog">
+    <div class="modal-header">
+      <div class="modal-title">📥 測試數據匯出與分析</div>
+      <button class="btn-icon-frameless" onclick="closeModal('exportModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:0.9rem; color:var(--color-text-muted); margin-bottom:1rem;">
+        已將您於小遊戲中所進行的發射測試數據整理為 CSV 格式，可直接複製或下載匯入 Excel / Google Sheets 繪製折線圖（對應教案活動五）。
+      </p>
+      <textarea id="csvExportArea" readonly style="width:100%; height:160px; font-family:var(--font-mono); font-size:0.85rem; padding:0.75rem; border-radius:var(--radius-sm); border:1px solid var(--color-border); background:var(--color-surface-muted); color:var(--color-text);"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-frameless" onclick="closeModal('exportModal')">取消</button>
+      <button class="btn btn-primary" onclick="copyCSVData()">📋 複製數據到剪貼簿</button>
+    </div>
+  </dialog>
+
+  <!-- ==========================================================================
+       VIEW 1: 完整教案檢視 (Lesson Plan View)
+       ========================================================================== -->
   <div id="lessonView" class="view-section active">
     <div class="layout-container">
-      <!-- Sidebar -->
+      
+      <!-- Sticky Sidebar -->
       <aside class="sidebar">
         <nav class="toc-card">
           <div class="toc-title">教案章節導覽</div>
           <ul class="toc-list">
             <li><a href="#overview" class="toc-link">教案概述與基本資料</a></li>
             <li><a href="#matrix" class="toc-link">一、雙向細目表</a></li>
-            <li><a href="#summary" class="toc-link">二、專題摘要與核心素養</a></li>
+            <li><a href="#summary" class="toc-link">二、專題摘要與 STEAM</a></li>
             <li><a href="#evaluation" class="toc-link">三、評量方式</a></li>
             <li><a href="#framework" class="toc-link">四、5 節課 STEM PBL 架構</a></li>
             <li><a href="#act1" class="toc-link">第 1 節：原理探索篇</a></li>
@@ -763,12 +1429,12 @@
           <!-- Interactive Game Banner Callout -->
           <div class="game-callout">
             <div>
-              <strong style="font-size: 1.05rem; color: #b45309; display: block; margin-bottom: 0.25rem;">🎮 內建教學互動式小遊戲</strong>
+              <strong style="font-size: 1.05rem; color: var(--color-warning); display: block; margin-bottom: 0.25rem;">🎮 內建教學互動式小遊戲</strong>
               <span style="font-size: 0.9rem; color: var(--color-text-muted);">
                 已將教案中第二節「數位模擬篇」與第四節「彈性與角度實測」轉化為線上互動物理模擬與攻城挑戰！
               </span>
             </div>
-            <button class="btn btn-game" onclick="switchView('game')">
+            <button class="btn btn-game-accent" onclick="switchView('game')">
               立即進入遊戲 ▶
             </button>
           </div>
@@ -784,7 +1450,7 @@
             </div>
             <div class="meta-item">
               <span class="meta-label">領域別與節數</span>
-              <span class="meta-value">自然科學（1節）+ 科技（4節）共 5 節 (200 分鐘)</span>
+              <span class="meta-value">自然（1節）+ 科技（4節）共 5 節 (200 分鐘)</span>
             </div>
             <div class="meta-item">
               <span class="meta-label">教學設備</span>
@@ -884,15 +1550,15 @@
           <div style="margin-top: 1.5rem;">
             <strong>總綱核心素養：</strong>
             <div class="badge-group">
-              <span class="badge-pill"><strong>A2 系統思考與解決問題</strong>：培養問題拆解、數位模擬與結構優化實踐能力</span>
-              <span class="badge-pill"><strong>C2 人際關係與團隊合作</strong>：小組動手共編組裝、實施測試與成果發表</span>
+              <span class="badge-pill" data-tooltip="A2 系統思考與解決問題：培養問題拆解、數位模擬與結構優化實踐能力">🎯 A2 系統思考與解決問題</span>
+              <span class="badge-pill" data-tooltip="C2 人際關係與團隊合作：小組動手共編組裝、實施測試與成果發表">🤝 C2 人際關係與團隊合作</span>
             </div>
           </div>
 
           <div style="margin-top: 1.5rem;">
             <strong>學生先備知識：</strong>
             <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--color-text-muted);">
-              <li><strong>簡單機械與槓桿知識</strong>：了解槓桿的三要素（支點、施力點、負載點）及其生活應用。</li>
+              <li><strong>簡單機械與槓桿知識</strong>：了解槓桿的三要素（<span data-tooltip="槓桿的轉動中心點（如投石車轉軸）" style="text-decoration: underline dotted; cursor:help">支點</span>、<span data-tooltip="橡皮筋掛勾施力點" style="text-decoration: underline dotted; cursor:help">施力點</span>、<span data-tooltip="放置彈丸的拋射籃" style="text-decoration: underline dotted; cursor:help">負載點</span>）及其生活應用。</li>
               <li><strong>基礎數據記錄與圖表閱讀</strong>：具備記錄數據及讀取簡單圖表（如折線圖）的能力。</li>
               <li><strong>基礎電腦操作</strong>：具備基本電腦操作技能，能操作模擬程式與記錄數據。</li>
             </ul>
@@ -901,7 +1567,12 @@
 
         <!-- 三、評量方式 -->
         <section class="section-card" id="evaluation">
-          <h2 class="section-heading">📊 三、評量方式</h2>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.5rem;">
+            <h2 class="section-heading" style="margin-bottom:0; border-bottom:none">📊 三、評量方式</h2>
+            <button class="btn btn-frameless" onclick="openModal('rubricsModal')" data-tooltip="開啟完整 4 分制評量向度規準">
+              📋 檢視評量規準（Rubrics）Modal ▶
+            </button>
+          </div>
           <div class="table-container">
             <table>
               <thead>
@@ -983,9 +1654,6 @@
         <!-- 五、教學活動步驟 -->
         <section class="section-card" id="act1">
           <h2 class="section-heading">⏱️ 活動一：科學偵探的力學檔案 – 槓桿與位能大解密（第 1 節，40 分鐘）</h2>
-          <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 1rem;">
-            <strong>活動簡述</strong>：透過彈性物品展示彈性位能儲存與釋放，並以生活工具解釋槓桿原理；引導學生觀察投石戰車運作，提出適宜探究的科學問題。
-          </p>
           <div class="table-container">
             <table>
               <thead>
@@ -1240,9 +1908,9 @@
   </div>
 
 
-  <!-- ========================================== -->
-  <!-- VIEW 2: 互動式小遊戲 (Interactive Game View) -->
-  <!-- ========================================== -->
+  <!-- ==========================================================================
+       VIEW 2: 互動式小遊戲 (Interactive Game View)
+       ========================================================================== -->
   <div id="gameView" class="view-section">
     <div class="game-view-container">
       
@@ -1257,8 +1925,17 @@
           </p>
         </div>
 
-        <!-- Mode Toggle & Scoreboard -->
-        <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
+        <!-- Mode Toggle, Modals & Scoreboard -->
+        <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+          
+          <button class="btn btn-frameless" onclick="openModal('gameGuideModal')" data-tooltip="物理原理與玩法秘笈">
+            💡 玩法攻略
+          </button>
+
+          <button class="btn btn-frameless" onclick="openModal('exportModal')" data-tooltip="匯出目前測試數據 CSV">
+            📥 匯出數據
+          </button>
+
           <div style="display:flex; gap:0.35rem; background:var(--color-surface-muted); padding:0.25rem; border-radius:var(--radius-sm);">
             <button class="mode-btn active" data-mode="challenge" onclick="game.setMode('challenge')">🎯 攻城挑戰模式</button>
             <button class="mode-btn" data-mode="lab" onclick="game.setMode('lab')">🔬 自由探究實驗室</button>
@@ -1283,48 +1960,48 @@
         <!-- Control 1: Angle -->
         <div class="control-group">
           <div class="control-label-row">
-            <span>📐 拋射角度（θ）</span>
+            <span data-tooltip="發射角度 θ：45° 具有最大水平射程" style="cursor:help">📐 拋射角度（θ）</span>
             <span class="control-value-badge" id="angleVal">45°</span>
           </div>
           <input type="range" id="angleInput" min="10" max="85" value="45" style="width: 100%" oninput="game.setAngle(this.value)">
           <div class="preset-btns">
             <span style="font-size: 0.75rem; color:var(--color-text-muted); margin-right:0.25rem">教案角度：</span>
-            <button class="preset-btn" onclick="game.setAngle(30)">30°</button>
-            <button class="preset-btn" onclick="game.setAngle(45)" style="color:var(--color-primary); font-weight:700">45° (最佳)</button>
-            <button class="preset-btn" onclick="game.setAngle(50)">50°</button>
-            <button class="preset-btn" onclick="game.setAngle(65)">65°</button>
-            <button class="preset-btn" onclick="game.setAngle(80)">80°</button>
+            <button class="preset-btn" onclick="game.setAngle(30)" data-tooltip="低仰角，速度快但易提前觸地">30°</button>
+            <button class="preset-btn" onclick="game.setAngle(45)" style="color:var(--color-primary); font-weight:700" data-tooltip="理論最大射程角度（45度最佳解）">45° (最佳)</button>
+            <button class="preset-btn" onclick="game.setAngle(50)" data-tooltip="教案第四節固定測試角">50°</button>
+            <button class="preset-btn" onclick="game.setAngle(65)" data-tooltip="教案第四節固定測試角">65°</button>
+            <button class="preset-btn" onclick="game.setAngle(80)" data-tooltip="高仰角，射高極高但射程短">80°</button>
           </div>
         </div>
 
         <!-- Control 2: Elastic Power -->
         <div class="control-group">
           <div class="control-label-row">
-            <span>⚡ 橡皮筋彈力（初速度）</span>
+            <span data-tooltip="橡皮筋形變位能轉為初動能，初速越快射程越遠" style="cursor:help">⚡ 橡皮筋彈力（初速度）</span>
             <span class="control-value-badge" id="powerVal">25 m/s</span>
           </div>
           <input type="range" id="powerInput" min="10" max="45" value="25" style="width: 100%" oninput="game.setPower(this.value)">
           <div class="preset-btns">
             <span style="font-size: 0.75rem; color:var(--color-text-muted); margin-right:0.25rem">橡皮筋：</span>
-            <button class="preset-btn" onclick="game.setPower(18)">細橡皮筋 (18)</button>
-            <button class="preset-btn" onclick="game.setPower(26)">標準橡皮筋 (26)</button>
-            <button class="preset-btn" onclick="game.setPower(36)">粗橡皮筋 (36)</button>
+            <button class="preset-btn" onclick="game.setPower(18)" data-tooltip="細橡皮筋：彈力小，初速 18 m/s">細橡皮筋 (18)</button>
+            <button class="preset-btn" onclick="game.setPower(26)" data-tooltip="標準橡皮筋：標準拉力，初速 26 m/s">標準橡皮筋 (26)</button>
+            <button class="preset-btn" onclick="game.setPower(36)" data-tooltip="粗橡皮筋：高張力，初速 36 m/s">粗橡皮筋 (36)</button>
           </div>
         </div>
 
         <!-- Control 3: Projectile Material -->
         <div class="control-group">
           <div class="control-label-row">
-            <span>⚾ 拋射物材質</span>
+            <span data-tooltip="不同材質具有不同質量與空氣阻力特性" style="cursor:help">⚾ 拋射物材質</span>
           </div>
           <div style="display:flex; gap:0.4rem;">
-            <button class="proj-btn" data-type="pingpong" onclick="game.setProjectile('pingpong')" title="質量輕，受空氣阻力大">
+            <button class="proj-btn" data-type="pingpong" onclick="game.setProjectile('pingpong')" data-tooltip="乒乓球：質量極輕（2.7g），受空氣阻力大">
               ⚪ 乒乓球
             </button>
-            <button class="proj-btn active" data-type="clay" onclick="game.setProjectile('clay')" title="中等質量，標準拋射">
+            <button class="proj-btn active" data-type="clay" onclick="game.setProjectile('clay')" data-tooltip="黏土球：標準質量（20g），飛行穩定">
               🟠 黏土球
             </button>
-            <button class="proj-btn" data-type="marble" onclick="game.setProjectile('marble')" title="質量大，穿透力強，抗阻力">
+            <button class="proj-btn" data-type="marble" onclick="game.setProjectile('marble')" data-tooltip="彈珠：高密度質量（35g），抗風阻，射程遠">
               🔵 彈珠
             </button>
           </div>
@@ -1336,13 +2013,13 @@
         <!-- Launch & Reset Actions -->
         <div class="control-group" style="justify-content: flex-end;">
           <div style="display:flex; gap:0.6rem;">
-            <button class="launch-btn" onclick="game.launch()">
+            <button class="launch-btn" onclick="game.launch()" data-tooltip="點擊發射投石戰車！">
               <span>🚀 發射投石！</span>
             </button>
-            <button class="btn" onclick="game.resetGame()" title="重設遊戲關卡與分數" style="padding: 0 1rem;">
+            <button class="btn btn-frameless" onclick="game.resetGame()" data-tooltip="重設遊戲關卡與得分">
               🔄 重設
             </button>
-            <button class="btn" onclick="game.clearTrails()" title="清除實驗室軌跡線" style="padding: 0 1rem;">
+            <button class="btn btn-frameless" onclick="game.clearTrails()" data-tooltip="清空畫布上的歷史拋物線軌跡">
               🧹 清除軌跡
             </button>
           </div>
@@ -1352,9 +2029,13 @@
 
       <!-- Data Table Card (Corresponding to Activity 5) -->
       <div class="section-card" style="margin-top: 0.5rem;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.75rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.75rem; flex-wrap:wrap; gap:0.5rem;">
           <h3 style="font-size: 1.15rem; font-weight:700;">📊 實體與模擬測試數據記錄表（對應活動五）</h3>
-          <span style="font-size: 0.8rem; color:var(--color-text-muted)">每次發射均自動記錄物理數據</span>
+          <div style="display:flex; gap:0.5rem;">
+            <button class="btn btn-frameless" onclick="openModal('exportModal')">
+              📥 匯出 CSV 表格
+            </button>
+          </div>
         </div>
         <div class="table-container">
           <table>
@@ -1387,51 +2068,198 @@
   <!-- Footer -->
   <footer>
     <p>科技領域教材教法 · 張宗智、吳立安、黃勁允、翁苙維</p>
-    <p style="margin-top: 0.25rem;">國小科技領域「拋物線上的科學家：投石戰車探究與角度大解密」教案與互動教學平台</p>
+    <p style="margin-top: 0.25rem;">國小科技領域「拋物線上的科學家：投石戰車探究與角度大解密」公開教案與互動教學平台</p>
   </footer>
 
   <!-- Scripts -->
   <script src="game.js"></script>
   <script>
-    // View Switcher
-    function switchView(viewName) {
-      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-      const targetView = document.getElementById(viewName === 'game' ? 'gameView' : 'lessonView');
-      if (targetView) targetView.classList.add('active');
+    // ==========================================================================
+    // UI/UX Interactions: Toast Notification System
+    // ==========================================================================
+    function showToast(message, icon = '🔔', duration = 3200) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `
+        <span class="toast-icon">${icon}</span>
+        <span class="toast-body">${message}</span>
+      `;
+      container.appendChild(toast);
 
-      // Update button styles
-      const lessonBtn = document.getElementById('navLessonBtn');
-      const gameBtn = document.getElementById('navGameBtn');
-      if (viewName === 'game') {
-        lessonBtn.classList.remove('btn-primary');
-        gameBtn.classList.add('btn-primary');
-        // Initialize or resize game canvas
-        initCatapultGame();
-        setTimeout(() => {
-          if (game) game.resize();
-        }, 50);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        lessonBtn.classList.add('btn-primary');
-        gameBtn.classList.remove('btn-primary');
+      // Trigger animation
+      requestAnimationFrame(() => {
+        toast.classList.add('show');
+      });
+
+      // Auto dismiss
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 250);
+      }, duration);
+    }
+
+    // ==========================================================================
+    // UI/UX Interactions: Modals Control (<dialog>)
+    // ==========================================================================
+    function openModal(id) {
+      const dialog = document.getElementById(id);
+      if (dialog) {
+        if (id === 'exportModal') {
+          prepareCSVData();
+        }
+        dialog.showModal();
       }
     }
 
-    // Theme toggle
+    function closeModal(id) {
+      const dialog = document.getElementById(id);
+      if (dialog) {
+        dialog.close();
+      }
+    }
+
+    // Close modal on backdrop click
+    document.querySelectorAll('dialog.modal-dialog').forEach(dialog => {
+      dialog.addEventListener('click', (e) => {
+        const rect = dialog.getBoundingClientRect();
+        const isInDialog = (
+          rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
+          rect.left <= e.clientX && e.clientX <= rect.left + rect.width
+        );
+        if (!isInDialog) {
+          dialog.close();
+        }
+      });
+    });
+
+    // ==========================================================================
+    // UI/UX Interactions: Hamburger Menu Drawer
+    // ==========================================================================
+    function toggleDrawer(forceOpen) {
+      const drawer = document.getElementById('drawerMenu');
+      const overlay = document.getElementById('drawerOverlay');
+      const isOpen = forceOpen !== undefined ? forceOpen : !drawer.classList.contains('active');
+      
+      drawer.classList.toggle('active', isOpen);
+      overlay.classList.toggle('active', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+    // Close drawer on ESC
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        toggleDrawer(false);
+        document.querySelectorAll('dialog[open]').forEach(d => d.close());
+      }
+    });
+
+    // ==========================================================================
+    // UI/UX Interactions: Day & Night Theme Switcher (無外框按鈕)
+    // ==========================================================================
     function toggleTheme() {
       const current = document.documentElement.getAttribute('data-theme');
       const target = current === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', target);
       localStorage.setItem('theme', target);
-      document.getElementById('theme-toggle').textContent = target === 'dark' ? '☀️' : '🌙';
+
+      const themeBtn = document.getElementById('themeToggleBtn');
+      if (themeBtn) {
+        themeBtn.textContent = target === 'dark' ? '🌙' : '☀️';
+      }
+
+      showToast(target === 'dark' ? '已切換為黑夜主題模式 🌙' : '已切換為白天主題模式 ☀️', target === 'dark' ? '🌙' : '☀️');
+
+      // Re-render canvas if game initialized
+      if (game) {
+        game.render();
+      }
     }
 
-    // Load saved theme
+    // Initialize Theme
     const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     document.documentElement.setAttribute('data-theme', savedTheme);
-    document.getElementById('theme-toggle').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    const themeBtn = document.getElementById('themeToggleBtn');
+    if (themeBtn) {
+      themeBtn.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+    }
 
-    // Highlight current active TOC link on scroll
+    // ==========================================================================
+    // UI/UX Interactions: View Switcher (Lesson vs Game)
+    // ==========================================================================
+    function switchView(viewName) {
+      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+      const targetView = document.getElementById(viewName === 'game' ? 'gameView' : 'lessonView');
+      if (targetView) targetView.classList.add('active');
+
+      const lessonBtn = document.getElementById('navLessonBtn');
+      const gameBtn = document.getElementById('navGameBtn');
+      const drawerLesson = document.getElementById('drawerLessonLink');
+      const drawerGame = document.getElementById('drawerGameLink');
+
+      if (viewName === 'game') {
+        if (lessonBtn) lessonBtn.classList.remove('btn-primary');
+        if (gameBtn) gameBtn.classList.add('btn-primary');
+        if (drawerLesson) drawerLesson.classList.remove('active');
+        if (drawerGame) drawerGame.classList.add('active');
+
+        initCatapultGame();
+        setTimeout(() => {
+          if (game) game.resize();
+        }, 50);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        showToast('已切換至「投石戰車互動小遊戲」🎮', '🏹');
+      } else {
+        if (lessonBtn) lessonBtn.classList.add('btn-primary');
+        if (gameBtn) gameBtn.classList.remove('btn-primary');
+        if (drawerLesson) drawerLesson.classList.add('active');
+        if (drawerGame) drawerGame.classList.remove('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function triggerPrint() {
+      showToast('正在準備 A4 教案列印格式...', '🖨️');
+      setTimeout(() => {
+        window.print();
+      }, 300);
+    }
+
+    // ==========================================================================
+    // CSV Data Export Helpers
+    // ==========================================================================
+    function prepareCSVData() {
+      const area = document.getElementById('csvExportArea');
+      if (!area) return;
+      if (!game || !game.records || game.records.length === 0) {
+        area.value = "尚未有任何發射記錄。請先前往互動小遊戲進行投石發射！";
+        return;
+      }
+      let csv = "次數,發射角度(度),初始速度(m/s),拋射物材質,拋射距離(m),最高高度(m),飛行時間(s),測試結果\n";
+      game.records.forEach(r => {
+        csv += `${r.id},${r.angle},${r.power},"${r.material}",${r.distance},${r.height},${r.time},"${r.result}"\n`;
+      });
+      area.value = csv;
+    }
+
+    function copyCSVData() {
+      const area = document.getElementById('csvExportArea');
+      if (area && area.value) {
+        navigator.clipboard.writeText(area.value).then(() => {
+          showToast('測試數據 CSV 已成功複製到剪貼簿！', '📋');
+          closeModal('exportModal');
+        }).catch(() => {
+          area.select();
+          document.execCommand('copy');
+          showToast('已選取並複製！', '📋');
+          closeModal('exportModal');
+        });
+      }
+    }
+
+    // ==========================================================================
+    // Scroll Spy for TOC
+    // ==========================================================================
     window.addEventListener('scroll', () => {
       const sections = document.querySelectorAll('section[id]');
       const scrollPos = window.scrollY + 120;
@@ -1450,7 +2278,7 @@
       });
     });
 
-    // Default to lesson view
+    // Default initialization
     document.addEventListener('DOMContentLoaded', () => {
       switchView('lesson');
     });
