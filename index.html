@@ -7,73 +7,95 @@
   <title>科技領域教材教法_張宗智、吳立安、黃勁允、翁苙維</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* ==========================================================================
-       1. Design Tokens (Day & Night Themes)
+       1. Design Tokens & Responsive Typography (Day & Night Themes)
        ========================================================================== */
     :root {
       --font-sans: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --font-mono: 'JetBrains Mono', Menlo, Monaco, monospace;
       
       /* Day Theme Colors */
-      --color-primary: #2563eb;
-      --color-primary-hover: #1d4ed8;
+      --color-primary: #1d4ed8;
+      --color-primary-hover: #1e40af;
       --color-primary-light: #eff6ff;
+      --color-primary-line: #3b82f6;
       --color-bg: #f8fafc;
       --color-surface: #ffffff;
       --color-surface-muted: #f1f5f9;
       --color-surface-card: #ffffff;
       --color-text: #0f172a;
-      --color-text-muted: #64748b;
-      --color-border: #e2e8f0;
-      --color-border-subtle: #f1f5f9;
-      --color-success: #10b981;
-      --color-warning: #f59e0b;
-      --color-danger: #ef4444;
+      --color-text-muted: #475569;
+      --color-border: #cbd5e1;
+      --color-border-subtle: #e2e8f0;
+      --color-border-focus: #2563eb;
+      --color-success: #059669;
+      --color-warning: #d97706;
+      --color-danger: #dc2626;
       --color-tag-bg: #e0f2fe;
       --color-tag-text: #0369a1;
-      --color-tooltip-bg: #1e293b;
-      --color-tooltip-text: #ffffff;
+      --color-tooltip-bg: #0f172a;
+      --color-tooltip-text: #f8fafc;
       
       --radius-sm: 6px;
       --radius-md: 10px;
       --radius-lg: 16px;
       --radius-full: 9999px;
       
-      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-      --shadow-lg: 0 10px 25px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.05);
-      --shadow-drawer: -10px 0 25px -5px rgb(0 0 0 / 0.15);
+      --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.06);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.04);
+      --shadow-lg: 0 10px 25px -3px rgb(0 0 0 / 0.1);
+      --shadow-drawer: -8px 0 24px 0 rgb(0 0 0 / 0.12);
       
-      --container-width: 1140px;
+      --max-reading-width: 940px;
     }
 
     [data-theme="dark"] {
       /* Night Theme Colors */
       --color-primary: #38bdf8;
       --color-primary-hover: #7dd3fc;
-      --color-primary-light: #0c4a6e;
-      --color-bg: #090d16;
+      --color-primary-light: rgba(56, 189, 248, 0.12);
+      --color-primary-line: #38bdf8;
+      --color-bg: #0b0f19;
       --color-surface: #111827;
-      --color-surface-muted: #1f2937;
+      --color-surface-muted: #1a2234;
       --color-surface-card: #141e33;
-      --color-text: #f9fafb;
-      --color-text-muted: #9ca3af;
-      --color-border: #1f293d;
-      --color-border-subtle: #172033;
+      --color-text: #f3f4f6;
+      --color-text-muted: #94a3b8;
+      --color-border: #2d3748;
+      --color-border-subtle: #1e293b;
+      --color-border-focus: #38bdf8;
       --color-success: #34d399;
       --color-warning: #fbbf24;
       --color-danger: #f87171;
-      --color-tag-bg: #0369a1;
-      --color-tag-text: #e0f2fe;
+      --color-tag-bg: rgba(56, 189, 248, 0.15);
+      --color-tag-text: #7dd3fc;
       --color-tooltip-bg: #0f172a;
       --color-tooltip-text: #f8fafc;
       
-      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
-      --shadow-lg: 0 10px 25px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.3);
-      --shadow-drawer: -10px 0 30px 0 rgb(0 0 0 / 0.6);
+      --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.35);
+      --shadow-md: 0 4px 8px -1px rgb(0 0 0 / 0.45);
+      --shadow-lg: 0 12px 28px -3px rgb(0 0 0 / 0.6);
+      --shadow-drawer: -8px 0 30px 0 rgb(0 0 0 / 0.7);
+    }
+
+    /* RWD Base Font Sizing */
+    html {
+      font-size: 18.5px;
+      scroll-behavior: smooth;
+    }
+
+    @media (max-width: 1024px) {
+      html {
+        font-size: 17.5px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      html {
+        font-size: 16.5px;
+      }
     }
 
     * {
@@ -86,129 +108,154 @@
       font-family: var(--font-sans);
       background-color: var(--color-bg);
       color: var(--color-text);
-      line-height: 1.7;
+      line-height: 1.88;
       -webkit-font-smoothing: antialiased;
       transition: background-color 0.25s ease, color 0.25s ease;
     }
 
     /* ==========================================================================
-       2. Buttons & Frameless / Ghost Buttons (無外框按鈕)
+       2. Typography & Headings (Bold Rule Enforcement)
        ========================================================================== */
-    /* Base Button */
-    .btn {
+    h1, .hero-title {
+      font-size: 2.15rem;
+      font-weight: 800;
+      line-height: 1.35;
+      color: var(--color-text);
+      letter-spacing: -0.015em;
+    }
+
+    h2, .section-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      line-height: 1.35;
+      color: var(--color-text);
+      letter-spacing: -0.01em;
+    }
+
+    h3, .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--color-text);
+    }
+
+    h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .subheading, .section-subtitle, .accordion-subtitle, .hero-subtitle {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    p {
+      margin-bottom: 0.85rem;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ==========================================================================
+       3. Linear / Outline Buttons (線稿按鈕風格，零 Emoji)
+       ========================================================================== */
+    .btn-outline {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.45rem;
-      padding: 0.45rem 0.9rem;
-      font-size: 0.875rem;
+      gap: 0.5rem;
+      padding: 0.48rem 0.95rem;
+      font-size: 0.92rem;
       font-weight: 600;
       border-radius: var(--radius-sm);
       cursor: pointer;
       text-decoration: none;
-      transition: all 0.15s ease;
+      background-color: transparent;
+      color: var(--color-text);
+      border: 1.5px solid var(--color-border);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       white-space: nowrap;
       user-select: none;
+      line-height: 1.4;
     }
 
-    /* Frameless / Ghost Button (無外框按鈕) */
-    .btn-frameless {
-      border: none;
-      background: transparent;
-      color: var(--color-text);
-      padding: 0.5rem 0.75rem;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: background-color 0.2s, color 0.2s, transform 0.1s;
-    }
-
-    .btn-frameless:hover {
-      background-color: var(--color-surface-muted);
+    .btn-outline:hover {
+      border-color: var(--color-primary);
       color: var(--color-primary);
-    }
-
-    .btn-frameless:active {
-      transform: scale(0.96);
-    }
-
-    .btn-icon-frameless {
-      border: none;
-      background: transparent;
-      color: var(--color-text);
-      width: 40px;
-      height: 40px;
-      padding: 0;
-      border-radius: var(--radius-full);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 1.25rem;
-      transition: background-color 0.2s, transform 0.15s;
-    }
-
-    .btn-icon-frameless:hover {
-      background-color: var(--color-surface-muted);
-    }
-
-    .btn-icon-frameless:active {
-      transform: scale(0.92);
-    }
-
-    .btn-primary {
-      background-color: var(--color-primary);
-      border: 1px solid var(--color-primary);
-      color: #ffffff !important;
-    }
-
-    .btn-primary:hover {
-      background-color: var(--color-primary-hover);
-      border-color: var(--color-primary-hover);
-    }
-
-    .btn-game-accent {
-      background: linear-gradient(135deg, #f59e0b, #ef4444);
-      color: #ffffff !important;
-      border: none;
-      border-radius: var(--radius-full);
-      padding: 0.45rem 1rem;
-      box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
-      font-weight: 700;
-    }
-
-    .btn-game-accent:hover {
-      background: linear-gradient(135deg, #d97706, #dc2626);
-      box-shadow: 0 4px 10px rgba(239, 68, 68, 0.45);
+      background-color: var(--color-primary-light);
       transform: translateY(-1px);
     }
 
+    .btn-outline:active {
+      transform: translateY(0);
+    }
+
+    .btn-outline.active, .btn-outline-primary {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background-color: var(--color-primary-light);
+      font-weight: 700;
+    }
+
+    .btn-outline-sm {
+      padding: 0.35rem 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .btn-icon-outline {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--color-text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .btn-icon-outline:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background-color: var(--color-primary-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-icon-outline:active {
+      transform: translateY(0);
+    }
+
     /* ==========================================================================
-       3. Navbar & Hamburger Menu (抽屜導覽列)
+       4. Top Navigation Bar (整合章節下拉選單 & 抽屜選單)
        ========================================================================== */
     .navbar {
       position: sticky;
       top: 0;
       z-index: 100;
-      background-color: rgba(255, 255, 255, 0.88);
+      background-color: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--color-border);
+      border-bottom: 1.5px solid var(--color-border);
       transition: background-color 0.25s, border-color 0.25s;
     }
 
     [data-theme="dark"] .navbar {
-      background-color: rgba(17, 24, 39, 0.88);
+      background-color: rgba(17, 24, 39, 0.94);
     }
 
     .nav-container {
-      max-width: var(--container-width);
+      max-width: var(--max-reading-width);
       margin: 0 auto;
-      padding: 0.65rem 1.25rem;
+      padding: 0.75rem 1.25rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -218,36 +265,8 @@
     .nav-left {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-    }
-
-    /* Animated Hamburger Icon Button */
-    .hamburger-btn {
-      border: none;
-      background: transparent;
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-md);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      cursor: pointer;
-      padding: 8px;
-      transition: background-color 0.2s;
-    }
-
-    .hamburger-btn:hover {
-      background-color: var(--color-surface-muted);
-    }
-
-    .hamburger-bar {
-      width: 22px;
-      height: 2px;
-      background-color: var(--color-text);
-      border-radius: 2px;
-      transition: transform 0.25s, opacity 0.25s;
+      gap: 0.85rem;
+      min-width: 0;
     }
 
     .nav-brand {
@@ -256,24 +275,41 @@
       gap: 0.6rem;
       text-decoration: none;
       color: var(--color-text);
-      font-weight: 700;
-      font-size: 1.1rem;
+      font-weight: 800;
+      font-size: 1.05rem;
+      min-width: 0;
     }
 
     .nav-title-text {
-      max-width: 480px;
+      max-width: 420px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      font-weight: 800;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 820px) {
+      .nav-title-text {
+        max-width: 220px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-title-text {
+        max-width: 170px;
+        font-size: 0.92rem;
+      }
     }
 
     .nav-badge {
       font-size: 0.75rem;
       font-weight: 700;
-      padding: 0.15rem 0.5rem;
+      padding: 0.15rem 0.55rem;
       border-radius: var(--radius-full);
       background-color: var(--color-tag-bg);
       color: var(--color-tag-text);
+      border: 1px solid var(--color-border);
       white-space: nowrap;
     }
 
@@ -281,14 +317,81 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      flex-shrink: 0;
     }
 
-    /* Hamburger Drawer (Off-Canvas Menu) */
+    /* Chapter Quick Jump Dropdown */
+    .nav-dropdown-wrapper {
+      position: relative;
+    }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: 290px;
+      background-color: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      padding: 0.5rem 0;
+      display: none;
+      flex-direction: column;
+      z-index: 150;
+      max-height: 480px;
+      overflow-y: auto;
+    }
+
+    .nav-dropdown-menu.show {
+      display: flex;
+    }
+
+    .dropdown-header {
+      padding: 0.55rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: 0.25rem;
+    }
+
+    .dropdown-item {
+      padding: 0.65rem 1rem;
+      color: var(--color-text);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background-color 0.15s, color 0.15s;
+    }
+
+    .dropdown-item:hover {
+      background-color: var(--color-primary-light);
+      color: var(--color-primary);
+    }
+
+    @media (max-width: 720px) {
+      .nav-dropdown-wrapper {
+        display: none;
+      }
+      .nav-text-btn {
+        display: none;
+      }
+    }
+
+    /* ==========================================================================
+       5. Off-Canvas Drawer (Hamburger Menu)
+       ========================================================================== */
     .drawer-overlay {
       position: fixed;
       inset: 0;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.55);
       backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       z-index: 200;
       opacity: 0;
       visibility: hidden;
@@ -305,8 +408,8 @@
       top: 0;
       left: 0;
       bottom: 0;
-      width: 320px;
-      max-width: 85vw;
+      width: 350px;
+      max-width: 88vw;
       background-color: var(--color-surface);
       z-index: 201;
       box-shadow: var(--shadow-drawer);
@@ -314,6 +417,7 @@
       flex-direction: column;
       transform: translateX(-100%);
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      border-right: 1.5px solid var(--color-border);
     }
 
     .drawer-menu.active {
@@ -322,18 +426,16 @@
 
     .drawer-header {
       padding: 1.25rem 1.5rem;
-      border-bottom: 1px solid var(--color-border);
+      border-bottom: 1.5px solid var(--color-border);
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
     .drawer-header-title {
-      font-size: 1.05rem;
+      font-size: 1.15rem;
       font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      color: var(--color-text);
     }
 
     .drawer-body {
@@ -346,50 +448,678 @@
     }
 
     .drawer-group-title {
-      font-size: 0.75rem;
-      font-weight: 700;
+      font-size: 0.8rem;
+      font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--color-text-muted);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
+      border-bottom: 1px dashed var(--color-border);
+      padding-bottom: 0.35rem;
     }
 
     .drawer-nav-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: 0.35rem;
     }
 
     .drawer-nav-link {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
+      display: block;
       padding: 0.6rem 0.85rem;
       color: var(--color-text);
       text-decoration: none;
-      font-size: 0.925rem;
-      font-weight: 500;
+      font-size: 0.95rem;
+      font-weight: 600;
       border-radius: var(--radius-sm);
-      transition: background-color 0.15s, color 0.15s;
+      border: 1px solid transparent;
+      transition: background-color 0.15s, border-color 0.15s, color 0.15s;
     }
 
     .drawer-nav-link:hover, .drawer-nav-link.active {
       background-color: var(--color-primary-light);
+      border-color: var(--color-border);
       color: var(--color-primary);
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .drawer-footer {
       padding: 1rem 1.5rem;
-      border-top: 1px solid var(--color-border);
-      font-size: 0.8rem;
+      border-top: 1.5px solid var(--color-border);
+      font-size: 0.85rem;
       color: var(--color-text-muted);
+      line-height: 1.6;
     }
 
     /* ==========================================================================
-       4. Tooltips (現代 CSS Tooltip)
+       6. Reading Container & Collapsible Accordion Components
        ========================================================================== */
+    .view-section {
+      display: none;
+    }
+    .view-section.active {
+      display: block;
+    }
+
+    .layout-container {
+      max-width: var(--max-reading-width);
+      margin: 2.25rem auto;
+      padding: 0 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    /* Hero Card */
+    .hero-card {
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 2.25rem;
+      box-shadow: var(--shadow-sm);
+      scroll-margin-top: 5rem;
+    }
+
+    @media (max-width: 640px) {
+      .hero-card {
+        padding: 1.5rem;
+      }
+    }
+
+    .hero-pretitle {
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title {
+      margin-bottom: 0.65rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--color-text);
+      line-height: 1.88;
+      margin-bottom: 1.75rem;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.15rem;
+      padding: 1.35rem;
+      background-color: var(--color-surface-muted);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .meta-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .meta-value {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    /* Accordion Toolbar (展開/收合全部) */
+    .accordion-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1.25rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .toolbar-label {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--color-text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    /* Collapsible Accordion Item (<details>) */
+    details.accordion-item {
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background-color: var(--color-surface);
+      margin-bottom: 1.5rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      scroll-margin-top: 5rem;
+      overflow: hidden;
+    }
+
+    details.accordion-item[open] {
+      border-color: var(--color-primary-line);
+      box-shadow: var(--shadow-sm);
+    }
+
+    summary.accordion-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.35rem 1.6rem;
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+      background-color: var(--color-surface);
+      transition: background-color 0.2s;
+      gap: 1rem;
+    }
+
+    summary.accordion-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary.accordion-summary:hover {
+      background-color: var(--color-surface-muted);
+    }
+
+    details.accordion-item[open] > summary.accordion-summary {
+      border-bottom: 1.5px solid var(--color-border);
+      background-color: var(--color-surface-muted);
+    }
+
+    .accordion-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      flex: 1;
+    }
+
+    .accordion-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--color-text);
+      line-height: 1.35;
+      margin: 0;
+    }
+
+    .accordion-subtitle {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .accordion-toggle-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--color-text);
+      transition: transform 0.25s ease, border-color 0.2s, color 0.2s;
+    }
+
+    details.accordion-item[open] > summary .accordion-toggle-icon {
+      transform: rotate(180deg);
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .accordion-content {
+      padding: 1.75rem 1.6rem;
+      line-height: 1.88;
+    }
+
+    @media (max-width: 640px) {
+      summary.accordion-summary {
+        padding: 1.15rem 1.25rem;
+      }
+      .accordion-content {
+        padding: 1.35rem 1.25rem;
+      }
+      .accordion-title {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* Section Heading Wrap for Activity Header */
+    .section-title-wrap {
+      margin: 1.5rem 0 1rem;
+    }
+
+    /* ==========================================================================
+       7. Tables & Rich Lesson Content Elements
+       ========================================================================== */
+    .table-container {
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background-color: var(--color-surface);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.98rem;
+      line-height: 1.82;
+    }
+
+    th {
+      background-color: var(--color-surface-muted);
+      color: var(--color-text);
+      font-weight: 700 !important;
+      font-size: 1.02rem;
+      padding: 1.1rem 1.25rem;
+      border-bottom: 1.5px solid var(--color-border);
+      border-right: 1px solid var(--color-border);
+      vertical-align: middle;
+    }
+
+    td {
+      padding: 1.1rem 1.25rem;
+      border-bottom: 1px solid var(--color-border);
+      border-right: 1px solid var(--color-border);
+      vertical-align: top;
+      color: var(--color-text);
+      line-height: 1.82;
+    }
+
+    th:last-child, td:last-child {
+      border-right: none;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background-color: var(--color-surface-muted);
+    }
+
+    /* STEAM Grid */
+    .steam-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.15rem;
+      margin: 1.25rem 0;
+    }
+
+    .steam-card {
+      background: var(--color-surface-muted);
+      padding: 1.35rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border);
+      border-left: 4px solid var(--color-primary);
+    }
+
+    .steam-card-title {
+      font-weight: 800;
+      font-size: 1.08rem;
+      margin-bottom: 0.45rem;
+      color: var(--color-primary);
+    }
+
+    /* Flow Grid */
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    .flow-step {
+      background: var(--color-surface-muted);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: 1.35rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .flow-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--color-primary);
+      color: var(--color-primary);
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-bottom: 0.65rem;
+      background: var(--color-surface);
+    }
+
+    .flow-step-title {
+      font-weight: 800;
+      font-size: 1.05rem;
+      margin-bottom: 0.35rem;
+      color: var(--color-text);
+    }
+
+    .flow-step-desc {
+      font-size: 0.92rem;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+    }
+
+    /* Badges */
+    .badge-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.65rem;
+    }
+
+    .badge-pill {
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      background-color: var(--color-surface-muted);
+      border: 1.5px solid var(--color-border);
+      color: var(--color-text);
+      cursor: help;
+    }
+
+    /* Game Banner Callout in Lesson View */
+    .game-callout {
+      background: var(--color-surface-muted);
+      border: 1.5px solid var(--color-border);
+      border-left: 4px solid var(--color-primary);
+      border-radius: var(--radius-sm);
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin: 1.75rem 0;
+      flex-wrap: wrap;
+    }
+
+    .callout-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 0.35rem;
+      color: var(--color-text);
+    }
+
+    .callout-desc {
+      font-size: 0.98rem;
+      color: var(--color-text-muted);
+      line-height: 1.65;
+    }
+
+    /* ==========================================================================
+       8. Game View Styles (Linear Outline Controls)
+       ========================================================================== */
+    .game-view-container {
+      max-width: var(--max-reading-width);
+      margin: 2.25rem auto;
+      padding: 0 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .game-header-card {
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .game-canvas-card {
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    #catapultCanvas {
+      width: 100%;
+      height: 420px;
+      background: #f8fafc;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--color-border);
+      touch-action: none;
+    }
+
+    [data-theme="dark"] #catapultCanvas {
+      background: #090d16;
+    }
+
+    .game-controls-panel {
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1.75rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .control-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .control-value-badge {
+      font-family: var(--font-mono);
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      background: var(--color-primary-light);
+      border: 1px solid var(--color-border);
+      padding: 0.2rem 0.65rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .preset-btns {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .preset-btn {
+      padding: 0.3rem 0.6rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: transparent;
+      cursor: pointer;
+      color: var(--color-text);
+      transition: all 0.15s;
+    }
+
+    .preset-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: var(--color-primary-light);
+    }
+
+    .mode-btn, .proj-btn {
+      padding: 0.45rem 0.85rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: transparent;
+      cursor: pointer;
+      color: var(--color-text);
+      transition: all 0.15s;
+    }
+
+    .mode-btn:hover, .proj-btn:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .mode-btn.active, .proj-btn.active {
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+      font-weight: 700;
+    }
+
+    .launch-btn {
+      border: 1.5px solid var(--color-danger);
+      background: transparent;
+      color: var(--color-danger);
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+    }
+
+    .launch-btn:hover {
+      background: var(--color-danger);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+    }
+
+    .scoreboard {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .score-badge {
+      background: var(--color-surface-muted);
+      border: 1.5px solid var(--color-border);
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .score-badge strong {
+      font-family: var(--font-mono);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    /* ==========================================================================
+       9. Modals (<dialog>) & Tooltips & Toast Notifications
+       ========================================================================== */
+    dialog.modal-dialog {
+      margin: auto;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background-color: var(--color-surface);
+      color: var(--color-text);
+      max-width: 680px;
+      width: 90vw;
+      box-shadow: var(--shadow-lg);
+      padding: 0;
+      overflow: hidden;
+    }
+
+    dialog.modal-dialog::backdrop {
+      background-color: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1.5px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--color-surface-muted);
+    }
+
+    .modal-title {
+      font-size: 1.18rem;
+      font-weight: 800;
+    }
+
+    .modal-body {
+      padding: 1.6rem;
+      max-height: 70vh;
+      overflow-y: auto;
+      line-height: 1.85;
+      font-size: 0.98rem;
+    }
+
+    .modal-footer {
+      padding: 1.1rem 1.5rem;
+      border-top: 1.5px solid var(--color-border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      background: var(--color-surface-muted);
+    }
+
+    /* Tooltips */
     [data-tooltip] {
       position: relative;
     }
@@ -418,13 +1148,13 @@
       transform: translateX(-50%) translateY(4px);
       background-color: var(--color-tooltip-bg);
       color: var(--color-tooltip-text);
-      font-size: 0.775rem;
+      font-size: 0.82rem;
       font-weight: 500;
-      line-height: 1.4;
-      padding: 0.4rem 0.7rem;
+      line-height: 1.45;
+      padding: 0.45rem 0.75rem;
       border-radius: var(--radius-sm);
       white-space: pre-wrap;
-      max-width: 240px;
+      max-width: 250px;
       text-align: center;
       box-shadow: var(--shadow-md);
       opacity: 0;
@@ -443,34 +1173,33 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* Tooltip positioned below if needed */
     [data-tooltip-pos="bottom"]::before {
       bottom: auto;
       top: calc(100% + 4px);
       border-color: transparent transparent var(--color-tooltip-bg) transparent;
       transform: translateX(-50%) translateY(-4px);
     }
+
     [data-tooltip-pos="bottom"]::after {
       bottom: auto;
       top: calc(100% + 14px);
       transform: translateX(-50%) translateY(-4px);
     }
+
     [data-tooltip-pos="bottom"]:hover::before,
     [data-tooltip-pos="bottom"]:hover::after {
       transform: translateX(-50%) translateY(0);
     }
 
-    /* ==========================================================================
-       5. Toast Notifications (浮動通知)
-       ========================================================================== */
+    /* Toast Container */
     #toastContainer {
       position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
+      bottom: 2rem;
+      right: 2rem;
       z-index: 9999;
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+      gap: 0.75rem;
       pointer-events: none;
     }
 
@@ -478,589 +1207,42 @@
       pointer-events: auto;
       background: var(--color-surface);
       color: var(--color-text);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-md);
+      border: 1.5px solid var(--color-border);
+      border-left: 4px solid var(--color-primary);
+      border-radius: var(--radius-sm);
       padding: 0.85rem 1.25rem;
       box-shadow: var(--shadow-lg);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 600;
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.75rem;
       min-width: 260px;
-      max-width: 380px;
-      transform: translateY(20px) scale(0.95);
+      max-width: 420px;
+      transform: translateY(16px);
       opacity: 0;
       transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s;
     }
 
     .toast.show {
-      transform: translateY(0) scale(1);
+      transform: translateY(0);
       opacity: 1;
-    }
-
-    .toast-icon {
-      font-size: 1.2rem;
-      flex-shrink: 0;
     }
 
     .toast-body {
       flex: 1;
-    }
-
-    /* ==========================================================================
-       6. Modals (現代原生 <dialog> 彈窗)
-       ========================================================================== */
-    dialog.modal-dialog {
-      margin: auto;
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      background-color: var(--color-surface);
-      color: var(--color-text);
-      max-width: 650px;
-      width: 90vw;
-      box-shadow: var(--shadow-lg);
-      padding: 0;
-      overflow: hidden;
-      transform: scale(0.95);
-      opacity: 0;
-      transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    dialog.modal-dialog[open] {
-      transform: scale(1);
-      opacity: 1;
-    }
-
-    dialog.modal-dialog::backdrop {
-      background-color: rgba(0, 0, 0, 0.55);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-
-    .modal-header {
-      padding: 1.25rem 1.5rem;
-      border-bottom: 1px solid var(--color-border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--color-surface-muted);
-    }
-
-    .modal-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .modal-body {
-      padding: 1.5rem;
-      max-height: 70vh;
-      overflow-y: auto;
-      line-height: 1.7;
-    }
-
-    .modal-footer {
-      padding: 1rem 1.5rem;
-      border-top: 1px solid var(--color-border);
-      display: flex;
-      justify-content: flex-end;
-      gap: 0.75rem;
-      background: var(--color-surface-muted);
-    }
-
-    /* ==========================================================================
-       7. Content Views & Layout
-       ========================================================================== */
-    .view-section {
-      display: none;
-    }
-    .view-section.active {
-      display: block;
-    }
-
-    .layout-container {
-      max-width: var(--container-width);
-      margin: 2rem auto;
-      padding: 0 1.25rem;
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      gap: 2.25rem;
-    }
-
-    @media (max-width: 960px) {
-      .layout-container {
-        grid-template-columns: 1fr;
-      }
-      .sidebar {
-        display: none;
-      }
-      .nav-title-text {
-        max-width: 260px;
-      }
-    }
-
-    /* Sidebar Navigation */
-    .sidebar {
-      position: sticky;
-      top: 5rem;
-      height: fit-content;
-    }
-
-    .toc-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .toc-title {
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--color-text-muted);
-      margin-bottom: 0.75rem;
-    }
-
-    .toc-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-
-    .toc-link {
-      color: var(--color-text-muted);
-      text-decoration: none;
-      font-size: 0.875rem;
-      padding: 0.35rem 0.6rem;
-      border-radius: var(--radius-sm);
-      transition: all 0.15s;
-      display: block;
-    }
-
-    .toc-link:hover, .toc-link.active {
-      color: var(--color-primary);
-      background-color: var(--color-primary-light);
-      font-weight: 600;
-    }
-
-    /* Content Area */
-    .content-area {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    .hero-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-lg);
-      padding: 2.25rem;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .hero-pretitle {
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--color-primary);
-      margin-bottom: 0.4rem;
-    }
-
-    .hero-title {
-      font-size: 1.85rem;
-      font-weight: 800;
-      line-height: 1.35;
-      margin-bottom: 0.6rem;
-      color: var(--color-text);
-    }
-
-    .hero-subtitle {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--color-primary);
-      margin-bottom: 1rem;
-    }
-
-    .hero-desc {
-      font-size: 1rem;
-      color: var(--color-text-muted);
-      margin-bottom: 1.5rem;
-      line-height: 1.8;
-    }
-
-    .meta-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      padding: 1.25rem;
-      background-color: var(--color-surface-muted);
-      border-radius: var(--radius-md);
-    }
-
-    .meta-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-
-    .meta-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--color-text-muted);
-      text-transform: uppercase;
-    }
-
-    .meta-value {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--color-text);
-    }
-
-    /* Section Cards */
-    .section-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-md);
-      padding: 2rem;
-      box-shadow: var(--shadow-sm);
-      scroll-margin-top: 5rem;
-    }
-
-    .section-heading {
-      font-size: 1.35rem;
-      font-weight: 700;
-      margin-bottom: 1.25rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid var(--color-primary-light);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--color-text);
-    }
-
-    /* Tables */
-    .table-container {
-      overflow-x: auto;
-      margin: 1.25rem 0;
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-sm);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.925rem;
-    }
-
-    th {
-      background-color: var(--color-surface-muted);
-      color: var(--color-text);
-      font-weight: 600;
-      padding: 0.85rem 1rem;
-      border-bottom: 1px solid var(--color-border);
-      border-right: 1px solid var(--color-border);
-    }
-
-    td {
-      padding: 0.85rem 1rem;
-      border-bottom: 1px solid var(--color-border);
-      border-right: 1px solid var(--color-border);
-      vertical-align: top;
-      color: var(--color-text);
-      line-height: 1.6;
-    }
-
-    th:last-child, td:last-child {
-      border-right: none;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    tr:hover td {
-      background-color: var(--color-surface-muted);
-    }
-
-    /* Badges */
-    .badge-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-    }
-
-    .badge-pill {
-      font-size: 0.8rem;
-      font-weight: 500;
-      padding: 0.35rem 0.75rem;
-      border-radius: var(--radius-full);
-      background-color: var(--color-surface-muted);
-      border: 1px solid var(--color-border);
-      color: var(--color-text);
-      cursor: help;
-    }
-
-    .steam-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1rem;
-      margin: 1rem 0;
-    }
-
-    .steam-card {
-      background: var(--color-surface-muted);
-      padding: 1.25rem;
-      border-radius: var(--radius-md);
-      border-left: 4px solid var(--color-primary);
-    }
-
-    .steam-card-title {
-      font-weight: 700;
-      font-size: 1rem;
-      margin-bottom: 0.4rem;
-      color: var(--color-primary);
-    }
-
-    /* Flow Grid */
-    .flow-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 0.75rem;
-      margin: 1.25rem 0;
-    }
-
-    .flow-step {
-      background: var(--color-surface-muted);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-      text-align: center;
-      position: relative;
-    }
-
-    .flow-step-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: var(--color-primary);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.85rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .flow-step-title {
-      font-weight: 700;
-      font-size: 0.95rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .flow-step-desc {
-      font-size: 0.8rem;
-      color: var(--color-text-muted);
-    }
-
-    /* Banner for Interactive Game Callout */
-    .game-callout {
-      background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(245, 158, 11, 0.12) 100%);
-      border: 2px dashed var(--color-warning);
-      border-radius: var(--radius-md);
-      padding: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      margin: 1.5rem 0;
-    }
-
-    /* Game Container View */
-    .game-view-container {
-      max-width: var(--container-width);
-      margin: 2rem auto;
-      padding: 0 1.25rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .game-header-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-md);
-      padding: 1.5rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .game-canvas-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-      box-shadow: var(--shadow-md);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    #catapultCanvas {
-      width: 100%;
-      height: 420px;
-      background: #f8fafc;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--color-border);
-      touch-action: none;
-    }
-
-    .game-controls-panel {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-md);
-      padding: 1.5rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .control-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .control-label-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-
-    .control-value-badge {
-      font-family: var(--font-mono);
-      font-size: 0.95rem;
-      color: var(--color-primary);
-      background: var(--color-primary-light);
-      padding: 0.15rem 0.6rem;
-      border-radius: var(--radius-sm);
-    }
-
-    .preset-btns {
-      display: flex;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-    }
-
-    .preset-btn {
-      padding: 0.25rem 0.5rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-sm);
-      background: var(--color-surface-muted);
-      cursor: pointer;
-      color: var(--color-text);
-      transition: all 0.15s;
-    }
-
-    .preset-btn:hover {
-      border-color: var(--color-primary);
-      color: var(--color-primary);
-    }
-
-    .mode-btn, .proj-btn {
-      padding: 0.4rem 0.8rem;
-      font-size: 0.85rem;
-      font-weight: 600;
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-sm);
-      background: var(--color-surface);
-      cursor: pointer;
-      color: var(--color-text);
-      transition: all 0.15s;
-    }
-
-    .mode-btn.active, .proj-btn.active {
-      background: var(--color-primary);
-      color: #fff;
-      border-color: var(--color-primary);
-    }
-
-    .launch-btn {
-      background: linear-gradient(135deg, #ef4444, #f97316);
-      color: #fff;
-      font-size: 1.15rem;
-      font-weight: 700;
-      padding: 0.85rem 2rem;
-      border: none;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      width: 100%;
-    }
-
-    .launch-btn:hover {
-      background: linear-gradient(135deg, #dc2626, #ea580c);
-      transform: scale(1.02);
-      box-shadow: 0 6px 14px rgba(239, 68, 68, 0.5);
-    }
-
-    .launch-btn:active {
-      transform: scale(0.98);
-    }
-
-    .scoreboard {
-      display: flex;
-      gap: 1.5rem;
-      align-items: center;
-    }
-
-    .score-badge {
-      background: var(--color-surface-muted);
-      border: 1px solid var(--color-border);
-      padding: 0.4rem 0.85rem;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-
-    .score-badge strong {
-      font-family: var(--font-mono);
-      font-size: 1.15rem;
-      color: var(--color-primary);
+      line-height: 1.5;
     }
 
     /* Footer */
     footer {
-      border-top: 1px solid var(--color-border);
-      padding: 2.5rem 1.5rem;
+      border-top: 1.5px solid var(--color-border);
+      padding: 3rem 1.5rem;
       margin-top: 4rem;
       text-align: center;
-      font-size: 0.875rem;
+      font-size: 0.92rem;
       color: var(--color-text-muted);
+      line-height: 1.8;
     }
 
     /* Print Styles */
@@ -1068,31 +1250,46 @@
       body {
         background: #ffffff !important;
         color: #000000 !important;
+        font-size: 11pt !important;
+        line-height: 1.5 !important;
       }
-      .navbar, .sidebar, .nav-right, footer, .game-callout, #gameView, .drawer-overlay, .drawer-menu, #toastContainer {
+      .navbar, .accordion-toolbar, footer, .game-callout, #gameView, .drawer-overlay, .drawer-menu, #toastContainer, .accordion-toggle-icon {
         display: none !important;
       }
       #lessonView {
         display: block !important;
       }
       .layout-container {
-        display: block !important;
+        max-width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
-        max-width: 100% !important;
       }
-      .hero-card, .section-card {
-        border: 1px solid #000000 !important;
+      details.accordion-item {
+        border: 1px solid #333333 !important;
+        margin-bottom: 1rem !important;
+        break-inside: avoid;
+        box-shadow: none !important;
+      }
+      details.accordion-item > summary {
+        border-bottom: 1px solid #333333 !important;
+      }
+      details.accordion-item > .accordion-content {
+        display: block !important;
+        padding: 1rem !important;
+      }
+      .hero-card {
+        border: 1px solid #333333 !important;
         box-shadow: none !important;
         margin-bottom: 1.5rem !important;
-        page-break-inside: avoid;
+        break-inside: avoid;
       }
       table, th, td {
-        border: 1px solid #000000 !important;
+        border: 1px solid #333333 !important;
         color: #000000 !important;
+        font-size: 10pt !important;
       }
       th {
-        background: #f0f0f0 !important;
+        background: #eeeeee !important;
       }
     }
   </style>
@@ -1100,54 +1297,88 @@
 <body>
 
   <!-- ==========================================================================
-       Top Navigation Bar
+       Top Navigation Bar (功能列)
        ========================================================================== -->
   <header class="navbar">
     <div class="nav-container">
       
-      <!-- Left: Hamburger Menu Button + Title -->
+      <!-- Left: Hamburger Button + Title -->
       <div class="nav-left">
-        <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleDrawer()" aria-label="打開導覽選單" data-tooltip="打開功能選單" data-tooltip-pos="bottom">
-          <span class="hamburger-bar"></span>
-          <span class="hamburger-bar"></span>
-          <span class="hamburger-bar"></span>
+        <button class="btn-icon-outline" id="hamburgerBtn" onclick="toggleDrawer()" aria-label="打開導覽選單" data-tooltip="章節與功能選單" data-tooltip-pos="bottom">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
         </button>
 
-        <a href="#" onclick="switchView('lesson')" class="nav-brand">
-          <span style="font-size:1.3rem">🏹</span>
+        <a href="#" onclick="navigateToSection('overview'); return false;" class="nav-brand">
           <span class="nav-title-text">科技領域教材教法_張宗智、吳立安、黃勁允、翁苙維</span>
           <span class="nav-badge">108 課綱</span>
         </a>
       </div>
 
-      <!-- Right: Frameless Action Buttons (無外框按鈕) & Game Trigger -->
+      <!-- Right: Linear Outline Buttons -->
       <div class="nav-right">
-        <!-- Switch to Lesson Plan (Frameless) -->
-        <button class="btn-frameless" id="navLessonBtn" onclick="switchView('lesson')" data-tooltip="瀏覽完整教案內文" data-tooltip-pos="bottom">
-          📖 完整教案
+        
+        <!-- Quick Chapter Dropdown Menu (Desktop / Tablet) -->
+        <div class="nav-dropdown-wrapper">
+          <button class="btn-outline btn-outline-sm" id="chapterDropdownBtn" onclick="toggleChapterDropdown(event)">
+            <span>章節導覽</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="nav-dropdown-menu" id="chapterDropdownMenu">
+            <div class="dropdown-header">教案章節快速導覽</div>
+            <a href="#overview" class="dropdown-item" onclick="navigateToSection('overview'); event.preventDefault();">教案概述與基本資料</a>
+            <a href="#matrix" class="dropdown-item" onclick="navigateToSection('matrix'); event.preventDefault();">一、雙向細目表</a>
+            <a href="#summary" class="dropdown-item" onclick="navigateToSection('summary'); event.preventDefault();">二、專題摘要與 STEAM 架構</a>
+            <a href="#evaluation" class="dropdown-item" onclick="navigateToSection('evaluation'); event.preventDefault();">三、評量方式表</a>
+            <a href="#framework" class="dropdown-item" onclick="navigateToSection('framework'); event.preventDefault();">四、5 節課 STEM PBL 架構</a>
+            <a href="#act1" class="dropdown-item" onclick="navigateToSection('act1'); event.preventDefault();">第 1 節：原理探索篇</a>
+            <a href="#act2" class="dropdown-item" onclick="navigateToSection('act2'); event.preventDefault();">第 2 節：數位模擬篇</a>
+            <a href="#act3" class="dropdown-item" onclick="navigateToSection('act3'); event.preventDefault();">第 3 節：實體組裝篇</a>
+            <a href="#act4" class="dropdown-item" onclick="navigateToSection('act4'); event.preventDefault();">第 4 節：彈性調校篇</a>
+            <a href="#act5" class="dropdown-item" onclick="navigateToSection('act5'); event.preventDefault();">第 5 節：數據發表篇</a>
+            <a href="#feedback" class="dropdown-item" onclick="navigateToSection('feedback'); event.preventDefault();">六、教學回饋與安全規範</a>
+          </div>
+        </div>
+
+        <!-- Mode Switch: Lesson Plan -->
+        <button class="btn-outline btn-outline-sm active" id="navLessonBtn" onclick="switchView('lesson')">
+          <span class="nav-text-btn">完整教案</span>
         </button>
 
-        <!-- Switch to Game (Pill Accent) -->
-        <button class="btn btn-game-accent" id="navGameBtn" onclick="switchView('game')" data-tooltip="進入投石戰車拋射小遊戲" data-tooltip-pos="bottom">
-          🎮 互動式小遊戲
+        <!-- Mode Switch: Game -->
+        <button class="btn-outline btn-outline-sm" id="navGameBtn" onclick="switchView('game')">
+          <span class="nav-text-btn">互動小遊戲</span>
         </button>
 
-        <!-- Day / Night Frameless Switcher Button (無外框按鈕) -->
-        <button class="btn-icon-frameless" id="themeToggleBtn" onclick="toggleTheme()" aria-label="切換深淺模式" data-tooltip="切換白天 / 黑夜主題" data-tooltip-pos="bottom">
-          ☀️
+        <!-- Day / Night Theme Switcher -->
+        <button class="btn-icon-outline" id="themeToggleBtn" onclick="toggleTheme()" aria-label="切換主題模式" data-tooltip="切換白天 / 黑夜主題" data-tooltip-pos="bottom">
+          <!-- Injected via JS -->
         </button>
 
-        <!-- Print Action (Frameless) -->
-        <button class="btn-icon-frameless" onclick="triggerPrint()" aria-label="列印或輸出 PDF" data-tooltip="列印 / 匯出 PDF" data-tooltip-pos="bottom">
-          🖨️
+        <!-- Print Action -->
+        <button class="btn-icon-outline" onclick="triggerPrint()" aria-label="列印或輸出 PDF" data-tooltip="列印 / 匯出 PDF" data-tooltip-pos="bottom">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
         </button>
 
-        <!-- Info Modal Trigger (Frameless) -->
-        <button class="btn-icon-frameless" onclick="openModal('infoModal')" aria-label="課程資訊" data-tooltip="團隊與課程簡介" data-tooltip-pos="bottom">
-          ℹ️
+        <!-- Info Modal Trigger -->
+        <button class="btn-icon-outline" onclick="openModal('infoModal')" aria-label="課程資訊" data-tooltip="課程與團隊簡介" data-tooltip-pos="bottom">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
         </button>
+
       </div>
-
     </div>
   </header>
 
@@ -1157,84 +1388,85 @@
   <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer(false)"></div>
   <aside class="drawer-menu" id="drawerMenu" aria-label="導覽選單">
     <div class="drawer-header">
-      <div class="drawer-header-title">
-        <span>📖 功能導覽選單</span>
-      </div>
-      <button class="btn-icon-frameless" onclick="toggleDrawer(false)" aria-label="關閉選單">
-        ✕
+      <div class="drawer-header-title">功能導覽選單</div>
+      <button class="btn-icon-outline" onclick="toggleDrawer(false)" aria-label="關閉選單">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
       </button>
     </div>
 
     <div class="drawer-body">
-      <!-- Section 1: 主要功能切換 -->
+      <!-- Section 1: 主要模式切換 -->
       <div>
-        <div class="drawer-group-title">🎯 核心檢視切換</div>
+        <div class="drawer-group-title">核心檢視切換</div>
         <ul class="drawer-nav-list">
           <li>
-            <a href="#" class="drawer-nav-link active" id="drawerLessonLink" onclick="switchView('lesson'); toggleDrawer(false)">
-              <span>📖</span> 完整教案檢視
+            <a href="#" class="drawer-nav-link active" id="drawerLessonLink" onclick="switchView('lesson'); toggleDrawer(false); return false;">
+              完整教案檢視
             </a>
           </li>
           <li>
-            <a href="#" class="drawer-nav-link" id="drawerGameLink" onclick="switchView('game'); toggleDrawer(false)">
-              <span>🎮</span> 投石戰車互動小遊戲
+            <a href="#" class="drawer-nav-link" id="drawerGameLink" onclick="switchView('game'); toggleDrawer(false); return false;">
+              投石戰車互動小遊戲
             </a>
           </li>
         </ul>
       </div>
 
-      <!-- Section 2: 教學彈窗 (Modals) -->
+      <!-- Section 2: 教案章節速覽 -->
       <div>
-        <div class="drawer-group-title">💡 輔助速查彈窗 (Modals)</div>
+        <div class="drawer-group-title">教案章節快速導覽</div>
+        <ul class="drawer-nav-list">
+          <li><a href="#overview" class="drawer-nav-link" onclick="navigateToSection('overview'); return false;">基本資料與專案摘要</a></li>
+          <li><a href="#matrix" class="drawer-nav-link" onclick="navigateToSection('matrix'); return false;">一、雙向細目表</a></li>
+          <li><a href="#summary" class="drawer-nav-link" onclick="navigateToSection('summary'); return false;">二、專題摘要與 STEAM 架構</a></li>
+          <li><a href="#evaluation" class="drawer-nav-link" onclick="navigateToSection('evaluation'); return false;">三、評量方式表</a></li>
+          <li><a href="#framework" class="drawer-nav-link" onclick="navigateToSection('framework'); return false;">四、5 節課 STEM PBL 架構</a></li>
+          <li><a href="#act1" class="drawer-nav-link" onclick="navigateToSection('act1'); return false;">第 1 節：原理探索篇</a></li>
+          <li><a href="#act2" class="drawer-nav-link" onclick="navigateToSection('act2'); return false;">第 2 節：數位模擬篇</a></li>
+          <li><a href="#act3" class="drawer-nav-link" onclick="navigateToSection('act3'); return false;">第 3 節：實體組裝篇</a></li>
+          <li><a href="#act4" class="drawer-nav-link" onclick="navigateToSection('act4'); return false;">第 4 節：彈性調校篇</a></li>
+          <li><a href="#act5" class="drawer-nav-link" onclick="navigateToSection('act5'); return false;">第 5 節：數據發表篇</a></li>
+          <li><a href="#feedback" class="drawer-nav-link" onclick="navigateToSection('feedback'); return false;">六、教學回饋與安全規範</a></li>
+        </ul>
+      </div>
+
+      <!-- Section 3: 輔助彈窗 -->
+      <div>
+        <div class="drawer-group-title">輔助速查彈窗</div>
         <ul class="drawer-nav-list">
           <li>
-            <a href="#" class="drawer-nav-link" onclick="openModal('infoModal'); toggleDrawer(false)">
-              <span>ℹ️</span> 課程簡介與研發團隊
+            <a href="#" class="drawer-nav-link" onclick="openModal('infoModal'); toggleDrawer(false); return false;">
+              課程簡介與研發團隊
             </a>
           </li>
           <li>
-            <a href="#" class="drawer-nav-link" onclick="openModal('gameGuideModal'); toggleDrawer(false)">
-              <span>🏹</span> 遊戲玩法與物理原理攻略
+            <a href="#" class="drawer-nav-link" onclick="openModal('gameGuideModal'); toggleDrawer(false); return false;">
+              遊戲玩法與物理原理攻略
             </a>
           </li>
           <li>
-            <a href="#" class="drawer-nav-link" onclick="openModal('rubricsModal'); toggleDrawer(false)">
-              <span>📊</span> 5 階段評量規準（Rubrics）
+            <a href="#" class="drawer-nav-link" onclick="openModal('rubricsModal'); toggleDrawer(false); return false;">
+              5 階段評量規準（Rubrics）
             </a>
           </li>
           <li>
-            <a href="#" class="drawer-nav-link" onclick="openModal('exportModal'); toggleDrawer(false)">
-              <span>📥</span> 測試數據預覽與匯出
+            <a href="#" class="drawer-nav-link" onclick="openModal('exportModal'); toggleDrawer(false); return false;">
+              測試數據預覽與匯出
             </a>
           </li>
         </ul>
       </div>
 
-      <!-- Section 3: 教案章節跳轉 -->
+      <!-- Section 4: 外部專案 -->
       <div>
-        <div class="drawer-group-title">📑 教案章節速覽</div>
-        <ul class="drawer-nav-list">
-          <li><a href="#overview" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">基本資料與專案摘要</a></li>
-          <li><a href="#matrix" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">一、雙向細目表</a></li>
-          <li><a href="#summary" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">二、專題摘要與 STEAM</a></li>
-          <li><a href="#evaluation" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">三、評量方式</a></li>
-          <li><a href="#framework" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">四、5 節課 STEM PBL 架構</a></li>
-          <li><a href="#act1" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">第 1 節：原理探索篇</a></li>
-          <li><a href="#act2" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">第 2 節：數位模擬篇</a></li>
-          <li><a href="#act3" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">第 3 節：實體組裝篇</a></li>
-          <li><a href="#act4" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">第 4 節：彈性調校篇</a></li>
-          <li><a href="#act5" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">第 5 節：數據發表篇</a></li>
-          <li><a href="#feedback" class="drawer-nav-link" onclick="switchView('lesson'); toggleDrawer(false)">六、教學回饋與參考資料</a></li>
-        </ul>
-      </div>
-
-      <!-- Section 4: 外部連結 -->
-      <div>
-        <div class="drawer-group-title">🔗 外部專案與原始碼</div>
+        <div class="drawer-group-title">外部專案與原始碼</div>
         <ul class="drawer-nav-list">
           <li>
             <a href="https://github.com/leeonweng/TMD" target="_blank" rel="noopener noreferrer" class="drawer-nav-link">
-              <span>🐙</span> GitHub 儲存庫
+              GitHub 專案儲存庫
             </a>
           </li>
         </ul>
@@ -1242,8 +1474,8 @@
     </div>
 
     <div class="drawer-footer">
-      <div>科技領域教材教法 · 108 課綱</div>
-      <div style="font-size:0.75rem; margin-top:2px;">張宗智、吳立安、黃勁允、翁苙維</div>
+      <div style="font-weight:700;">科技領域教材教法 · 108 課綱</div>
+      <div style="margin-top:2px;">張宗智、吳立安、黃勁允、翁苙維</div>
     </div>
   </aside>
 
@@ -1253,86 +1485,101 @@
   <div id="toastContainer" aria-live="polite"></div>
 
   <!-- ==========================================================================
-       Modals (<dialog> Elements)
+       Modals (<dialog> Elements - Clean Line Design)
        ========================================================================== -->
   
   <!-- Modal 1: 課程簡介與研發團隊 -->
   <dialog id="infoModal" class="modal-dialog">
     <div class="modal-header">
-      <div class="modal-title">ℹ️ 課程簡介與教學設計團隊</div>
-      <button class="btn-icon-frameless" onclick="closeModal('infoModal')">✕</button>
+      <div class="modal-title">課程簡介與教學設計團隊</div>
+      <button class="btn-icon-outline" onclick="closeModal('infoModal')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
     </div>
     <div class="modal-body">
-      <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--color-primary)">
+      <h3 style="font-size: 1.25rem; font-weight:800; margin-bottom: 0.5rem; color: var(--color-primary)">
         科技領域教材教法：拋物線上的科學家
       </h3>
-      <p style="color: var(--color-text-muted); margin-bottom: 1rem;">
+      <p style="color: var(--color-text-muted); margin-bottom: 1.25rem;">
         本教案為國小六年級科技領域與自然科學領域之跨領域整合 STEM PBL 教案，榮獲教學設計優質模組。
       </p>
-      <div style="background: var(--color-surface-muted); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1rem;">
-        <p><strong>👥 教學設計團隊：</strong>張宗智、吳立安、黃勁允、翁苙維</p>
-        <p><strong>📅 版本日期：</strong>109 年 6 月 21 日修正版</p>
-        <p><strong>⏱️ 課程節數：</strong>自然領域 1 節 + 科技領域 4 節，共 5 節（200 分鐘）</p>
-        <p><strong>🎯 核心素養：</strong>A2 系統思考與解決問題、C2 人際關係與團隊合作</p>
+      <div style="background: var(--color-surface-muted); padding: 1.2rem; border-radius: var(--radius-sm); border: 1px solid var(--color-border); margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem;">
+        <p><strong>教學設計團隊：</strong>張宗智、吳立安、黃勁允、翁苙維</p>
+        <p><strong>版本日期：</strong>109 年 6 月 21 日修正版</p>
+        <p><strong>課程節數：</strong>自然領域 1 節 + 科技領域 4 節，共 5 節（200 分鐘）</p>
+        <p><strong>核心素養：</strong>A2 系統思考與解決問題、C2 人際關係與團隊合作</p>
       </div>
-      <p style="font-size: 0.9rem; color: var(--color-text-muted);">
+      <p style="font-size: 0.95rem; color: var(--color-text-muted);">
         結合動手雷切木造組裝、電腦物理拋射模擬與折線圖數據分析，讓學生以「科學偵探」身份掌握能量守恆與槓桿力學原理。
       </p>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-primary" onclick="closeModal('infoModal')">我知道了</button>
+      <button class="btn-outline btn-outline-primary" onclick="closeModal('infoModal')">我知道了</button>
     </div>
   </dialog>
 
   <!-- Modal 2: 遊戲攻略與物理原理 -->
   <dialog id="gameGuideModal" class="modal-dialog">
     <div class="modal-header">
-      <div class="modal-title">🏹 投石戰車玩法攻略與物理原理解析</div>
-      <button class="btn-icon-frameless" onclick="closeModal('gameGuideModal')">✕</button>
+      <div class="modal-title">投石戰車玩法攻略與物理原理解析</div>
+      <button class="btn-icon-outline" onclick="closeModal('gameGuideModal')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
     </div>
     <div class="modal-body">
-      <div style="display:flex; flex-direction:column; gap:1rem;">
+      <div style="display:flex; flex-direction:column; gap:1.25rem;">
         <div>
-          <strong style="color:var(--color-primary)">1. 拋射角度與理論極值：</strong>
-          <p style="font-size:0.9rem; color:var(--color-text-muted); margin-top:0.25rem;">
+          <strong style="color:var(--color-primary); font-size:1.05rem; display:block; margin-bottom:0.35rem;">1. 拋射角度與理論極值：</strong>
+          <p style="color:var(--color-text); line-height:1.75;">
             根據物理拋體運動方程式，在無空氣阻力理想狀態下，水平拋射距離為 \( R = \frac{v_0^2 \sin(2\theta)}{g} \)。當發射角度為 <strong>45°</strong> 時，\( \sin(90^\circ) = 1 \)，射程達到理論最大值！
           </p>
         </div>
         <div>
-          <strong style="color:var(--color-primary)">2. 橡皮筋彈性位能與初速度：</strong>
-          <p style="font-size:0.9rem; color:var(--color-text-muted); margin-top:0.25rem;">
+          <strong style="color:var(--color-primary); font-size:1.05rem; display:block; margin-bottom:0.35rem;">2. 橡皮筋彈性位能與初速度：</strong>
+          <p style="color:var(--color-text); line-height:1.75;">
             橡皮筋拉長時儲存彈性位能 \( E_p = \frac{1}{2}kx^2 \)，釋放瞬間轉換為拋射物動能 \( E_k = \frac{1}{2}mv^2 \)。拉力越強或彈力係數越大，出膛初速度 \( v_0 \) 越快。
           </p>
         </div>
         <div>
-          <strong style="color:var(--color-primary)">3. 拋射材質與空氣阻力差異：</strong>
-          <p style="font-size:0.9rem; color:var(--color-text-muted); margin-top:0.25rem;">
-            - <strong>⚪ 乒乓球</strong>：質量極輕（約 2.7g），受空氣阻力顯著，拋物線快速墜落。<br>
-            - <strong>🟠 黏土球</strong>：質量適中，軌跡平穩，適合基準實驗。<br>
-            - <strong>🔵 彈珠</strong>：質量高且密實，穿透力最強，受風阻影響最小，飛行最遠。
-          </p>
+          <strong style="color:var(--color-primary); font-size:1.05rem; display:block; margin-bottom:0.35rem;">3. 拋射材質與空氣阻力差異：</strong>
+          <ul style="margin-left:1.5rem; color:var(--color-text); line-height:1.75;">
+            <li><strong>乒乓球</strong>：質量極輕（約 2.7g），受空氣阻力顯著，拋物線快速墜落。</li>
+            <li><strong>黏土球</strong>：質量適中（約 20g），軌跡平穩，適合基準實驗。</li>
+            <li><strong>彈珠</strong>：質量高且密實（約 35g），穿透力最強，受風阻影響最小，飛行最遠。</li>
+          </ul>
         </div>
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-primary" onclick="closeModal('gameGuideModal')">開始挑戰！</button>
+      <button class="btn-outline btn-outline-primary" onclick="closeModal('gameGuideModal')">開始挑戰</button>
     </div>
   </dialog>
 
   <!-- Modal 3: 評量規準速查 (Rubrics) -->
   <dialog id="rubricsModal" class="modal-dialog">
     <div class="modal-header">
-      <div class="modal-title">📊 5 向度學習評量規準（Rubrics）</div>
-      <button class="btn-icon-frameless" onclick="closeModal('rubricsModal')">✕</button>
+      <div class="modal-title">5 向度學習評量規準（Rubrics）</div>
+      <button class="btn-icon-outline" onclick="closeModal('rubricsModal')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
     </div>
     <div class="modal-body">
       <div class="table-container">
         <table>
           <thead>
             <tr>
-              <th style="width: 20%">評量向度</th>
-              <th style="width: 27%">優秀（4分）</th>
-              <th style="width: 27%">良好（3分）</th>
+              <th style="width: 22%">評量向度</th>
+              <th style="width: 26%">優秀（4分）</th>
+              <th style="width: 26%">良好（3分）</th>
               <th>待加強（2分）</th>
             </tr>
           </thead>
@@ -1366,112 +1613,131 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-primary" onclick="closeModal('rubricsModal')">關閉</button>
+      <button class="btn-outline" onclick="closeModal('rubricsModal')">關閉</button>
     </div>
   </dialog>
 
   <!-- Modal 4: 數據匯出預覽 -->
   <dialog id="exportModal" class="modal-dialog">
     <div class="modal-header">
-      <div class="modal-title">📥 測試數據匯出與分析</div>
-      <button class="btn-icon-frameless" onclick="closeModal('exportModal')">✕</button>
+      <div class="modal-title">測試數據匯出與分析</div>
+      <button class="btn-icon-outline" onclick="closeModal('exportModal')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
     </div>
     <div class="modal-body">
-      <p style="font-size:0.9rem; color:var(--color-text-muted); margin-bottom:1rem;">
+      <p style="color:var(--color-text-muted); margin-bottom:1rem;">
         已將您於小遊戲中所進行的發射測試數據整理為 CSV 格式，可直接複製或下載匯入 Excel / Google Sheets 繪製折線圖（對應教案活動五）。
       </p>
-      <textarea id="csvExportArea" readonly style="width:100%; height:160px; font-family:var(--font-mono); font-size:0.85rem; padding:0.75rem; border-radius:var(--radius-sm); border:1px solid var(--color-border); background:var(--color-surface-muted); color:var(--color-text);"></textarea>
+      <textarea id="csvExportArea" readonly style="width:100%; height:180px; font-family:var(--font-mono); font-size:0.9rem; padding:0.85rem; border-radius:var(--radius-sm); border:1.5px solid var(--color-border); background:var(--color-surface-muted); color:var(--color-text); line-height:1.6;"></textarea>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-frameless" onclick="closeModal('exportModal')">取消</button>
-      <button class="btn btn-primary" onclick="copyCSVData()">📋 複製數據到剪貼簿</button>
+      <button class="btn-outline" onclick="closeModal('exportModal')">關閉</button>
+      <button class="btn-outline btn-outline-primary" onclick="copyCSVData()">複製數據到剪貼簿</button>
     </div>
   </dialog>
 
   <!-- ==========================================================================
-       VIEW 1: 完整教案檢視 (Lesson Plan View)
+       VIEW 1: 完整教案檢視 (Lesson Plan View) - 寬敞單欄居中閱讀
        ========================================================================== -->
   <div id="lessonView" class="view-section active">
     <div class="layout-container">
       
-      <!-- Sticky Sidebar -->
-      <aside class="sidebar">
-        <nav class="toc-card">
-          <div class="toc-title">教案章節導覽</div>
-          <ul class="toc-list">
-            <li><a href="#overview" class="toc-link">教案概述與基本資料</a></li>
-            <li><a href="#matrix" class="toc-link">一、雙向細目表</a></li>
-            <li><a href="#summary" class="toc-link">二、專題摘要與 STEAM</a></li>
-            <li><a href="#evaluation" class="toc-link">三、評量方式</a></li>
-            <li><a href="#framework" class="toc-link">四、5 節課 STEM PBL 架構</a></li>
-            <li><a href="#act1" class="toc-link">第 1 節：原理探索篇</a></li>
-            <li><a href="#act2" class="toc-link">第 2 節：數位模擬篇</a></li>
-            <li><a href="#act3" class="toc-link">第 3 節：實體組裝篇</a></li>
-            <li><a href="#act4" class="toc-link">第 4 節：彈性調校篇</a></li>
-            <li><a href="#act5" class="toc-link">第 5 節：數據發表篇</a></li>
-            <li><a href="#feedback" class="toc-link">六、教學回饋與參考資料</a></li>
-          </ul>
-        </nav>
-      </aside>
+      <!-- Hero Card (教案基本資料與專案摘要) -->
+      <section class="hero-card" id="overview">
+        <div class="hero-pretitle">國小科技領域教案 · 109 年 6 月 21 日修正版</div>
+        <h1 class="hero-title">科技領域教材教法_張宗智、吳立安、黃勁允、翁苙維</h1>
+        <div class="hero-subtitle">教案名稱：拋物線上的科學家：投石戰車探究與角度大解密</div>
+        <p class="hero-desc">
+          本課程旨在引導六年級學生透過投石戰車的動手實作與電腦虛擬模擬，理解彈性位能、動能轉換及槓桿原理。課程結合運算思維、數據記錄與折線圖分析，在團隊合作中探究最佳拋射角度與拋射距離優化。
+        </p>
 
-      <!-- Main Content Area -->
-      <main class="content-area">
+        <!-- Interactive Game Callout Banner -->
+        <div class="game-callout">
+          <div>
+            <div class="callout-title">教學互動式小遊戲</div>
+            <div class="callout-desc">
+              已將教案中第二節「數位模擬篇」與第四節「彈性與角度實測」轉化為線上互動物理模擬與攻城挑戰。
+            </div>
+          </div>
+          <button class="btn-outline btn-outline-primary" onclick="switchView('game')">
+            <span>進入遊戲模擬</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
         
-        <!-- Hero Card -->
-        <section class="hero-card" id="overview">
-          <div class="hero-pretitle">國小科技領域教案 · 109 年 6 月 21 日修正版</div>
-          <h1 class="hero-title">科技領域教材教法_張宗智、吳立安、黃勁允、翁苙維</h1>
-          <div class="hero-subtitle">教案名稱：拋物線上的科學家：投石戰車探究與角度大解密</div>
-          <p class="hero-desc">
-            本課程旨在引導六年級學生透過投石戰車的動手實作與電腦虛擬模擬，理解彈性位能、動能轉換及槓桿原理。課程結合運算思維、數據記錄與折線圖分析，在團隊合作中探究最佳拋射角度與拋射距離優化。
-          </p>
-
-          <!-- Interactive Game Banner Callout -->
-          <div class="game-callout">
-            <div>
-              <strong style="font-size: 1.05rem; color: var(--color-warning); display: block; margin-bottom: 0.25rem;">🎮 內建教學互動式小遊戲</strong>
-              <span style="font-size: 0.9rem; color: var(--color-text-muted);">
-                已將教案中第二節「數位模擬篇」與第四節「彈性與角度實測」轉化為線上互動物理模擬與攻城挑戰！
-              </span>
-            </div>
-            <button class="btn btn-game-accent" onclick="switchView('game')">
-              立即進入遊戲 ▶
-            </button>
+        <div class="meta-grid">
+          <div class="meta-item">
+            <span class="meta-label">教學設計者</span>
+            <span class="meta-value">張宗智、吳立安、黃勁允、翁苙維</span>
           </div>
-          
-          <div class="meta-grid">
-            <div class="meta-item">
-              <span class="meta-label">教學設計者</span>
-              <span class="meta-value">張宗智、吳立安、黃勁允、翁苙維</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">實施年級與對象</span>
-              <span class="meta-value">國小六年級</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">領域別與節數</span>
-              <span class="meta-value">自然（1節）+ 科技（4節）共 5 節 (200 分鐘)</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">教學設備</span>
-              <span class="meta-value">雷切木製投石器、電腦、學習單</span>
-            </div>
+          <div class="meta-item">
+            <span class="meta-label">實施年級與對象</span>
+            <span class="meta-value">國小六年級</span>
           </div>
-        </section>
+          <div class="meta-item">
+            <span class="meta-label">領域別與節數</span>
+            <span class="meta-value">自然（1節）+ 科技（4節）共 5 節 (200 分鐘)</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">教學設備</span>
+            <span class="meta-value">雷切木製投石器、電腦、學習單</span>
+          </div>
+        </div>
+      </section>
 
-        <!-- 一、雙向細目表 -->
-        <section class="section-card" id="matrix">
-          <h2 class="section-heading">📑 一、雙向細目表</h2>
-          <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 1rem;">
+      <!-- Accordion Toolbar: 全部展開 / 全部收合 -->
+      <div class="accordion-toolbar">
+        <div class="toolbar-label">
+          <span>教案章節內容收合導覽</span>
+        </div>
+        <div class="toolbar-actions">
+          <button class="btn-outline btn-outline-sm" onclick="expandAllAccordions(true)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="7 13 12 18 17 13"></polyline>
+              <polyline points="7 6 12 11 17 6"></polyline>
+            </svg>
+            <span>全部展開</span>
+          </button>
+          <button class="btn-outline btn-outline-sm" onclick="expandAllAccordions(false)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="7 11 12 6 17 11"></polyline>
+              <polyline points="7 18 12 13 17 18"></polyline>
+            </svg>
+            <span>全部收合</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 一、雙向細目表（摺疊收合） -->
+      <details class="accordion-item" id="matrix" open>
+        <summary class="accordion-summary">
+          <div class="accordion-title-group">
+            <h2 class="accordion-title">一、雙向細目表</h2>
+            <p class="accordion-subtitle">融入領綱學習重點及國小科技與資訊教育學習表現之雙向檢核</p>
+          </div>
+          <div class="accordion-toggle-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </summary>
+        <div class="accordion-content">
+          <p style="color: var(--color-text-muted); margin-bottom: 1.25rem;">
             （以融入領綱學習重點及國小科技教育及資訊教育課程發展參考說明之學習重點，規劃與撰寫）
           </p>
           <div class="table-container">
             <table>
               <thead>
                 <tr>
-                  <th style="width: 25%">學習表現 \ 學習內容</th>
+                  <th style="width: 26%">學習表現 \ 學習內容</th>
                   <th style="width: 25%">科議 N-Ⅲ-1：科技的基本特性<br>自 INb-Ⅲ-4：力可藉由簡單機械傳遞</th>
-                  <th style="width: 25%">科議 P-Ⅲ-1：基本的造形與設計</th>
+                  <th style="width: 24%">科議 P-Ⅲ-1：基本的造形與設計</th>
                   <th style="width: 25%">科議 P-Ⅲ-2：工具與材料的使用方法</th>
                   <th style="width: 25%">資議 D-Ⅲ-2：系統化資料管理方法</th>
                 </tr>
@@ -1518,59 +1784,85 @@
               </tbody>
             </table>
           </div>
-        </section>
+        </div>
+      </details>
 
-        <!-- 二、教案概述 -->
-        <section class="section-card" id="summary">
-          <h2 class="section-heading">💡 二、教案概述與 STEAM 架構</h2>
-          
+      <!-- 二、專題摘要與 STEAM 架構（摺疊收合） -->
+      <details class="accordion-item" id="summary" open>
+        <summary class="accordion-summary">
+          <div class="accordion-title-group">
+            <h2 class="accordion-title">二、專題摘要與 STEAM 架構</h2>
+            <p class="accordion-subtitle">跨領域學科整合（S-T-E-A-M）、核心素養指標與先備知識說明</p>
+          </div>
+          <div class="accordion-toggle-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </summary>
+        <div class="accordion-content">
           <div class="steam-grid">
             <div class="steam-card">
               <div class="steam-card-title">S（科學 Science）</div>
-              <p style="font-size: 0.875rem; color: var(--color-text-muted);">彈性位能儲存與釋放、動能轉換歷程、槓桿原理（支點、施力點、負載點）。</p>
+              <p style="color: var(--color-text-muted);">彈性位能儲存與釋放、動能轉換歷程、槓桿原理（支點、施力點、負載點）。</p>
             </div>
             <div class="steam-card">
               <div class="steam-card-title">T（技術 Technology）</div>
-              <p style="font-size: 0.875rem; color: var(--color-text-muted);">運用軟體/系統模擬拋射路徑、進行數據記錄與變因控制。</p>
+              <p style="color: var(--color-text-muted);">運用軟體/系統模擬拋射路徑、進行數據記錄與變因控制。</p>
             </div>
             <div class="steam-card">
               <div class="steam-card-title">E（工程 Engineering）</div>
-              <p style="font-size: 0.875rem; color: var(--color-text-muted);">動手組裝投石戰車結構，測試不同材質彈力與結構微調對射程的影響。</p>
+              <p style="color: var(--color-text-muted);">動手組裝投石戰車結構，測試不同材質彈力與結構微調對射程的影響。</p>
             </div>
             <div class="steam-card">
               <div class="steam-card-title">A（藝術 Art）</div>
-              <p style="font-size: 0.875rem; color: var(--color-text-muted);">繪製改良投石戰車設計圖稿，並進行戰車外觀造型美化設計。</p>
+              <p style="color: var(--color-text-muted);">繪製改良投石戰車設計圖稿，並進行戰車外觀造型美化設計。</p>
             </div>
             <div class="steam-card">
               <div class="steam-card-title">M（數學 Mathematics）</div>
-              <p style="font-size: 0.875rem; color: var(--color-text-muted);">量測投石臂角度、比較射程與高度，繪製折線圖分析最佳角度與比值。</p>
+              <p style="color: var(--color-text-muted);">量測投石臂角度、比較射程與高度，繪製折線圖分析最佳角度與比值。</p>
             </div>
           </div>
 
-          <div style="margin-top: 1.5rem;">
-            <strong>總綱核心素養：</strong>
+          <div style="margin-top: 1.75rem;">
+            <strong style="font-size:1.05rem;">總綱核心素養：</strong>
             <div class="badge-group">
-              <span class="badge-pill" data-tooltip="A2 系統思考與解決問題：培養問題拆解、數位模擬與結構優化實踐能力">🎯 A2 系統思考與解決問題</span>
-              <span class="badge-pill" data-tooltip="C2 人際關係與團隊合作：小組動手共編組裝、實施測試與成果發表">🤝 C2 人際關係與團隊合作</span>
+              <span class="badge-pill" data-tooltip="A2 系統思考與解決問題：培養問題拆解、數位模擬與結構優化實踐能力">A2 系統思考與解決問題</span>
+              <span class="badge-pill" data-tooltip="C2 人際關係與團隊合作：小組動手共編組裝、實施測試與成果發表">C2 人際關係與團隊合作</span>
             </div>
           </div>
 
-          <div style="margin-top: 1.5rem;">
-            <strong>學生先備知識：</strong>
-            <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--color-text-muted);">
+          <div style="margin-top: 1.75rem;">
+            <strong style="font-size:1.05rem;">學生先備知識：</strong>
+            <ul style="margin-left: 1.5rem; margin-top: 0.65rem; color: var(--color-text-muted); line-height:1.9;">
               <li><strong>簡單機械與槓桿知識</strong>：了解槓桿的三要素（<span data-tooltip="槓桿的轉動中心點（如投石車轉軸）" style="text-decoration: underline dotted; cursor:help">支點</span>、<span data-tooltip="橡皮筋掛勾施力點" style="text-decoration: underline dotted; cursor:help">施力點</span>、<span data-tooltip="放置彈丸的拋射籃" style="text-decoration: underline dotted; cursor:help">負載點</span>）及其生活應用。</li>
               <li><strong>基礎數據記錄與圖表閱讀</strong>：具備記錄數據及讀取簡單圖表（如折線圖）的能力。</li>
               <li><strong>基礎電腦操作</strong>：具備基本電腦操作技能，能操作模擬程式與記錄數據。</li>
             </ul>
           </div>
-        </section>
+        </div>
+      </details>
 
-        <!-- 三、評量方式 -->
-        <section class="section-card" id="evaluation">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.5rem;">
-            <h2 class="section-heading" style="margin-bottom:0; border-bottom:none">📊 三、評量方式</h2>
-            <button class="btn btn-frameless" onclick="openModal('rubricsModal')" data-tooltip="開啟完整 4 分制評量向度規準">
-              📋 檢視評量規準（Rubrics）Modal ▶
+      <!-- 三、評量方式表（摺疊收合） -->
+      <details class="accordion-item" id="evaluation" open>
+        <summary class="accordion-summary">
+          <div class="accordion-title-group">
+            <h2 class="accordion-title">三、評量方式表</h2>
+            <p class="accordion-subtitle">學習表現標準、學習內容類別對應與具體評量規準（Rubrics）</p>
+          </div>
+          <div class="accordion-toggle-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </summary>
+        <div class="accordion-content">
+          <div style="display:flex; justify-content:flex-end; margin-bottom: 1.25rem;">
+            <button class="btn-outline btn-outline-sm" onclick="openModal('rubricsModal')" data-tooltip="開啟完整 4 分制評量向度規準">
+              <span>檢視評量規準（Rubrics）</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
             </button>
           </div>
           <div class="table-container">
@@ -1617,11 +1909,23 @@
               </tbody>
             </table>
           </div>
-        </section>
+        </div>
+      </details>
 
-        <!-- 四、課程設計架構圖 -->
-        <section class="section-card" id="framework">
-          <h2 class="section-heading">🗺️ 四、投石戰車 5 節課 STEM PBL 課程流程</h2>
+      <!-- 四、5 節課 STEM PBL 架構（摺疊收合） -->
+      <details class="accordion-item" id="framework" open>
+        <summary class="accordion-summary">
+          <div class="accordion-title-group">
+            <h2 class="accordion-title">四、5 節課 STEM PBL 架構</h2>
+            <p class="accordion-subtitle">從原理探索、數位模擬、實體組裝、彈性調校到數據分析發表之完整脈絡</p>
+          </div>
+          <div class="accordion-toggle-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </summary>
+        <div class="accordion-content">
           <div class="flow-grid">
             <div class="flow-step">
               <div class="flow-step-num">1</div>
@@ -1631,12 +1935,12 @@
             <div class="flow-step">
               <div class="flow-step-num">2</div>
               <div class="flow-step-title">第 2 節：數位模擬篇</div>
-              <div class="flow-step-desc">電腦模擬拋射路徑<br>戰車設計圖繪製</div>
+              <div class="flow-step-desc">電腦模擬拋射路徑<br>戰車構想設計圖繪製</div>
             </div>
             <div class="flow-step">
               <div class="flow-step-num">3</div>
               <div class="flow-step-title">第 3 節：實體組裝篇</div>
-              <div class="flow-step-desc">手工具安全規範<br>戰車底盤與支架組裝</div>
+              <div class="flow-step-desc">手工具安全防護<br>戰車底盤與支架組裝</div>
             </div>
             <div class="flow-step">
               <div class="flow-step-num">4</div>
@@ -1649,261 +1953,345 @@
               <div class="flow-step-desc">折線圖繪製與數據分析<br>小組成果報告與互評</div>
             </div>
           </div>
-        </section>
+        </div>
+      </details>
 
-        <!-- 五、教學活動步驟 -->
-        <section class="section-card" id="act1">
-          <h2 class="section-heading">⏱️ 活動一：科學偵探的力學檔案 – 槓桿與位能大解密（第 1 節，40 分鐘）</h2>
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width: 28%">教學活動 (名稱)</th>
-                  <th>活動內容 (含時間分配)</th>
-                  <th style="width: 25%">評量方式與依據</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>1. 能量線索蒐集 – 位能儲存與釋放</strong></td>
-                  <td>
-                    1. 教師使用橡皮筋與彈性玩具示範「拉開➔釋放」過程，引導觀察物體形變與運動。<br>
-                    2. 引導學生像科學偵探般推理「彈性位能」儲存與轉換為動能的過程。(5 min)<br>
-                    3. 展示投石戰車實物發射影片。<br>
-                    4. 引導思考提問（如：「橡皮筋拉越緊飛越遠嗎？」、「角度如何影響拋射距離？」）。(5 min)
-                  </td>
-                  <td>口頭問答、教師觀察。<br><strong>評量依據</strong>：能觀察現象並提出適宜探究的科學問題。</td>
-                </tr>
-                <tr>
-                  <td><strong>2. 偵探工具箱 – 槓桿原理大解密</strong></td>
-                  <td>
-                    1. 以翹翹板、剪刀、開瓶器為例，說明槓桿三要素：支點、施力點、負載點。(7 min)<br>
-                    2. 邀請學生示範不同施力點位置對省力/費力的影響。<br>
-                    3. 指導拆解投石戰車結構，找出支點（轉軸）、施力點（橡皮筋連接處）與負載點（拋射籃）。(8 min)
-                  </td>
-                  <td>口頭問答、學生舉手發表。<br><strong>評量依據</strong>：能清楚解釋槓桿原理與彈性位能，說明其在戰車上的運作方式。</td>
-                </tr>
-                <tr>
-                  <td><strong>3. 偵查腦力激盪 – 破解射程</strong></td>
-                  <td>
-                    1. 列舉生活中其他運用槓桿的工具（如指甲剪、開瓶器）。<br>
-                    2. 小組討論：如何利用槓桿原理與橡皮筋位能讓戰車拋得更遠？(10 min)
-                  </td>
-                  <td>引導式問答、小組討論紀錄。<br><strong>評量依據</strong>：能清楚解釋槓桿原理與彈性位能並思考改良。</td>
-                </tr>
-                <tr>
-                  <td><strong>4. 偵探推理總結 – 核心概念梳理</strong></td>
-                  <td>
-                    1. 歸納彈性位能轉換與槓桿原理，澄清常見迷思。<br>
-                    2. 學生填寫「第一節偵探探究日誌」（記錄提出的探究問題與槓桿結構圖）。<br>
-                    3. 下節預告：說明下節進入「數位線索實驗室」透過電腦模擬驗證假設！(5 min)
-                  </td>
-                  <td>口頭問答、學習單檢核。<br><strong>評量依據</strong>：能將觀察與討論記錄於學習單中。</td>
-                </tr>
-              </tbody>
-            </table>
+      <!-- 五、教學活動詳細步驟（第 1 ~ 5 節課，個別摺疊卡片） -->
+      <div id="activities" class="activities-wrapper">
+        <div class="section-title-wrap">
+          <h2 class="section-title">五、教學活動詳細步驟</h2>
+          <p class="section-subtitle">第 1 至第 5 節課循序漸進之實施步驟、時間分配與評量檢核</p>
+        </div>
+
+        <!-- Activity 1 -->
+        <details class="accordion-item" id="act1" open>
+          <summary class="accordion-summary">
+            <div class="accordion-title-group">
+              <h3 class="accordion-title">第 1 節：原理探索篇 – 槓桿與位能大解密</h3>
+              <p class="accordion-subtitle">40 分鐘 · 能量線索蒐集、槓桿三要素解析、探究問題提出</p>
+            </div>
+            <div class="accordion-toggle-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
+          </summary>
+          <div class="accordion-content">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 28%">教學活動 (名稱)</th>
+                    <th>活動內容 (含時間分配)</th>
+                    <th style="width: 25%">評量方式與依據</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>1. 能量線索蒐集 – 位能儲存與釋放</strong></td>
+                    <td>
+                      1. 教師使用橡皮筋與彈性玩具示範「拉開 → 釋放」過程，引導觀察物體形變與運動。<br>
+                      2. 引導學生像科學偵探般推理「彈性位能」儲存與轉換為動能的過程。(5 min)<br>
+                      3. 展示投石戰車實物發射影片。<br>
+                      4. 引導思考提問（如：「橡皮筋拉越緊飛越遠嗎？」、「角度如何影響拋射距離？」）。(5 min)
+                    </td>
+                    <td>口頭問答、教師觀察。<br><strong>評量依據</strong>：能觀察現象並提出適宜探究的科學問題。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>2. 偵探工具箱 – 槓桿原理大解密</strong></td>
+                    <td>
+                      1. 以翹翹板、剪刀、開瓶器為例，說明槓桿三要素：支點、施力點、負載點。(7 min)<br>
+                      2. 邀請學生示範不同施力點位置對省力/費力的影響。<br>
+                      3. 指導拆解投石戰車結構，找出支點（轉軸）、施力點（橡皮筋連接處）與負載點（拋射籃）。(8 min)
+                    </td>
+                    <td>口頭問答、學生舉手發表。<br><strong>評量依據</strong>：能清楚解釋槓桿原理與彈性位能，說明其在戰車上的運作方式。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>3. 偵查腦力激盪 – 破解射程</strong></td>
+                    <td>
+                      1. 列舉生活中其他運用槓桿的工具（如指甲剪、開瓶器）。<br>
+                      2. 小組討論：如何利用槓桿原理與橡皮筋位能讓戰車拋得更遠？(10 min)
+                    </td>
+                    <td>引導式問答、小組討論紀錄。<br><strong>評量依據</strong>：能清楚解釋槓桿原理與彈性位能並思考改良。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>4. 偵探推理總結 – 核心概念梳理</strong></td>
+                    <td>
+                      1. 歸納彈性位能轉換與槓桿原理，澄清常見迷思。<br>
+                      2. 學生填寫「第一節偵探探究日誌」（記錄提出的探究問題與槓桿結構圖）。<br>
+                      3. 下節預告：說明下節進入「數位線索實驗室」透過電腦模擬驗證假設！(5 min)
+                    </td>
+                    <td>口頭問答、學習單檢核。<br><strong>評量依據</strong>：能將觀察與討論記錄於學習單中。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-        </section>
+        </details>
 
-        <section class="section-card" id="act2">
-          <h2 class="section-heading">💻 活動二：數位線索實驗室 – 電腦模擬拋射路徑與設計圖繪製（第 2 節，40 分鐘）</h2>
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width: 28%">教學活動 (名稱)</th>
-                  <th>活動內容 (含時間分配)</th>
-                  <th style="width: 25%">評量方式與依據</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>1. 數位裝備點睛 – 拋射參數模擬示範</strong></td>
-                  <td>
-                    1. 示範模擬軟體操作，引導觀察不同角度、初速對物體拋射軌跡與距離的影響。(8 min)<br>
-                    2. 以生活中投籃經驗輔助解釋角度與落點關係。
-                  </td>
-                  <td>口頭評量。<br><strong>評量依據</strong>：學生能理解並解釋拋射角與初始速度的概念。</td>
-                </tr>
-                <tr>
-                  <td><strong>2. 偵探實操測試 – 拋射數據線索交驗</strong></td>
-                  <td>
-                    1. 學生在模擬軟體上，固定初速度測試不同拋射角（70°、80°、90° 等）的射程。(6 min)<br>
-                    2. 固定拋射角度，測試初速度對拋射距離的影響。(6 min)
-                  </td>
-                  <td>紀錄表。<br><strong>評量依據</strong>：檢查學生的紀錄是否有不同角度與對應拋射結果。</td>
-                </tr>
-                <tr>
-                  <td><strong>3. 線索交集與戰車藍圖繪製</strong></td>
-                  <td>
-                    1. 小組討論模擬結果（預測最佳角度約 45°，初速越大距離越遠）。(5 min)<br>
-                    2. 結合模擬線索與參考圖片，繪製小組投石戰車構想設計圖。(10 min)
-                  </td>
-                  <td>設計圖稿檢核。<br><strong>評量依據</strong>：設計圖能依據模擬數據清晰呈現構想。</td>
-                </tr>
-                <tr>
-                  <td><strong>4. 模擬線索總結 – 成果盤點</strong></td>
-                  <td>
-                    1. 統整模擬結論，確認拋射角度與距離的規律。(3 min)<br>
-                    2. 說明下節實體製作注意事項與材料配給。(2 min)
-                  </td>
-                  <td>教師觀察。<br><strong>評量依據</strong>：能依據模擬數據調整設計構想。</td>
-                </tr>
-              </tbody>
-            </table>
+        <!-- Activity 2 -->
+        <details class="accordion-item" id="act2">
+          <summary class="accordion-summary">
+            <div class="accordion-title-group">
+              <h3 class="accordion-title">第 2 節：數位模擬篇 – 電腦模擬拋射路徑與設計圖繪製</h3>
+              <p class="accordion-subtitle">40 分鐘 · 拋射參數模擬、角度與初速交驗、戰車藍圖繪製</p>
+            </div>
+            <div class="accordion-toggle-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
+          </summary>
+          <div class="accordion-content">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 28%">教學活動 (名稱)</th>
+                    <th>活動內容 (含時間分配)</th>
+                    <th style="width: 25%">評量方式與依據</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>1. 數位裝備點睛 – 拋射參數模擬示範</strong></td>
+                    <td>
+                      1. 示範模擬軟體操作，引導觀察不同角度、初速對物體拋射軌跡與距離的影響。(8 min)<br>
+                      2. 以生活中投籃經驗輔助解釋角度與落點關係。
+                    </td>
+                    <td>口頭評量。<br><strong>評量依據</strong>：學生能理解並解釋拋射角與初始速度的概念。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>2. 偵探實操測試 – 拋射數據線索交驗</strong></td>
+                    <td>
+                      1. 學生在模擬軟體上，固定初速度測試不同拋射角（70°、80°、90° 等）的射程。(6 min)<br>
+                      2. 固定拋射角度，測試初速度對拋射距離的影響。(6 min)
+                    </td>
+                    <td>紀錄表。<br><strong>評量依據</strong>：檢查學生的紀錄是否有不同角度與對應拋射結果。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>3. 線索交集與戰車藍圖繪製</strong></td>
+                    <td>
+                      1. 小組討論模擬結果（預測最佳角度約 45°，初速越大距離越遠）。(5 min)<br>
+                      2. 結合模擬線索與參考圖片，繪製小組投石戰車構想設計圖。(10 min)
+                    </td>
+                    <td>設計圖稿檢核。<br><strong>評量依據</strong>：設計圖能依據模擬數據清晰呈現構想。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>4. 模擬線索總結 – 成果盤點</strong></td>
+                    <td>
+                      1. 統整模擬結論，確認拋射角度與距離的規律。(3 min)<br>
+                      2. 說明下節實體製作注意事項與材料配給。(2 min)
+                    </td>
+                    <td>教師觀察。<br><strong>評量依據</strong>：能依據模擬數據調整設計構想。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-        </section>
+        </details>
 
-        <section class="section-card" id="act3">
-          <h2 class="section-heading">🔨 活動三：實體工坊手作 – 工具安全與投石戰車主體組裝（第 3 節，40 分鐘）</h2>
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width: 28%">教學活動 (名稱)</th>
-                  <th>活動內容 (含時間分配)</th>
-                  <th style="width: 25%">評量方式與依據</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>1. 工坊防護手冊 – 工具與材料安全</strong></td>
-                  <td>
-                    1. 宣導剪刀、熱熔膠及木條等手工具的使用安全事項（熱熔膠槍防燙）。(5 min)<br>
-                    2. 展示材料包內容並說明底盤與支架結構組裝要點。(3 min)
-                  </td>
-                  <td>教師觀察。<br><strong>評量依據</strong>：確認學生能遵守工具使用與課堂安全規範。</td>
-                </tr>
-                <tr>
-                  <td><strong>2. 實體造車開工 – 底盤與支架組裝</strong></td>
-                  <td>
-                    1. 依設計圖使用木條與熱熔膠固定戰車底盤矩形結構。(12 min)<br>
-                    2. 建立垂直支架與水平轉軸，確保結構穩固。(10 min)
-                  </td>
-                  <td>過程檢核。<br><strong>評量依據</strong>：確認能否安全、正確地使用工具材料進行組裝。</td>
-                </tr>
-                <tr>
-                  <td><strong>3. 機構運作檢查 – 拋射臂與軸心</strong></td>
-                  <td>
-                    1. 組裝投石臂與旋轉軸心，確認動態旋轉順暢。(7 min)<br>
-                    2. 教師隨堂巡視並提供組裝輔導協助。(3 min)
-                  </td>
-                  <td>階段檢核。<br><strong>評量依據</strong>：投石臂機構能順暢轉動。</td>
-                </tr>
-              </tbody>
-            </table>
+        <!-- Activity 3 -->
+        <details class="accordion-item" id="act3">
+          <summary class="accordion-summary">
+            <div class="accordion-title-group">
+              <h3 class="accordion-title">第 3 節：實體組裝篇 – 工具安全與投石戰車主體組裝</h3>
+              <p class="accordion-subtitle">40 分鐘 · 工具防護規範、底盤與支架結構固定、拋射臂軸心運作檢查</p>
+            </div>
+            <div class="accordion-toggle-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
+          </summary>
+          <div class="accordion-content">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 28%">教學活動 (名稱)</th>
+                    <th>活動內容 (含時間分配)</th>
+                    <th style="width: 25%">評量方式與依據</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>1. 工坊防護手冊 – 工具與材料安全</strong></td>
+                    <td>
+                      1. 宣導剪刀、熱熔膠及木條等手工具的使用安全事項（熱熔膠槍防燙）。(5 min)<br>
+                      2. 展示材料包內容並說明底盤與支架結構組裝要點。(3 min)
+                    </td>
+                    <td>教師觀察。<br><strong>評量依據</strong>：確認學生能遵守工具使用與課堂安全規範。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>2. 實體造車開工 – 底盤與支架組裝</strong></td>
+                    <td>
+                      1. 依設計圖使用木條與熱熔膠固定戰車底盤矩形結構。(12 min)<br>
+                      2. 建立垂直支架與水平轉軸，確保結構穩固。(10 min)
+                    </td>
+                    <td>過程檢核。<br><strong>評量依據</strong>：確認能否安全、正確地使用工具材料進行組裝。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>3. 機構運作檢查 – 拋射臂與軸心</strong></td>
+                    <td>
+                      1. 組裝投石臂與旋轉軸心，確認動態旋轉順暢。(7 min)<br>
+                      2. 教師隨堂巡視並提供組裝輔導協助。(3 min)
+                    </td>
+                    <td>階段檢核。<br><strong>評量依據</strong>：投石臂機構能順暢轉動。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-        </section>
+        </details>
 
-        <section class="section-card" id="act4">
-          <h2 class="section-heading">🎯 活動四：彈性極限試煉 – 材質測試與結構微調（第 4 節，40 分鐘）</h2>
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width: 28%">教學活動 (名稱)</th>
-                  <th>活動內容 (含時間分配)</th>
-                  <th style="width: 25%">評量方式與依據</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>1. 彈性線索測試 – 橡皮筋材質影響</strong></td>
-                  <td>
-                    1. 測試不同粗細與強度之橡皮筋對投射距離的影響。(10 min)<br>
-                    2. 引導體會材料選擇在工程設計中的關鍵作用。
-                  </td>
-                  <td>教師觀察。<br><strong>評量依據</strong>：能正確選用並安裝適當強度之橡皮筋。</td>
-                </tr>
-                <tr>
-                  <td><strong>2. 角度極限挑戰 – 實體發射與紀錄</strong></td>
-                  <td>
-                    1. 調整投石臂拉伸角度（如 30°、45°、90° 或 80°、65°、50°），進行交叉測試。(15 min)<br>
-                    2. 使用乒乓球、彈珠、黏土球記錄對應拋射距離至紀錄表。(5 min)
-                  </td>
-                  <td>實驗記錄表。<br><strong>評量依據</strong>：檢查戰車是否正常運行並詳實完成記錄。</td>
-                </tr>
-                <tr>
-                  <td><strong>3. 戰車結構強化 – 測試回饋與微調</strong></td>
-                  <td>
-                    1. 根據實體發射結果與數據，對鬆脫或偏斜處進行補強與修正。(7 min)<br>
-                    2. 整理實驗區域，維持場地安全與整潔。(3 min)
-                  </td>
-                  <td>作品檢查。<br><strong>評量依據</strong>：能根據測試數據微調戰車結構。</td>
-                </tr>
-              </tbody>
-            </table>
+        <!-- Activity 4 -->
+        <details class="accordion-item" id="act4">
+          <summary class="accordion-summary">
+            <div class="accordion-title-group">
+              <h3 class="accordion-title">第 4 節：彈性調校篇 – 材質測試與結構微調</h3>
+              <p class="accordion-subtitle">40 分鐘 · 橡皮筋彈性強度測試、三角度極限實測、結構補強與微調</p>
+            </div>
+            <div class="accordion-toggle-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
+          </summary>
+          <div class="accordion-content">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 28%">教學活動 (名稱)</th>
+                    <th>活動內容 (含時間分配)</th>
+                    <th style="width: 25%">評量方式與依據</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>1. 彈性線索測試 – 橡皮筋材質影響</strong></td>
+                    <td>
+                      1. 測試不同粗細與強度之橡皮筋對投射距離的影響。(10 min)<br>
+                      2. 引導體會材料選擇在工程設計中的關鍵作用。
+                    </td>
+                    <td>教師觀察。<br><strong>評量依據</strong>：能正確選用並安裝適當強度之橡皮筋。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>2. 角度極限挑戰 – 實體發射與紀錄</strong></td>
+                    <td>
+                      1. 調整投石臂拉伸角度（如 30°、45°、90° 或 80°、65°、50°），進行交叉測試。(15 min)<br>
+                      2. 使用乒乓球、彈珠、黏土球記錄對應拋射距離至紀錄表。(5 min)
+                    </td>
+                    <td>實驗記錄表。<br><strong>評量依據</strong>：檢查戰車是否正常運行並詳實完成記錄。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>3. 戰車結構強化 – 測試回饋與微調</strong></td>
+                    <td>
+                      1. 根據實體發射結果與數據，對鬆脫或偏斜處進行補強與修正。(7 min)<br>
+                      2. 整理實驗區域，維持場地安全與整潔。(3 min)
+                    </td>
+                    <td>作品檢查。<br><strong>評量依據</strong>：能根據測試數據微調戰車結構。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-        </section>
+        </details>
 
-        <section class="section-card" id="act5">
-          <h2 class="section-heading">📈 活動五：數據密碼解碼者 – 數據統計分析與成果發表（第 5 節，40 分鐘）</h2>
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width: 28%">教學活動 (名稱)</th>
-                  <th>活動內容 (含時間分配)</th>
-                  <th style="width: 25%">評量方式與依據</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>1. 數據圖像化 – 電腦折線圖繪製</strong></td>
-                  <td>
-                    1. 將三角度與多材質測試數據輸入 Excel/Google Sheets。(10 min)<br>
-                    2. 繪製「角度-距離交叉分析折線圖」，視覺化呈現射程表現。(10 min)
-                  </td>
-                  <td>電腦圖表。<br><strong>評量依據</strong>：能在電腦上記錄數據並正確製作統計折線圖。</td>
-                </tr>
-                <tr>
-                  <td><strong>2. 最佳組合大揭密 – 數據比較歸納</strong></td>
-                  <td>
-                    1. 學生觀察折線圖，討論在何種材質與角度下射程最遠。(5 min)<br>
-                    2. 引導理解 45°-60° 角度與彈性材質搭配之物理規律。(5 min)
-                  </td>
-                  <td>表格檢核。<br><strong>評量依據</strong>：能利用數據分析比較不同角度與材質差異。</td>
-                </tr>
-                <tr>
-                  <td><strong>3. 偵探成果發表 – 小組分享與互評</strong></td>
-                  <td>
-                    1. 各組依據探究日誌、戰車作品與統計圖上台進行成果報告。(6 min)<br>
-                    2. 進行組間互評與自評，填寫『自評與互評表』。(4 min)
-                  </td>
-                  <td>同儕互評表。<br><strong>評量依據</strong>：展現小組團隊合作與口頭溝通能力。</td>
-                </tr>
-              </tbody>
-            </table>
+        <!-- Activity 5 -->
+        <details class="accordion-item" id="act5">
+          <summary class="accordion-summary">
+            <div class="accordion-title-group">
+              <h3 class="accordion-title">第 5 節：數據發表篇 – 數據統計分析與成果發表</h3>
+              <p class="accordion-subtitle">40 分鐘 · 電腦折線圖繪製、最佳組合數據比較、小組發表與互評</p>
+            </div>
+            <div class="accordion-toggle-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
+          </summary>
+          <div class="accordion-content">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 28%">教學活動 (名稱)</th>
+                    <th>活動內容 (含時間分配)</th>
+                    <th style="width: 25%">評量方式與依據</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>1. 數據圖像化 – 電腦折線圖繪製</strong></td>
+                    <td>
+                      1. 將三角度與多材質測試數據輸入 Excel/Google Sheets。(10 min)<br>
+                      2. 繪製「角度-距離交叉分析折線圖」，視覺化呈現射程表現。(10 min)
+                    </td>
+                    <td>電腦圖表。<br><strong>評量依據</strong>：能在電腦上記錄數據並正確製作統計折線圖。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>2. 最佳組合大揭密 – 數據比較歸納</strong></td>
+                    <td>
+                      1. 學生觀察折線圖，討論在何種材質與角度下射程最遠。(5 min)<br>
+                      2. 引導理解 45°-60° 角度與彈性材質搭配之物理規律。(5 min)
+                    </td>
+                    <td>表格檢核。<br><strong>評量依據</strong>：能利用數據分析比較不同角度與材質差異。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>3. 偵探成果發表 – 小組分享與互評</strong></td>
+                    <td>
+                      1. 各組依據探究日誌、戰車作品與統計圖上台進行成果報告。(6 min)<br>
+                      2. 進行組間互評與自評，填寫『自評與互評表』。(4 min)
+                    </td>
+                    <td>同儕互評表。<br><strong>評量依據</strong>：展現小組團隊合作與口頭溝通能力。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-        </section>
+        </details>
+      </div>
 
-        <!-- 六、教學回饋與參考資料 -->
-        <section class="section-card" id="feedback">
-          <h2 class="section-heading">📌 六、教學回饋與參考資料</h2>
-          <div style="display: flex; flex-direction: column; gap: 1rem;">
+      <!-- 六、教學回饋與安全規範（摺疊收合） -->
+      <details class="accordion-item" id="feedback" open>
+        <summary class="accordion-summary">
+          <div class="accordion-title-group">
+            <h2 class="accordion-title">六、教學回饋與安全規範</h2>
+            <p class="accordion-subtitle">手工具防護指引、機構誤差校正建議與參考文獻資料</p>
+          </div>
+          <div class="accordion-toggle-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </summary>
+        <div class="accordion-content">
+          <div style="display: flex; flex-direction: column; gap: 1.25rem;">
             <div>
-              <strong style="color: var(--color-primary)">🛡️ 手工具與課堂安全防護：</strong>
-              <ul style="margin-left: 1.5rem; margin-top: 0.35rem; color: var(--color-text-muted);">
+              <strong style="color: var(--color-primary); font-size:1.05rem; display:block; margin-bottom:0.35rem;">手工具與課堂安全防護：</strong>
+              <ul style="margin-left: 1.5rem; color: var(--color-text-muted); line-height: 1.85;">
                 <li>操作剪刀與熱熔膠槍時，須嚴格宣導安全規範，熱熔膠槍不用時須放置於防燙墊上。</li>
                 <li>進行戰車發射測試時，教室前方須劃設<strong>『拋射安全區域』</strong>，禁止學生進入發射彈道範圍內，避免彈珠或乒乓球擊傷他人。</li>
               </ul>
             </div>
             <div>
-              <strong style="color: var(--color-primary)">⚙️ 機構角度誤差調校：</strong>
-              <p style="margin-top: 0.35rem; color: var(--color-text-muted); line-height: 1.6;">
+              <strong style="color: var(--color-primary); font-size:1.05rem; display:block; margin-bottom:0.35rem;">機構角度誤差調校：</strong>
+              <p style="color: var(--color-text-muted); line-height: 1.85;">
                 實體戰車的三段角度卡榫若因木條切割誤差導致角度不準，教師可提供角度量角器輔助學生貼上角度標籤紙予以修正。
               </p>
             </div>
             <div>
-              <strong style="color: var(--color-primary)">📚 參考資料：</strong>
-              <p style="margin-top: 0.35rem; color: var(--color-text-muted); font-size: 0.9rem;">
+              <strong style="color: var(--color-primary); font-size:1.05rem; display:block; margin-bottom:0.35rem;">參考資料：</strong>
+              <p style="color: var(--color-text-muted); font-size: 0.95rem;">
                 教育部國民及學前教育署（2020）。國民小學科技與資訊教育教案設計模組。國家教育研究院。
               </p>
             </div>
           </div>
-        </section>
+        </div>
+      </details>
 
-      </main>
     </div>
   </div>
 
@@ -1917,28 +2305,28 @@
       <!-- Top Status Card -->
       <div class="game-header-card">
         <div>
-          <h2 style="font-size: 1.4rem; font-weight: 800; display:flex; align-items:center; gap:0.5rem;">
-            <span>🏹 投石戰車拋物線攻城挑戰</span>
+          <h2 style="font-size: 1.45rem; font-weight: 800; display:flex; align-items:center; gap:0.5rem;">
+            <span>投石戰車拋物線攻城挑戰</span>
           </h2>
-          <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-top: 0.25rem;">
+          <p style="font-size: 0.98rem; color: var(--color-text-muted); margin-top: 0.35rem;">
             呼應教案「數位線索實驗室」：調整發射角度、橡皮筋彈力與彈丸材質，觀察軌跡並擊中城堡靶心！
           </p>
         </div>
 
         <!-- Mode Toggle, Modals & Scoreboard -->
-        <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+        <div style="display:flex; align-items:center; gap:0.65rem; flex-wrap:wrap;">
           
-          <button class="btn btn-frameless" onclick="openModal('gameGuideModal')" data-tooltip="物理原理與玩法秘笈">
-            💡 玩法攻略
+          <button class="btn-outline btn-outline-sm" onclick="openModal('gameGuideModal')" data-tooltip="物理原理與玩法秘笈">
+            玩法攻略
           </button>
 
-          <button class="btn btn-frameless" onclick="openModal('exportModal')" data-tooltip="匯出目前測試數據 CSV">
-            📥 匯出數據
+          <button class="btn-outline btn-outline-sm" onclick="openModal('exportModal')" data-tooltip="匯出目前測試數據 CSV">
+            匯出數據
           </button>
 
-          <div style="display:flex; gap:0.35rem; background:var(--color-surface-muted); padding:0.25rem; border-radius:var(--radius-sm);">
-            <button class="mode-btn active" data-mode="challenge" onclick="game.setMode('challenge')">🎯 攻城挑戰模式</button>
-            <button class="mode-btn" data-mode="lab" onclick="game.setMode('lab')">🔬 自由探究實驗室</button>
+          <div style="display:flex; gap:0.35rem; background:var(--color-surface-muted); padding:0.25rem; border-radius:var(--radius-sm); border:1px solid var(--color-border);">
+            <button class="mode-btn active" data-mode="challenge" onclick="game.setMode('challenge')">攻城挑戰模式</button>
+            <button class="mode-btn" data-mode="lab" onclick="game.setMode('lab')">自由探究實驗室</button>
           </div>
 
           <div id="challengeInfo" class="scoreboard">
@@ -1960,13 +2348,13 @@
         <!-- Control 1: Angle -->
         <div class="control-group">
           <div class="control-label-row">
-            <span data-tooltip="發射角度 θ：45° 具有最大水平射程" style="cursor:help">📐 拋射角度（θ）</span>
+            <span data-tooltip="發射角度 θ：45° 具有最大理論水平射程" style="cursor:help">拋射角度（θ）</span>
             <span class="control-value-badge" id="angleVal">45°</span>
           </div>
-          <input type="range" id="angleInput" min="10" max="85" value="45" style="width: 100%" oninput="game.setAngle(this.value)">
+          <input type="range" id="angleInput" min="10" max="85" value="45" style="width: 100%; accent-color: var(--color-primary);" oninput="game.setAngle(this.value)">
           <div class="preset-btns">
-            <span style="font-size: 0.75rem; color:var(--color-text-muted); margin-right:0.25rem">教案角度：</span>
-            <button class="preset-btn" onclick="game.setAngle(30)" data-tooltip="低仰角，速度快但易提前觸地">30°</button>
+            <span style="font-size: 0.8rem; color:var(--color-text-muted); margin-right:0.25rem">教案角度：</span>
+            <button class="preset-btn" onclick="game.setAngle(30)" data-tooltip="低仰角，初速快但易提早觸地">30°</button>
             <button class="preset-btn" onclick="game.setAngle(45)" style="color:var(--color-primary); font-weight:700" data-tooltip="理論最大射程角度（45度最佳解）">45° (最佳)</button>
             <button class="preset-btn" onclick="game.setAngle(50)" data-tooltip="教案第四節固定測試角">50°</button>
             <button class="preset-btn" onclick="game.setAngle(65)" data-tooltip="教案第四節固定測試角">65°</button>
@@ -1977,12 +2365,12 @@
         <!-- Control 2: Elastic Power -->
         <div class="control-group">
           <div class="control-label-row">
-            <span data-tooltip="橡皮筋形變位能轉為初動能，初速越快射程越遠" style="cursor:help">⚡ 橡皮筋彈力（初速度）</span>
+            <span data-tooltip="橡皮筋形變位能轉為初動能，初速越快射程越遠" style="cursor:help">橡皮筋彈力（初速度）</span>
             <span class="control-value-badge" id="powerVal">25 m/s</span>
           </div>
-          <input type="range" id="powerInput" min="10" max="45" value="25" style="width: 100%" oninput="game.setPower(this.value)">
+          <input type="range" id="powerInput" min="10" max="45" value="25" style="width: 100%; accent-color: var(--color-primary);" oninput="game.setPower(this.value)">
           <div class="preset-btns">
-            <span style="font-size: 0.75rem; color:var(--color-text-muted); margin-right:0.25rem">橡皮筋：</span>
+            <span style="font-size: 0.8rem; color:var(--color-text-muted); margin-right:0.25rem">橡皮筋：</span>
             <button class="preset-btn" onclick="game.setPower(18)" data-tooltip="細橡皮筋：彈力小，初速 18 m/s">細橡皮筋 (18)</button>
             <button class="preset-btn" onclick="game.setPower(26)" data-tooltip="標準橡皮筋：標準拉力，初速 26 m/s">標準橡皮筋 (26)</button>
             <button class="preset-btn" onclick="game.setPower(36)" data-tooltip="粗橡皮筋：高張力，初速 36 m/s">粗橡皮筋 (36)</button>
@@ -1992,35 +2380,38 @@
         <!-- Control 3: Projectile Material -->
         <div class="control-group">
           <div class="control-label-row">
-            <span data-tooltip="不同材質具有不同質量與空氣阻力特性" style="cursor:help">⚾ 拋射物材質</span>
+            <span data-tooltip="不同材質具有不同質量與空氣阻力特性" style="cursor:help">拋射物材質</span>
           </div>
           <div style="display:flex; gap:0.4rem;">
             <button class="proj-btn" data-type="pingpong" onclick="game.setProjectile('pingpong')" data-tooltip="乒乓球：質量極輕（2.7g），受空氣阻力大">
-              ⚪ 乒乓球
+              乒乓球
             </button>
             <button class="proj-btn active" data-type="clay" onclick="game.setProjectile('clay')" data-tooltip="黏土球：標準質量（20g），飛行穩定">
-              🟠 黏土球
+              黏土球
             </button>
             <button class="proj-btn" data-type="marble" onclick="game.setProjectile('marble')" data-tooltip="彈珠：高密度質量（35g），抗風阻，射程遠">
-              🔵 彈珠
+              彈珠
             </button>
           </div>
-          <span style="font-size:0.75rem; color:var(--color-text-muted)">
+          <span style="font-size:0.8rem; color:var(--color-text-muted)">
             *不同材質具有不同質量與空氣阻力係數
           </span>
         </div>
 
         <!-- Launch & Reset Actions -->
         <div class="control-group" style="justify-content: flex-end;">
-          <div style="display:flex; gap:0.6rem;">
+          <div style="display:flex; gap:0.6rem; align-items:center;">
             <button class="launch-btn" onclick="game.launch()" data-tooltip="點擊發射投石戰車！">
-              <span>🚀 發射投石！</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              <span>發射投石</span>
             </button>
-            <button class="btn btn-frameless" onclick="game.resetGame()" data-tooltip="重設遊戲關卡與得分">
-              🔄 重設
+            <button class="btn-outline btn-outline-sm" onclick="game.resetGame()" data-tooltip="重設遊戲關卡與得分">
+              重設遊戲
             </button>
-            <button class="btn btn-frameless" onclick="game.clearTrails()" data-tooltip="清空畫布上的歷史拋物線軌跡">
-              🧹 清除軌跡
+            <button class="btn-outline btn-outline-sm" onclick="game.clearTrails()" data-tooltip="清空畫布上的歷史拋物線軌跡">
+              清除軌跡
             </button>
           </div>
         </div>
@@ -2028,14 +2419,12 @@
       </div>
 
       <!-- Data Table Card (Corresponding to Activity 5) -->
-      <div class="section-card" style="margin-top: 0.5rem;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.75rem; flex-wrap:wrap; gap:0.5rem;">
-          <h3 style="font-size: 1.15rem; font-weight:700;">📊 實體與模擬測試數據記錄表（對應活動五）</h3>
-          <div style="display:flex; gap:0.5rem;">
-            <button class="btn btn-frameless" onclick="openModal('exportModal')">
-              📥 匯出 CSV 表格
-            </button>
-          </div>
+      <div style="background:var(--color-surface); border:1.5px solid var(--color-border); border-radius:var(--radius-md); padding:1.75rem; box-shadow:var(--shadow-sm);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.85rem; flex-wrap:wrap; gap:0.65rem;">
+          <h3 style="font-size: 1.25rem; font-weight:800;">實體與模擬測試數據記錄表（對應活動五）</h3>
+          <button class="btn-outline btn-outline-sm" onclick="openModal('exportModal')">
+            匯出 CSV 表格
+          </button>
         </div>
         <div class="table-container">
           <table>
@@ -2053,8 +2442,8 @@
             </thead>
             <tbody id="recordTableBody">
               <tr>
-                <td colspan="8" style="text-align: center; color: var(--color-text-muted); padding: 1.5rem;">
-                  尚未進行發射。請調整上方角度與彈力，點擊「🚀 發射投石」開始產生數據！
+                <td colspan="8" style="text-align: center; color: var(--color-text-muted); padding: 1.75rem;">
+                  尚未進行發射。請調整上方角度與彈力，點擊「發射投石」開始產生數據！
                 </td>
               </tr>
             </tbody>
@@ -2067,32 +2456,43 @@
 
   <!-- Footer -->
   <footer>
-    <p>科技領域教材教法 · 張宗智、吳立安、黃勁允、翁苙維</p>
-    <p style="margin-top: 0.25rem;">國小科技領域「拋物線上的科學家：投石戰車探究與角度大解密」公開教案與互動教學平台</p>
+    <p style="font-weight:700;">科技領域教材教法 · 張宗智、吳立安、黃勁允、翁苙維</p>
+    <p style="margin-top: 0.35rem;">國小科技領域「拋物線上的科學家：投石戰車探究與角度大解密」公開教案與互動教學平台</p>
   </footer>
 
   <!-- Scripts -->
   <script src="game.js"></script>
   <script>
     // ==========================================================================
-    // UI/UX Interactions: Toast Notification System
+    // UI/UX Interactions: SVG Icons Template
     // ==========================================================================
-    function showToast(message, icon = '🔔', duration = 3200) {
+    const sunIconSvg = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+
+    const moonIconSvg = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+
+    function updateThemeButton(theme) {
+      const themeBtn = document.getElementById('themeToggleBtn');
+      if (themeBtn) {
+        themeBtn.innerHTML = theme === 'dark' ? moonIconSvg : sunIconSvg;
+        themeBtn.setAttribute('data-tooltip', theme === 'dark' ? '目前為黑夜模式，點擊切換白天模式' : '目前為白天模式，點擊切換黑夜模式');
+      }
+    }
+
+    // ==========================================================================
+    // UI/UX Interactions: Toast Notification System (無 Emoji，純俐落線框反饋)
+    // ==========================================================================
+    function showToast(message, duration = 3000) {
       const container = document.getElementById('toastContainer');
+      if (!container) return;
       const toast = document.createElement('div');
       toast.className = 'toast';
-      toast.innerHTML = `
-        <span class="toast-icon">${icon}</span>
-        <span class="toast-body">${message}</span>
-      `;
+      toast.innerHTML = `<span class="toast-body">${message}</span>`;
       container.appendChild(toast);
 
-      // Trigger animation
       requestAnimationFrame(() => {
         toast.classList.add('show');
       });
 
-      // Auto dismiss
       setTimeout(() => {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 250);
@@ -2150,28 +2550,80 @@
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         toggleDrawer(false);
+        closeChapterDropdown();
         document.querySelectorAll('dialog[open]').forEach(d => d.close());
       }
     });
 
     // ==========================================================================
-    // UI/UX Interactions: Day & Night Theme Switcher (無外框按鈕)
+    // UI/UX Interactions: Top Chapter Dropdown Menu
+    // ==========================================================================
+    function toggleChapterDropdown(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById('chapterDropdownMenu');
+      if (menu) {
+        menu.classList.toggle('show');
+      }
+    }
+
+    function closeChapterDropdown() {
+      const menu = document.getElementById('chapterDropdownMenu');
+      if (menu) {
+        menu.classList.remove('show');
+      }
+    }
+
+    window.addEventListener('click', () => {
+      closeChapterDropdown();
+    });
+
+    // ==========================================================================
+    // UI/UX Interactions: Smart Chapter Navigation with Auto Accordion Expansion
+    // ==========================================================================
+    function navigateToSection(targetId) {
+      switchView('lesson');
+      toggleDrawer(false);
+      closeChapterDropdown();
+
+      const el = document.getElementById(targetId);
+      if (el) {
+        if (el.tagName === 'DETAILS') {
+          el.open = true;
+        } else {
+          const parentDetails = el.closest('details');
+          if (parentDetails) {
+            parentDetails.open = true;
+          }
+        }
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 80);
+      }
+    }
+
+    // ==========================================================================
+    // UI/UX Interactions: Expand All / Collapse All Accordions
+    // ==========================================================================
+    function expandAllAccordions(shouldOpen) {
+      document.querySelectorAll('#lessonView details.accordion-item').forEach(d => {
+        d.open = shouldOpen;
+      });
+      showToast(shouldOpen ? '已全部展開教案章節' : '已全部收合教案章節');
+    }
+
+    // ==========================================================================
+    // UI/UX Interactions: Day & Night Theme Switcher
     // ==========================================================================
     function toggleTheme() {
       const current = document.documentElement.getAttribute('data-theme');
       const target = current === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', target);
       localStorage.setItem('theme', target);
+      updateThemeButton(target);
 
-      const themeBtn = document.getElementById('themeToggleBtn');
-      if (themeBtn) {
-        themeBtn.textContent = target === 'dark' ? '🌙' : '☀️';
-      }
+      showToast(target === 'dark' ? '已切換為黑夜主題模式' : '已切換為白天主題模式');
 
-      showToast(target === 'dark' ? '已切換為黑夜主題模式 🌙' : '已切換為白天主題模式 ☀️', target === 'dark' ? '🌙' : '☀️');
-
-      // Re-render canvas if game initialized
-      if (game) {
+      if (typeof game !== 'undefined' && game) {
         game.render();
       }
     }
@@ -2179,10 +2631,7 @@
     // Initialize Theme
     const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     document.documentElement.setAttribute('data-theme', savedTheme);
-    const themeBtn = document.getElementById('themeToggleBtn');
-    if (themeBtn) {
-      themeBtn.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
-    }
+    updateThemeButton(savedTheme);
 
     // ==========================================================================
     // UI/UX Interactions: View Switcher (Lesson vs Game)
@@ -2198,8 +2647,8 @@
       const drawerGame = document.getElementById('drawerGameLink');
 
       if (viewName === 'game') {
-        if (lessonBtn) lessonBtn.classList.remove('btn-primary');
-        if (gameBtn) gameBtn.classList.add('btn-primary');
+        if (lessonBtn) lessonBtn.classList.remove('active');
+        if (gameBtn) gameBtn.classList.add('active');
         if (drawerLesson) drawerLesson.classList.remove('active');
         if (drawerGame) drawerGame.classList.add('active');
 
@@ -2208,10 +2657,10 @@
           if (game) game.resize();
         }, 50);
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        showToast('已切換至「投石戰車互動小遊戲」🎮', '🏹');
+        showToast('已切換至「投石戰車互動小遊戲」');
       } else {
-        if (lessonBtn) lessonBtn.classList.add('btn-primary');
-        if (gameBtn) gameBtn.classList.remove('btn-primary');
+        if (lessonBtn) lessonBtn.classList.add('active');
+        if (gameBtn) gameBtn.classList.remove('active');
         if (drawerLesson) drawerLesson.classList.add('active');
         if (drawerGame) drawerGame.classList.remove('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2219,10 +2668,14 @@
     }
 
     function triggerPrint() {
-      showToast('正在準備 A4 教案列印格式...', '🖨️');
+      // Open all details before printing so all content is rendered
+      document.querySelectorAll('#lessonView details.accordion-item').forEach(d => {
+        d.open = true;
+      });
+      showToast('正在準備教案列印輸出格式...');
       setTimeout(() => {
         window.print();
-      }, 300);
+      }, 350);
     }
 
     // ==========================================================================
@@ -2246,37 +2699,16 @@
       const area = document.getElementById('csvExportArea');
       if (area && area.value) {
         navigator.clipboard.writeText(area.value).then(() => {
-          showToast('測試數據 CSV 已成功複製到剪貼簿！', '📋');
+          showToast('測試數據 CSV 已成功複製到剪貼簿！');
           closeModal('exportModal');
         }).catch(() => {
           area.select();
           document.execCommand('copy');
-          showToast('已選取並複製！', '📋');
+          showToast('已選取並複製！');
           closeModal('exportModal');
         });
       }
     }
-
-    // ==========================================================================
-    // Scroll Spy for TOC
-    // ==========================================================================
-    window.addEventListener('scroll', () => {
-      const sections = document.querySelectorAll('section[id]');
-      const scrollPos = window.scrollY + 120;
-      sections.forEach(section => {
-        const top = section.offsetTop;
-        const height = section.offsetHeight;
-        const id = section.getAttribute('id');
-        const link = document.querySelector(`.toc-link[href="#${id}"]`);
-        if (link) {
-          if (scrollPos >= top && scrollPos < top + height) {
-            link.classList.add('active');
-          } else {
-            link.classList.remove('active');
-          }
-        }
-      });
-    });
 
     // Default initialization
     document.addEventListener('DOMContentLoaded', () => {

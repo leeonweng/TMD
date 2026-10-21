@@ -260,7 +260,7 @@ class CatapultGame {
     }
 
     if (typeof showToast === 'function') {
-      showToast(`🚀 投石發射！初速 ${this.power} m/s · 角度 ${this.angle}° (${label})`);
+      showToast(`投石發射！初速 ${this.power} m/s · 角度 ${this.angle}° (${label})`);
     }
   }
 
@@ -325,7 +325,7 @@ class CatapultGame {
         this.logTrial(p, true);
 
         if (typeof showToast === 'function') {
-          showToast(`🎯 完美命中靶心！得分 +${addScore}，晉級下一關！`);
+          showToast(`完美命中靶心！得分 +${addScore}，晉級下一關！`);
         }
         
         setTimeout(() => {
@@ -376,7 +376,7 @@ class CatapultGame {
       distance: distance,
       height: maxH,
       time: flightTime,
-      result: hit ? '🎯 擊中目標' : '落入地面'
+      result: hit ? '擊中目標' : '落入地面'
     };
 
     this.records.unshift(record);
@@ -396,7 +396,7 @@ class CatapultGame {
         <td style="font-weight:600; color:var(--color-primary)">${r.distance} m</td>
         <td>${r.height} m</td>
         <td>${r.time} s</td>
-        <td>${r.result.includes('🎯') ? '<span style="color:#10b981;font-weight:700">'+r.result+'</span>' : r.result}</td>
+        <td>${r.result.includes('擊中目標') ? '<span style="color:var(--color-success);font-weight:700">'+r.result+'</span>' : r.result}</td>
       </tr>
     `).join('');
   }
@@ -406,7 +406,7 @@ class CatapultGame {
     this.records = [];
     this.updateRecordTable();
     if (typeof showToast === 'function') {
-      showToast('🧹 實驗室軌跡與測試數據已清空');
+      showToast('實驗室軌跡與測試數據已清空');
     }
   }
 
@@ -420,7 +420,7 @@ class CatapultGame {
     this.setNewTarget();
     this.updateUI();
     if (typeof showToast === 'function') {
-      showToast('🔄 遊戲關卡已重設為第 1 關');
+      showToast('遊戲關卡已重設為第 1 關');
     }
   }
 
