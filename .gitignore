@@ -22,3 +22,8 @@ notebooks.json
 *.log
 tmp/
 temp/
+
+# Large teaching material assets / PDFs
+05 科技領域教材教法/
+*.pdf
+
