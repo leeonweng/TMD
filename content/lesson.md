@@ -1,5 +1,7 @@
 # 科技領域教材教法_張宗智、吳立安、黃勁允、翁苙維
 
+> **課程資訊**：本網站為 115 學年度第一學期科技領域教材教法課程成果，由張宗智、吳立安、黃勁允、翁苙維等人共同設計製作；指導老師：顏榮泉老師。
+
 ## 國小科技領域教案
 ### 教案名稱：拋物線上的科學家：投石戰車探究與角度大解密
 - **教學設計**：張宗智、吳立安、黃勁允、翁苙維
@@ -278,3 +280,38 @@
 | **第 3 組** | [ ] A  [ ] B  [ ] C | [ ] A  [ ] B  [ ] C | [ ] A  [ ] B  [ ] C | [ ] A  [ ] B  [ ] C | |
 | **第 4 組** | [ ] A  [ ] B  [ ] C | [ ] A  [ ] B  [ ] C | [ ] A  [ ] B  [ ] C | [ ] A  [ ] B  [ ] C | |
 > 💡 *給予 C 級請寫上修改的建議、方向，請以正向溝通的方式寫下喔！*
+
+---
+
+## 八、課程成果檔案與資源下載專區
+
+本專區提供 115 學年度第一學期科技領域教材教法課程全部教學與工程檔案下載，均可在專案資料夾與線上發布網站取得：
+
+### (1) 規定格式的完整教案（含學習單與評量規準）
+- **完整教案（PDF）**：[`科技領域教材教法_完整教案.pdf`](file:///Users/liweiweng/Documents/AntiGravity/TMD/downloads/lesson-plan/科技領域教材教法_完整教案.pdf)（17 頁完整教案，42.3 MB）
+- **探究學習單一（PDF）**：[`附錄一_數位實驗室預測學習單.pdf`](file:///Users/liweiweng/Documents/AntiGravity/TMD/downloads/lesson-plan/附錄一_數位實驗室預測學習單.pdf)（數位模擬與拋射預測單，16.1 MB）
+- **探究學習單二（PDF）**：[`附錄二_投石器操作紀錄學習單.pdf`](file:///Users/liweiweng/Documents/AntiGravity/TMD/downloads/lesson-plan/附錄二_投石器操作紀錄學習單.pdf)（實體組裝與極限測試單，12.9 MB）
+- **探究學習單三（PDF）**：[`附錄三_成果分享小組互評學習單.pdf`](file:///Users/liweiweng/Documents/AntiGravity/TMD/downloads/lesson-plan/附錄三_成果分享小組互評學習單.pdf)（成果分享紀錄與互評單，12.8 MB）
+- **教案 Markdown 全文稿件**：[`教案全文字稿.md`](file:///Users/liweiweng/Documents/AntiGravity/TMD/downloads/lesson-plan/教案全文字稿.md)（輕量化文稿，25 KB）
+
+### (2) 小組設計雷切投石戰車（含組裝完成圖及雷切圖檔）
+- **結構組裝完成圖（SVG 向量工程圖）**：[`投石戰車_結構組裝完成圖.svg`](file:///Users/liweiweng/Documents/AntiGravity/TMD/downloads/laser-cut/投石戰車_結構組裝完成圖.svg)（標註支點、施力點、負載點、45°/60°/75°卡槽與榫卯結構，15 KB）
+- **結構組裝完成圖（PNG 高清圖）**：[`投石戰車_結構組裝完成圖.png`](file:///Users/liweiweng/Documents/AntiGravity/TMD/downloads/laser-cut/投石戰車_結構組裝完成圖.png)（高清點陣圖，266 KB）
+- **雷切零件排版圖檔（PNG）**：[`投石戰車_雷切零件圖檔.png`](file:///Users/liweiweng/Documents/AntiGravity/TMD/downloads/laser-cut/投石戰車_雷切零件圖檔.png)（3mm 椴木板雷切零件圖檔，21 KB）
+- **雷切與組裝全套設計包（ZIP）**：[`投石戰車_雷切與組裝設計包.zip`](file:///Users/liweiweng/Documents/AntiGravity/TMD/downloads/laser-cut/投石戰車_雷切與組裝設計包.zip)（整合向量圖、點陣圖與雷切圖檔，267 KB）
+
+### (3) 教材網站（離線完整包與原始碼）
+- **教材網站完整離線包（ZIP）**：[`科技領域教材教法_教材網站離線完整包.zip`](file:///Users/liweiweng/Documents/AntiGravity/TMD/downloads/website/科技領域教材教法_教材網站離線完整包.zip)（解壓後於本機雙擊 index.html 即可完全離線瀏覽，43 KB）
+- **線上公開網頁**：[https://leeonweng.github.io/TMD/](https://leeonweng.github.io/TMD/)
+- **GitHub 原始碼儲存庫**：[https://github.com/leeonweng/TMD](https://github.com/leeonweng/TMD)
+
+### (4) 動態模擬投石車遊戲（虛擬實驗室與互動遊戲）
+- **投石車動態模擬實驗室（HTML）**：[`投石車動態模擬實驗室.html`](file:///Users/liweiweng/Documents/AntiGravity/TMD/downloads/simulation-game/投石車動態模擬實驗室.html)（第一組原創單檔純 HTML/SVG/JS 動態模擬實驗室，42 KB）
+- **第一組模擬實驗室原始壓縮包（ZIP）**：[`第一組_投石車實驗室.zip`](file:///Users/liweiweng/Documents/AntiGravity/TMD/downloads/simulation-game/第一組_投石車實驗室.zip)（原創實驗室壓縮包，13 KB）
+- **雙模式互動模擬全套套件（ZIP）**：[`投石戰車雙模式互動模擬全套.zip`](file:///Users/liweiweng/Documents/AntiGravity/TMD/downloads/simulation-game/投石戰車雙模式互動模擬全套.zip)（整合動態模擬實驗室與攻城小遊戲，26 KB）
+
+---
+
+> **版權與成果宣告**：  
+> 本網站為115學年度第一學期科技領域教材教法課程成果，由張宗智、吳立安、黃勁允、翁苙維等人共同設計製作；指導老師：顏榮泉老師。
+

@@ -1292,6 +1292,132 @@
         background: #eeeeee !important;
       }
     }
+
+    /* ==========================================================================
+       Download Center Cards & Resources Section
+       ========================================================================== */
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 640px) {
+      .download-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .dl-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      box-shadow: var(--shadow-sm);
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .dl-card:hover {
+      border-color: var(--color-border-hover);
+      box-shadow: var(--shadow-md);
+    }
+    .dl-card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 0.85rem;
+    }
+    .dl-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--color-primary);
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: var(--color-primary-light);
+    }
+    .dl-card-title-group {
+      flex: 1;
+      min-width: 0;
+    }
+    .dl-card-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--color-primary);
+      margin-bottom: 0.2rem;
+    }
+    .dl-card-title {
+      font-size: 1.18rem;
+      font-weight: 800;
+      line-height: 1.35;
+      color: var(--color-text);
+      margin: 0;
+    }
+    .dl-card-desc {
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+      line-height: 1.65;
+      margin: 0;
+    }
+    .dl-file-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      flex: 1;
+    }
+    .dl-file-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.65rem 0.85rem;
+      border-radius: var(--radius-sm);
+      background: var(--color-surface-muted);
+      border: 1px solid var(--color-border);
+      transition: background var(--transition-fast), border-color var(--transition-fast);
+    }
+    .dl-file-row:hover {
+      background: var(--color-surface);
+      border-color: var(--color-border-hover);
+    }
+    .dl-file-info {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      min-width: 0;
+      flex: 1;
+    }
+    .dl-file-name {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--color-text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .dl-file-badge {
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text-muted);
+      flex-shrink: 0;
+    }
+    .dl-action-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+
   </style>
 </head>
 <body>
@@ -1346,6 +1472,8 @@
             <a href="#appendix1" class="dropdown-item" onclick="navigateToSection('appendix1'); event.preventDefault();">附錄一：數位模擬預測單</a>
             <a href="#appendix2" class="dropdown-item" onclick="navigateToSection('appendix2'); event.preventDefault();">附錄二：實體組裝測試單</a>
             <a href="#appendix3" class="dropdown-item" onclick="navigateToSection('appendix3'); event.preventDefault();">附錄三：成果分享互評單</a>
+            <div class="dropdown-header">八、課程成果檔案下載</div>
+            <a href="#downloads" class="dropdown-item" onclick="navigateToSection('downloads'); event.preventDefault();">成果下載專區 (教案/雷切/網站/遊戲)</a>
           </div>
         </div>
 
@@ -1357,6 +1485,15 @@
         <!-- Mode Switch: Game -->
         <button class="btn-outline btn-outline-sm" id="navGameBtn" onclick="switchView('game')">
           <span class="nav-text-btn">互動小遊戲</span>
+        </button>
+
+        <!-- Download Center Shortcut -->
+        <button class="btn-icon-outline" onclick="navigateToSection('downloads')" aria-label="成果檔案下載" data-tooltip="成果檔案下載專區" data-tooltip-pos="bottom">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
         </button>
 
         <!-- Day / Night Theme Switcher -->
@@ -1437,6 +1574,7 @@
           <li><a href="#appendix1" class="drawer-nav-link" onclick="navigateToSection('appendix1'); return false;">附錄一：數位模擬預測單</a></li>
           <li><a href="#appendix2" class="drawer-nav-link" onclick="navigateToSection('appendix2'); return false;">附錄二：實體組裝測試單</a></li>
           <li><a href="#appendix3" class="drawer-nav-link" onclick="navigateToSection('appendix3'); return false;">附錄三：成果分享互評單</a></li>
+          <li><a href="#downloads" class="drawer-nav-link" onclick="navigateToSection('downloads'); return false;">八、成果檔案下載專區</a></li>
         </ul>
       </div>
 
@@ -1514,7 +1652,9 @@
         本教案為國小六年級科技領域與自然科學領域之跨領域整合 STEM PBL 教案，榮獲教學設計優質模組。
       </p>
       <div style="background: var(--color-surface-muted); padding: 1.2rem; border-radius: var(--radius-sm); border: 1px solid var(--color-border); margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem;">
-        <p><strong>教學設計團隊：</strong>張宗智、吳立安、黃勁允、翁苙維</p>
+        <p><strong>課程背景：</strong>本網站為115學年度第一學期科技領域教材教法課程成果</p>
+        <p><strong>指導老師：</strong>顏榮泉老師</p>
+        <p><strong>設計製作團隊：</strong>張宗智、吳立安、黃勁允、翁苙維</p>
         <p><strong>版本日期：</strong>109 年 6 月 21 日修正版（科技教材教法教案_完整版 17 頁全案）</p>
         <p><strong>課程節數：</strong>自然領域 1 節 + 科技領域 4 節，共 5 節（200 分鐘）</p>
         <p><strong>核心素養：</strong>A2 系統思考與解決問題、C2 人際關係與團隊合作</p>
@@ -1624,7 +1764,57 @@
     </div>
   </dialog>
 
-  <!-- Modal 4: 數據匯出預覽 -->
+  <!-- Modal: 投石戰車結構組裝圖預覽 -->
+  <dialog id="blueprintModal" class="modal-dialog" style="max-width: 920px; width: 95%;">
+    <div class="modal-header">
+      <div class="modal-title">投石戰車機構組裝完成示意圖（工程圖解）</div>
+      <button class="btn-icon-outline" onclick="closeModal('blueprintModal')" aria-label="關閉彈窗">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body" style="text-align: center;">
+      <p style="text-align: left; margin-bottom: 0.85rem; font-size: 0.95rem; color: var(--color-text-muted);">
+        包含雷切 3mm 椴木板卡榫結構、三段仰角限位槽（45°/60°/75°）及槓桿三要素（支點、施力點、負載點）完整工程配置圖解。
+      </p>
+      <div style="background: #ffffff; border-radius: var(--radius-sm); border: 1px solid var(--color-border); padding: 0.75rem; overflow: auto; max-height: 65vh;">
+        <img src="downloads/laser-cut/投石戰車_結構組裝完成圖.png" alt="投石戰車結構組裝完成示意圖" style="width: 100%; height: auto; display: block; border-radius: 4px;">
+      </div>
+    </div>
+    <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+      <a href="downloads/laser-cut/投石戰車_結構組裝完成圖.svg" download="投石戰車_結構組裝完成圖.svg" class="btn-outline btn-outline-primary btn-outline-sm">下載 SVG 向量圖</a>
+      <button class="btn-outline btn-outline-sm" onclick="closeModal('blueprintModal')">關閉預覽</button>
+    </div>
+  </dialog>
+
+  <!-- Modal: 雷切零件圖檔預覽 -->
+  <dialog id="laserCutModal" class="modal-dialog" style="max-width: 860px; width: 95%;">
+    <div class="modal-header">
+      <div class="modal-title">投石戰車雷切零件圖檔（3mm 椴木板排版）</div>
+      <button class="btn-icon-outline" onclick="closeModal('laserCutModal')" aria-label="關閉彈窗">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body" style="text-align: center;">
+      <p style="text-align: left; margin-bottom: 0.85rem; font-size: 0.95rem; color: var(--color-text-muted);">
+        包含多角度卡槽雙側板、一體成型投石擺臂（含拋射籃與施力孔）及底盤卡榫橫樑。
+      </p>
+      <div style="background: #ffffff; border-radius: var(--radius-sm); border: 1px solid var(--color-border); padding: 1.5rem; overflow: auto; max-height: 60vh;">
+        <img src="downloads/laser-cut/投石戰車_雷切零件圖檔.png" alt="投石戰車雷切零件圖檔" style="width: 100%; max-width: 680px; height: auto; display: block; margin: 0 auto; filter: contrast(110%);">
+      </div>
+    </div>
+    <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+      <a href="downloads/laser-cut/投石戰車_雷切零件圖檔.png" download="投石戰車_雷切零件圖檔.png" class="btn-outline btn-outline-primary btn-outline-sm">下載原圖 (PNG)</a>
+      <button class="btn-outline btn-outline-sm" onclick="closeModal('laserCutModal')">關閉預覽</button>
+    </div>
+  </dialog>
+
+  <!-- Modal 4: 數據紀錄與成果匯出 -->
   <dialog id="exportModal" class="modal-dialog">
     <div class="modal-header">
       <div class="modal-title">測試數據匯出與分析</div>
@@ -1655,7 +1845,7 @@
       
       <!-- Hero Card (教案基本資料與專案摘要) -->
       <section class="hero-card" id="overview">
-        <div class="hero-pretitle">國小科技領域教案 · 109 年 6 月 21 日修正版（科技教材教法教案_完整版）</div>
+        <div class="hero-pretitle">115學年度第一學期科技領域教材教法課程成果 · 指導老師：顏榮泉老師</div>
         <h1 class="hero-title">科技領域教材教法_張宗智、吳立安、黃勁允、翁苙維</h1>
         <div class="hero-subtitle">教案名稱：拋物線上的科學家：投石戰車探究與角度大解密</div>
         <p class="hero-desc">
@@ -2840,6 +3030,281 @@
   </div>
 
 
+      <!-- 八、課程成果檔案與資源下載專區（摺疊收合） -->
+      <details class="accordion-item" id="downloads" open>
+        <summary class="accordion-summary">
+          <div class="accordion-title-group">
+            <h2 class="accordion-title">八、課程成果檔案與資源下載專區</h2>
+            <p class="accordion-subtitle">完整教案、學習單、雷切圖檔、組裝完成圖、教材網站離線包與動態模擬器全套資源</p>
+          </div>
+          <div class="accordion-toggle-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </summary>
+        <div class="accordion-body">
+          <div style="background: var(--color-surface-muted); padding: 1.1rem 1.35rem; border-radius: var(--radius-sm); border: 1px solid var(--color-border); margin-bottom: 1.5rem;">
+            <p style="font-weight: 700; color: var(--color-primary); margin-bottom: 0.35rem;">
+              本專區提供 115 學年度第一學期科技領域教材教法課程全部教學與工程檔案下載：
+            </p>
+            <p style="font-size: 0.95rem; color: var(--color-text-muted); line-height: 1.7;">
+              所有檔案均為原創研發與正式教學規格，包含完整版教案與三階段探究學習單、小組雷切投石戰車圖檔與組裝完成圖、公開教材網站原始離線包，以及自主開發之動態投石車物理模擬實驗室。
+            </p>
+          </div>
+
+          <div class="download-grid">
+            
+            <!-- 卡片 1: 規定格式完整教案與學習單 -->
+            <div class="dl-card">
+              <div class="dl-card-header">
+                <div class="dl-card-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                </div>
+                <div class="dl-card-title-group">
+                  <div class="dl-card-tag">項目一 · 教學設計</div>
+                  <h3 class="dl-card-title">(1) 規定格式完整教案與文件</h3>
+                </div>
+              </div>
+              <p class="dl-card-desc">
+                符合科技領域課程規範之 17 頁完整教案詳案、雙向細目表、STEAM PBL 五節課架構、三階段探究學習單與小組互評規準表。
+              </p>
+              <div class="dl-file-list">
+                <div class="dl-file-row">
+                  <div class="dl-file-info">
+                    <span class="dl-file-name" title="科技領域教材教法_完整教案.pdf">科技領域教材教法_完整教案.pdf</span>
+                    <span class="dl-file-badge">17 頁全案 · 42.3 MB</span>
+                  </div>
+                  <div class="dl-action-group">
+                    <a href="downloads/lesson-plan/科技領域教材教法_完整教案.pdf" download="科技領域教材教法_完整教案.pdf" class="btn-outline btn-outline-primary btn-outline-sm">下載</a>
+                  </div>
+                </div>
+
+                <div class="dl-file-row">
+                  <div class="dl-file-info">
+                    <span class="dl-file-name" title="附錄一_數位實驗室預測學習單.pdf">附錄一：數位模擬預測單.pdf</span>
+                    <span class="dl-file-badge">學習單一 · 16.1 MB</span>
+                  </div>
+                  <div class="dl-action-group">
+                    <a href="downloads/lesson-plan/附錄一_數位實驗室預測學習單.pdf" download="附錄一_數位實驗室預測學習單.pdf" class="btn-outline btn-outline-sm">下載</a>
+                  </div>
+                </div>
+
+                <div class="dl-file-row">
+                  <div class="dl-file-info">
+                    <span class="dl-file-name" title="附錄二_投石器操作紀錄學習單.pdf">附錄二：實體組裝測試單.pdf</span>
+                    <span class="dl-file-badge">學習單二 · 12.9 MB</span>
+                  </div>
+                  <div class="dl-action-group">
+                    <a href="downloads/lesson-plan/附錄二_投石器操作紀錄學習單.pdf" download="附錄二_投石器操作紀錄學習單.pdf" class="btn-outline btn-outline-sm">下載</a>
+                  </div>
+                </div>
+
+                <div class="dl-file-row">
+                  <div class="dl-file-info">
+                    <span class="dl-file-name" title="附錄三_成果分享小組互評學習單.pdf">附錄三：成果分享互評單.pdf</span>
+                    <span class="dl-file-badge">互評表 · 12.8 MB</span>
+                  </div>
+                  <div class="dl-action-group">
+                    <a href="downloads/lesson-plan/附錄三_成果分享小組互評學習單.pdf" download="附錄三_成果分享小組互評學習單.pdf" class="btn-outline btn-outline-sm">下載</a>
+                  </div>
+                </div>
+
+                <div class="dl-file-row">
+                  <div class="dl-file-info">
+                    <span class="dl-file-name" title="教案全文字稿.md">教案全文字文稿 (Markdown)</span>
+                    <span class="dl-file-badge">MD · 25 KB</span>
+                  </div>
+                  <div class="dl-action-group">
+                    <a href="downloads/lesson-plan/教案全文字稿.md" download="科技領域教材教法_完整教案全文字稿.md" class="btn-outline btn-outline-sm">下載</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 卡片 2: 小組設計雷切投石車與組裝圖 -->
+            <div class="dl-card">
+              <div class="dl-card-header">
+                <div class="dl-card-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                  </svg>
+                </div>
+                <div class="dl-card-title-group">
+                  <div class="dl-card-tag">項目二 · 機構工程</div>
+                  <h3 class="dl-card-title">(2) 雷切投石車圖檔與組裝完成圖</h3>
+                </div>
+              </div>
+              <p class="dl-card-desc">
+                小組自研 3mm 椴木層積板雷切卡榫圖檔，以及標註支點、施力點、負載點與 45°/60°/75° 三段仰角限位槽之組裝工程圖。
+              </p>
+              <div class="dl-file-list">
+                <div class="dl-file-row">
+                  <div class="dl-file-info">
+                    <span class="dl-file-name" title="投石戰車_結構組裝完成圖.svg">投石戰車_結構組裝完成圖.svg</span>
+                    <span class="dl-file-badge">向量工程圖 · 15 KB</span>
+                  </div>
+                  <div class="dl-action-group">
+                    <button class="btn-outline btn-outline-sm" onclick="openModal('blueprintModal')">預覽</button>
+                    <a href="downloads/laser-cut/投石戰車_結構組裝完成圖.svg" download="投石戰車_結構組裝完成圖.svg" class="btn-outline btn-outline-primary btn-outline-sm">下載</a>
+                  </div>
+                </div>
+
+                <div class="dl-file-row">
+                  <div class="dl-file-info">
+                    <span class="dl-file-name" title="投石戰車_結構組裝完成圖.png">投石戰車_結構組裝完成圖.png</span>
+                    <span class="dl-file-badge">高清點陣圖 · 266 KB</span>
+                  </div>
+                  <div class="dl-action-group">
+                    <a href="downloads/laser-cut/投石戰車_結構組裝完成圖.png" download="投石戰車_結構組裝完成圖.png" class="btn-outline btn-outline-sm">下載</a>
+                  </div>
+                </div>
+
+                <div class="dl-file-row">
+                  <div class="dl-file-info">
+                    <span class="dl-file-name" title="投石戰車_雷切零件圖檔.png">投石戰車_雷切零件排版圖.png</span>
+                    <span class="dl-file-badge">雷切圖 · 21 KB</span>
+                  </div>
+                  <div class="dl-action-group">
+                    <button class="btn-outline btn-outline-sm" onclick="openModal('laserCutModal')">預覽</button>
+                    <a href="downloads/laser-cut/投石戰車_雷切零件圖檔.png" download="投石戰車_雷切零件排版圖.png" class="btn-outline btn-outline-sm">下載</a>
+                  </div>
+                </div>
+
+                <div class="dl-file-row">
+                  <div class="dl-file-info">
+                    <span class="dl-file-name" title="投石戰車_雷切與組裝設計包.zip">雷切與組裝全套設計包.zip</span>
+                    <span class="dl-file-badge">ZIP 完整包 · 267 KB</span>
+                  </div>
+                  <div class="dl-action-group">
+                    <a href="downloads/laser-cut/投石戰車_雷切與組裝設計包.zip" download="投石戰車_雷切與組裝設計包.zip" class="btn-outline btn-outline-primary btn-outline-sm">下載</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 卡片 3: 教材網站離線包與原始碼 -->
+            <div class="dl-card">
+              <div class="dl-card-header">
+                <div class="dl-card-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                  </svg>
+                </div>
+                <div class="dl-card-title-group">
+                  <div class="dl-card-tag">項目三 · 數位平台</div>
+                  <h3 class="dl-card-title">(3) 教材網站完整原始碼與離線包</h3>
+                </div>
+              </div>
+              <p class="dl-card-desc">
+                本教案公開展示網站完整原始碼，採前端純靜態技術建置，解壓縮後在任何本機電腦雙擊 index.html 即可離線瀏覽全部內容。
+              </p>
+              <div class="dl-file-list">
+                <div class="dl-file-row">
+                  <div class="dl-file-info">
+                    <span class="dl-file-name" title="科技領域教材教法_教材網站離線完整包.zip">教材網站完整離線包.zip</span>
+                    <span class="dl-file-badge">ZIP 離線包 · 43 KB</span>
+                  </div>
+                  <div class="dl-action-group">
+                    <a href="downloads/website/科技領域教材教法_教材網站離線完整包.zip" download="科技領域教材教法_教材網站離線完整包.zip" class="btn-outline btn-outline-primary btn-outline-sm">下載</a>
+                  </div>
+                </div>
+
+                <div class="dl-file-row">
+                  <div class="dl-file-info">
+                    <span class="dl-file-name">GitHub 原始碼儲存庫</span>
+                    <span class="dl-file-badge">Public Repo</span>
+                  </div>
+                  <div class="dl-action-group">
+                    <a href="https://github.com/leeonweng/TMD" target="_blank" rel="noopener noreferrer" class="btn-outline btn-outline-sm">造訪倉庫</a>
+                  </div>
+                </div>
+
+                <div class="dl-file-row">
+                  <div class="dl-file-info">
+                    <span class="dl-file-name">線上公開教學網站網址</span>
+                    <span class="dl-file-badge">GitHub Pages</span>
+                  </div>
+                  <div class="dl-action-group">
+                    <a href="https://leeonweng.github.io/TMD/" target="_blank" rel="noopener noreferrer" class="btn-outline btn-outline-sm">線上瀏覽</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 卡片 4: 動態模擬投石車遊戲 -->
+            <div class="dl-card">
+              <div class="dl-card-header">
+                <div class="dl-card-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                </div>
+                <div class="dl-card-title-group">
+                  <div class="dl-card-tag">項目四 · 互動模擬</div>
+                  <h3 class="dl-card-title">(4) 動態模擬投石車遊戲與實驗室</h3>
+                </div>
+              </div>
+              <p class="dl-card-desc">
+                第一組自主研發之純 HTML/SVG 動態投石車實驗室（單檔免伺服器即開即玩，支援連續試射與擬合圖），以及本站投石戰車攻城小遊戲。
+              </p>
+              <div class="dl-file-list">
+                <div class="dl-file-row">
+                  <div class="dl-file-info">
+                    <span class="dl-file-name" title="投石車動態模擬實驗室.html">投石車動態模擬實驗室.html</span>
+                    <span class="dl-file-badge">單檔網頁 · 42 KB</span>
+                  </div>
+                  <div class="dl-action-group">
+                    <a href="downloads/simulation-game/投石車動態模擬實驗室.html" download="第一組_投石車動態模擬實驗室.html" class="btn-outline btn-outline-primary btn-outline-sm">下載</a>
+                  </div>
+                </div>
+
+                <div class="dl-file-row">
+                  <div class="dl-file-info">
+                    <span class="dl-file-name" title="第一組_投石車實驗室.zip">第一組模擬實驗室原始壓縮包.zip</span>
+                    <span class="dl-file-badge">ZIP 原檔 · 13 KB</span>
+                  </div>
+                  <div class="dl-action-group">
+                    <a href="downloads/simulation-game/第一組_投石車實驗室.zip" download="第一組_投石車實驗室.zip" class="btn-outline btn-outline-sm">下載</a>
+                  </div>
+                </div>
+
+                <div class="dl-file-row">
+                  <div class="dl-file-info">
+                    <span class="dl-file-name" title="投石戰車雙模式互動模擬全套.zip">雙模式互動模擬全套套件.zip</span>
+                    <span class="dl-file-badge">ZIP 遊戲包 · 26 KB</span>
+                  </div>
+                  <div class="dl-action-group">
+                    <a href="downloads/simulation-game/投石戰車雙模式互動模擬全套.zip" download="投石戰車雙模式互動模擬全套.zip" class="btn-outline btn-outline-sm">下載</a>
+                  </div>
+                </div>
+
+                <div class="dl-file-row">
+                  <div class="dl-file-info">
+                    <span class="dl-file-name">本站投石戰車攻城小遊戲</span>
+                    <span class="dl-file-badge">在線遊玩</span>
+                  </div>
+                  <div class="dl-action-group">
+                    <button class="btn-outline btn-outline-primary btn-outline-sm" onclick="switchView('game'); showToast('已切換至互動模擬小遊戲');">進入遊戲</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </details>
+
+
   <!-- ==========================================================================
        VIEW 2: 互動式小遊戲 (Interactive Game View)
        ========================================================================== -->
@@ -3000,8 +3465,14 @@
 
   <!-- Footer -->
   <footer>
-    <p style="font-weight:700;">科技領域教材教法 · 張宗智、吳立安、黃勁允、翁苙維</p>
-    <p style="margin-top: 0.35rem;">國小科技領域「拋物線上的科學家：投石戰車探究與角度大解密」公開教案與互動教學平台</p>
+    <div style="max-width: 900px; margin: 0 auto; text-align: center; line-height: 1.8;">
+      <p style="font-weight: 800; font-size: 1.05rem; letter-spacing: 0.02em; color: var(--color-text);">
+        本網站為115學年度第一學期科技領域教材教法課程成果，由張宗智、吳立安、黃勁允、翁苙維等人共同設計製作；指導老師：顏榮泉老師
+      </p>
+      <p style="margin-top: 0.5rem; font-size: 0.92rem; color: var(--color-text-muted);">
+        國小科技領域「拋物線上的科學家：投石戰車探究與角度大解密」公開教案 · 國立臺北教育大學
+      </p>
+    </div>
   </footer>
 
   <!-- Scripts -->

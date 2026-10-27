@@ -1,0 +1,932 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>投石車實驗室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: scene + controls on the left, prediction + record table on the right, chart + conclusion below. */
+:root {
+  --bg: #eef2f0;
+  --panel: #fcfcfb;
+  --ink: #13201b;
+  --ink2: #46534d;
+  --muted: #66736d;
+  --line: #d6ddd9;
+  --line2: #e7ece9;
+  --btn: #13201b;
+  --btn-ink: #fcfcfb;
+  --focus: #1c5cab;
+  --s40: #2a78d6;
+  --s60: #eb6834;
+  --s80: #1baf7a;
+  --wood: #d2ad74;
+  --wood-ln: #8a6636;
+  --band: #8a948f;
+  --ground: #c4ccc8;
+  --ball: #ffffff;
+  --note: #eaf3ef;
+  --font: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "Heiti TC", system-ui, sans-serif;
+  --mono: "DM Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111312;
+    --panel: #1a1a19;
+    --ink: #eef1ef;
+    --ink2: #c3c9c5;
+    --muted: #9aa49f;
+    --line: #34393a;
+    --line2: #262a29;
+    --btn: #eef1ef;
+    --btn-ink: #111312;
+    --focus: #6da7ec;
+    --s40: #3987e5;
+    --s60: #d95926;
+    --s80: #199e70;
+    --wood: #b58b52;
+    --wood-ln: #dcb982;
+    --band: #8f9a95;
+    --ground: #3b4140;
+    --ball: #f3f3ef;
+    --note: #1f2926;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111312;
+  --panel: #1a1a19;
+  --ink: #eef1ef;
+  --ink2: #c3c9c5;
+  --muted: #9aa49f;
+  --line: #34393a;
+  --line2: #262a29;
+  --btn: #eef1ef;
+  --btn-ink: #111312;
+  --focus: #6da7ec;
+  --s40: #3987e5;
+  --s60: #d95926;
+  --s80: #199e70;
+  --wood: #b58b52;
+  --wood-ln: #dcb982;
+  --band: #8f9a95;
+  --ground: #3b4140;
+  --ball: #f3f3ef;
+  --note: #1f2926;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+.credit { margin-top: 20px; padding: 14px 4px 4px; border-top: 1px solid var(--line); color: var(--ink2); font-size: 13px; line-height: 1.7; text-wrap: pretty; }
+.credit b { color: var(--ink); font-weight: 600; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.6;
+  padding-inline: 16px;
+  padding-block: 24px 40px;
+}
+.wrap { max-width: 1080px; margin-inline: auto; display: grid; gap: 16px; }
+h1 { font-size: 28px; line-height: 1.25; margin: 0; letter-spacing: 0.02em; text-wrap: balance; }
+h2 { font-size: 16px; margin: 0; line-height: 1.4; }
+p { margin: 0; }
+.lead { color: var(--ink2); margin-top: 4px; max-width: 46em; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; min-width: 0; }
+.card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap; margin-bottom: 12px; }
+.hint { color: var(--muted); font-size: 13px; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* fixed conditions */
+.fixed { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; padding: 10px 14px; border-radius: 10px; background: var(--note); border: 1px solid var(--line); }
+.fixed b { font-size: 13px; letter-spacing: 0.08em; margin-right: 4px; }
+.fixed span { font-size: 13.5px; color: var(--ink2); white-space: nowrap; }
+.fixed span em { font-style: normal; color: var(--ink); font-weight: 500; }
+
+.layout { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.col { display: grid; gap: 16px; min-width: 0; }
+@media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+
+/* scene */
+.scene { width: 100%; height: auto; display: block; }
+.scene text { font-family: var(--font); fill: var(--ink2); }
+.scene .tick { stroke: var(--muted); stroke-width: 1.5; }
+.scene .lbl { font-size: 20px; }
+.scene .launch-line { stroke: var(--muted); stroke-width: 2; stroke-dasharray: 6 6; }
+.scene .guide { stroke-width: 3; stroke-dasharray: 8 6; fill: none; }
+.scene .plate { fill: var(--wood); fill-opacity: 0.55; stroke: var(--wood-ln); stroke-width: 2; }
+.scene .base { fill: var(--wood); stroke: var(--wood-ln); stroke-width: 2; }
+.scene .arm { stroke: var(--wood-ln); stroke-width: 9; stroke-linecap: round; }
+.scene .arm-core { stroke: var(--wood); stroke-width: 5; stroke-linecap: round; }
+.scene .band { stroke: var(--band); stroke-width: 3; }
+.scene .cup { fill: none; stroke: var(--wood-ln); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.scene .ball { fill: var(--ball); stroke: var(--ink); stroke-width: 2; }
+.scene .stopbar { fill: var(--panel); stroke: var(--wood-ln); stroke-width: 3; }
+.scene .ghost { stroke: var(--muted); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 2 7; opacity: .8; }
+.scene .halo { paint-order: stroke; stroke: var(--panel); stroke-width: 5px; stroke-linejoin: round; }
+@media (max-width: 600px) { .scene .lbl { font-size: 32px; } .scene .halo { stroke-width: 8px; } }
+
+/* controls */
+.controls { display: grid; gap: 14px; }
+.angles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.angle { font: inherit; color: var(--ink); background: var(--panel); border: 1.5px solid var(--line); border-radius: 10px; padding: 10px 8px 9px; cursor: pointer; display: grid; justify-items: center; gap: 4px; }
+.angle:hover:not(:disabled) { border-color: var(--muted); }
+.angle[aria-checked="true"] { border-color: var(--ink); background: var(--line2); }
+.angle:disabled { cursor: not-allowed; opacity: .6; }
+.angle .a-top { display: flex; align-items: center; gap: 8px; }
+.angle .a-val { font-family: var(--mono); font-size: 22px; font-weight: 500; line-height: 1.2; }
+.dots { display: flex; gap: 4px; }
+.dots i { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--muted); display: block; }
+.dots i.on { border-color: transparent; }
+.row { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+.fire { font: inherit; font-weight: 700; font-size: 17px; letter-spacing: 0.1em; padding: 11px 28px; border-radius: 10px; border: none; background: var(--btn); color: var(--btn-ink); cursor: pointer; min-width: 132px; }
+.fire:disabled { opacity: .35; cursor: not-allowed; }
+.fire:hover:not(:disabled) { filter: brightness(1.15); }
+.status { flex: 1 1 200px; min-width: 0; color: var(--ink2); font-size: 14px; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; color: var(--ink2); }
+.opts label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.opts input { width: 16px; height: 16px; accent-color: var(--ink); }
+.btn2 { font: inherit; font-size: 13.5px; color: var(--ink); background: transparent; border: 1.5px solid var(--line); border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+.btn2:hover { border-color: var(--muted); }
+.btn2.warn { border-color: var(--s60); }
+button:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* prediction */
+.pred { display: grid; gap: 8px; }
+.pred label { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1.5px solid var(--line); border-radius: 8px; cursor: pointer; }
+.pred label:has(input:checked) { border-color: var(--ink); background: var(--line2); }
+.pred input { accent-color: var(--ink); width: 16px; height: 16px; }
+.pred.locked label { cursor: default; opacity: .75; }
+
+/* table */
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+caption { text-align: left; color: var(--muted); font-size: 13px; padding-bottom: 6px; }
+th, td { padding: 7px 8px; text-align: right; border-bottom: 1px solid var(--line2); font-size: 14px; white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+thead th { border-bottom: 1.5px solid var(--line); font-weight: 500; }
+thead th .th-in { display: inline-flex; align-items: center; gap: 6px; }
+tbody td { font-family: var(--mono); }
+tbody td:first-child { font-family: var(--font); color: var(--ink2); }
+td.new { background: var(--line2); font-weight: 500; }
+tr.sum td { border-top: 1.5px solid var(--line); font-weight: 500; }
+tr.sum td:first-child { font-weight: 500; color: var(--ink); }
+tr.rng td { color: var(--ink2); }
+.empty { color: var(--muted); }
+
+/* chart */
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13.5px; color: var(--ink2); margin-bottom: 8px; align-items: center; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.chartbox { position: relative; }
+.chart { width: 100%; height: auto; display: block; }
+.chart text { font-family: var(--font); fill: var(--ink2); font-size: 15px; }
+.chart .grid { stroke: var(--line2); stroke-width: 1; }
+.chart .axis { stroke: var(--muted); stroke-width: 1.5; }
+.chart .mline { stroke: var(--ink2); stroke-width: 2; fill: none; }
+.chart .mval { font-family: var(--mono); font-size: 16px; font-weight: 500; fill: var(--ink); paint-order: stroke; stroke: var(--panel); stroke-width: 5px; stroke-linejoin: round; }
+.chart .axt { font-size: 14px; fill: var(--muted); }
+.tip { position: absolute; pointer-events: none; background: var(--btn); color: var(--btn-ink); font-size: 13px; padding: 5px 9px; border-radius: 6px; white-space: nowrap; transform: translate(-50%, -130%); z-index: 2; }
+
+/* conclusion */
+.concl { display: grid; gap: 10px; border-color: var(--ink); }
+.concl h2 { font-size: 18px; }
+.concl ol { margin: 0; padding-left: 1.3em; display: grid; gap: 4px; color: var(--ink2); }
+.concl .big { font-size: 17px; }
+.copybox { display: grid; gap: 8px; margin-top: 12px; }
+.copybox textarea { width: 100%; min-height: 110px; font-family: var(--mono); font-size: 13px; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 8px; resize: vertical; }
+details { color: var(--ink2); font-size: 14px; }
+details summary { cursor: pointer; font-weight: 500; color: var(--ink); }
+details p { margin-top: 8px; max-width: 52em; }
+.toast { font-size: 13.5px; color: var(--ink2); min-height: 1.4em; }
+@media (prefers-reduced-motion: no-preference) { .fire, .angle { transition: filter .15s, border-color .15s; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>投石車實驗室</h1>
+    <p class="lead">只改變投射角度，每個角度投 5 次，看球飛得多遠，再用平均和折線圖找答案。</p>
+  </header>
+
+  <div class="fixed" role="group" aria-label="固定條件">
+    <b>固定不變</b>
+    <span>出手速度 <em class="num">5.0 m/s</em></span>
+    <span>球 <em>乒乓球 2.7 g</em></span>
+    <span>投石臂 <em>抗力臂 12 cm、施力臂 3 cm</em></span>
+    <span>空氣阻力 <em>不計</em></span>
+    <span>距離 <em>發射線到落點</em></span>
+  </div>
+
+  <div class="layout">
+    <div class="col">
+      <section class="card" aria-label="投石車場景">
+        <div class="card-head">
+          <h2>投石車</h2>
+          <span class="hint">虛線箭頭是球飛出的方向，球飛出的方向與投石臂垂直</span>
+        </div>
+        <svg id="scene" class="scene" viewBox="0 0 800 372" role="img" aria-label="投石車側視圖：球從承杯飛出，落在發射線右側的尺規上">
+          <g id="ruler"></g>
+          <line class="launch-line" x1="64" y1="322" x2="64" y2="34"/>
+          <text class="lbl" x="72" y="30">發射線</text>
+          <g id="trails"></g>
+          <g id="landings"></g>
+          <path id="trailNow" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <g id="static"></g>
+          <g id="guide"></g>
+          <line id="band" class="band"/>
+          <line id="arm" class="arm"/>
+          <line id="armcore" class="arm-core"/>
+          <circle id="pivot" r="6" class="stopbar"/>
+          <polyline id="cup" class="cup" fill="none"/>
+          <circle id="ball" r="7" class="ball"/>
+          <text id="lastLabel" class="lbl halo" text-anchor="middle" font-weight="700" style="fill:var(--ink)"></text>
+        </svg>
+      </section>
+
+      <section class="card controls" aria-label="操作">
+        <div class="card-head" style="margin-bottom:0">
+          <h2>選角度，按發射</h2>
+          <span class="hint" id="progress">已投 0 / 15 次</span>
+        </div>
+        <div class="angles" role="radiogroup" aria-label="投射角度" id="angles"></div>
+        <div class="row">
+          <button class="fire" id="fire" type="button">發射</button>
+          <button class="btn2" id="fireAll" type="button">連續投完這個角度</button>
+          <p class="status" id="status" role="status" aria-live="polite">先選好角度，再按「發射」。</p>
+        </div>
+        <div class="opts">
+          <label><input type="checkbox" id="optNoise">進階：加入小誤差（模擬手的差異）</label>
+          <label><input type="checkbox" id="optSlow">慢動作</label>
+          <label><input type="checkbox" id="optAll" checked>顯示全部軌跡</label>
+        </div>
+      </section>
+    </div>
+
+    <div class="col">
+      <section class="card" aria-label="預測">
+        <div class="card-head"><h2>先預測</h2><span class="hint" id="predHint">第一次發射前可以改</span></div>
+        <p style="margin-bottom:10px;color:var(--ink2)">你認為哪個角度的球會飛得最遠？</p>
+        <div class="pred" id="pred" role="radiogroup" aria-label="我的預測"></div>
+      </section>
+
+      <section class="card" aria-label="紀錄表">
+        <div class="card-head"><h2>紀錄表</h2><span class="hint">單位：公分（cm）</span></div>
+        <div class="tablewrap">
+          <table id="tbl">
+            <caption>每個角度各投 5 次的落點距離</caption>
+            <thead id="thead"></thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+        <div class="row" style="margin-top:12px">
+          <button class="btn2" id="copy" type="button">複製資料（貼到試算表）</button>
+          <button class="btn2" id="reset" type="button">全部重來</button>
+          <span class="toast" id="toast" role="status" aria-live="polite"></span>
+        </div>
+        <div class="copybox" id="copybox" hidden>
+          <p class="hint">瀏覽器不讓程式直接複製。請按住下面的文字全選，再自己複製。</p>
+          <textarea id="copytext" readonly aria-label="可複製的資料"></textarea>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <section class="card" aria-label="折線圖">
+    <div class="card-head">
+      <h2>角度與平均距離</h2>
+      <span class="hint" id="chartHint">小點是每一次，大符號是 5 次的平均</span>
+    </div>
+    <div class="legend" id="legend"></div>
+    <div class="chartbox" id="chartbox">
+      <svg id="chart" class="chart" viewBox="0 0 720 340" role="img" aria-label="折線圖：三個投射角度的平均落點距離"></svg>
+      <div class="tip" id="tip" hidden></div>
+    </div>
+  </section>
+
+  <section class="card concl" id="concl" hidden aria-label="結果">
+    <h2>15 次都投完了</h2>
+    <p class="big" id="conclMain"></p>
+    <p id="conclPred" style="color:var(--ink2)"></p>
+    <p><b>想一想</b></p>
+    <ol>
+      <li>三個角度的條件都一樣，只有角度不同，為什麼距離不一樣？哪個角度最遠？</li>
+      <li>80° 的球飛得很高，為什麼卻落得最近？</li>
+      <li>這裡每個角度 5 次的結果都一樣。真的投石車也會這樣嗎？按下「進階：加入小誤差」再投一輪看看。</li>
+    </ol>
+  </section>
+
+  <details class="card">
+    <summary>這個模型怎麼算</summary>
+    <p>球離開承杯時，水平速度是 v × cos θ，向上速度是 v × sin θ，v 固定為 5.0 m/s。出手點由投石臂決定：支點離地 7 cm，抗力臂 12 cm，臂停在擋桿時，球的飛行方向與臂垂直，所以出手點在發射線後方 12 × sin θ cm、離地 7 + 12 × cos θ cm。球只受重力，不計空氣阻力，飛行時間由高度算到 0 為止，距離是落點到發射線的水平距離。</p>
+    <p>預設所有條件都固定（出手速度、球、出手點、距離量法），只有投射角度會變，所以同一個角度每次的結果都一樣。「進階：加入小誤差」會讓每次的出手速度在 ±4% 內變動，用來模擬真實操作時手的差異。這個模型假設三個角度的出手速度一樣；真的投石車擋桿位置不同時，臂擺動的距離也不同，速度可能跟著變，結果會和這裡有差別。</p>
+  </details>
+
+  <footer class="credit">
+    <p>本網站為 <b>115 學年度第一學期科技領域教材教法課程</b>成果，由<b>第 1 組</b>吳立安、張宗智、黃勁允、翁苙維等人共同設計製作。</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var G = 9.8, V0 = 5.0, L = 0.12, PY = 0.07, SHORT = 0.03, N = 5;
+  var ANGLES = [40, 60, 80];
+  var S = 205, X0 = 64, Y0 = 322;
+  var BETA0 = 205 * Math.PI / 180;
+  var COLORS = { 40: "var(--s40)", 60: "var(--s60)", 80: "var(--s80)" };
+  var SHAPES = { 40: "circle", 60: "square", 80: "triangle" };
+  var NS = "http://www.w3.org/2000/svg";
+  var $ = function (id) { return document.getElementById(id); };
+  var px = function (x) { return X0 + S * x; };
+  var py = function (y) { return Y0 - S * y; };
+  var rad = function (d) { return d * Math.PI / 180; };
+  var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var state = { angle: 40, busy: false, pred: null, last: null, trials: { 40: [], 60: [], 80: [] } };
+
+  /* ---------- physics ---------- */
+  function flight(deg, v) {
+    var th = rad(deg);
+    var xr = -L * Math.sin(th), yr = PY + L * Math.cos(th);
+    var vx = v * Math.cos(th), vy = v * Math.sin(th);
+    var T = (vy + Math.sqrt(vy * vy + 2 * G * yr)) / G;
+    return { xr: xr, yr: yr, vx: vx, vy: vy, T: T, D: xr + vx * T };
+  }
+  function samplePath(f) {
+    var pts = [], steps = 40;
+    for (var i = 0; i <= steps; i++) {
+      var t = f.T * i / steps;
+      pts.push([f.xr + f.vx * t, f.yr + f.vy * t - 0.5 * G * t * t]);
+    }
+    pts[steps][1] = 0;
+    return pts;
+  }
+  function ptsToD(pts) {
+    return pts.map(function (p, i) { return (i ? "L" : "M") + px(p[0]).toFixed(1) + " " + py(p[1]).toFixed(1); }).join(" ");
+  }
+
+  /* ---------- svg helpers ---------- */
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function shapeIcon(kind, color, size) {
+    var s = size || 14, h = s / 2;
+    var svg = el("svg", { width: s, height: s, viewBox: "0 0 " + s + " " + s, "aria-hidden": "true" });
+    svg.style.flex = "none";
+    if (kind === "circle") el("circle", { cx: h, cy: h, r: h - 1, fill: color }, svg);
+    else if (kind === "square") el("rect", { x: 1.5, y: 1.5, width: s - 3, height: s - 3, rx: 1.5, fill: color }, svg);
+    else el("polygon", { points: h + ",1.5 " + (s - 1) + "," + (s - 2) + " 1," + (s - 2), fill: color }, svg);
+    return svg;
+  }
+  function shapeAt(kind, x, y, r, color, parent, extra) {
+    var e;
+    if (kind === "circle") e = el("circle", { cx: x, cy: y, r: r, fill: color }, parent);
+    else if (kind === "square") e = el("rect", { x: x - r * 0.9, y: y - r * 0.9, width: r * 1.8, height: r * 1.8, rx: 2, fill: color }, parent);
+    else e = el("polygon", { points: x + "," + (y - r * 1.15) + " " + (x + r * 1.1) + "," + (y + r * 0.85) + " " + (x - r * 1.1) + "," + (y + r * 0.85), fill: color }, parent);
+    e.setAttribute("stroke", "var(--panel)");
+    e.setAttribute("stroke-width", "2.5");
+    if (extra) for (var k in extra) e.setAttribute(k, extra[k]);
+    return e;
+  }
+
+  /* ---------- scene ---------- */
+  function buildScene() {
+    var ruler = $("ruler");
+    el("line", { x1: 20, y1: Y0, x2: 790, y2: Y0, stroke: "var(--muted)", "stroke-width": 2 }, ruler);
+    el("rect", { x: 0, y: Y0, width: 800, height: 8, fill: "var(--ground)", opacity: 0.6 }, ruler);
+    for (var cm = 0; cm <= 350; cm += 50) {
+      var x = px(cm / 100);
+      el("line", { class: "tick", x1: x, y1: Y0, x2: x, y2: Y0 + (cm % 100 === 0 ? 14 : 9) }, ruler);
+      if (cm % 100 === 0) {
+        var t = el("text", { class: "lbl", x: x, y: Y0 + 36, "text-anchor": "middle" }, ruler);
+        t.textContent = cm === 0 ? "0" : String(cm);
+      }
+    }
+    var u = el("text", { class: "lbl", x: 790, y: Y0 + 36, "text-anchor": "end" }, ruler);
+    u.textContent = "公分";
+
+    var st = $("static");
+    el("rect", { class: "base", x: px(-0.12), y: py(0.01), width: S * 0.2, height: S * 0.01, rx: 2 }, st);
+    el("rect", { class: "plate", x: px(-0.09), y: py(0.13), width: S * 0.14, height: S * 0.12, rx: 4 }, st);
+    el("circle", { cx: px(0.06), cy: py(0.012), r: 4, fill: "var(--wood-ln)" }, st);
+    $("pivot").setAttribute("cx", px(0));
+    $("pivot").setAttribute("cy", py(PY));
+  }
+
+  function armGeom(beta) {
+    var c = Math.cos(beta), s = Math.sin(beta);
+    return {
+      tip: [L * c, PY + L * s],
+      short: [-SHORT * c, PY - SHORT * s],
+      vdir: [Math.sin(beta), -Math.cos(beta)]
+    };
+  }
+  function setArm(beta) {
+    var g = armGeom(beta);
+    var a = ["x1", px(g.short[0]), "y1", py(g.short[1]), "x2", px(g.tip[0]), "y2", py(g.tip[1])];
+    ["arm", "armcore"].forEach(function (id) {
+      for (var i = 0; i < a.length; i += 2) $(id).setAttribute(a[i], a[i + 1]);
+    });
+    $("band").setAttribute("x1", px(g.short[0]));
+    $("band").setAttribute("y1", py(g.short[1]));
+    $("band").setAttribute("x2", px(0.06));
+    $("band").setAttribute("y2", py(0.012));
+    var cx = px(g.tip[0]), cy = py(g.tip[1]);
+    setBall(g.tip[0], g.tip[1]);
+    // cup wraps the trailing half of the ball
+    var vdx = g.vdir[0], vdy = -g.vdir[1]; // px space
+    var base = Math.atan2(-vdy, -vdx), pts = [];
+    for (var i = -4; i <= 4; i++) {
+      var ang = base + i * rad(22);
+      pts.push((cx + 12 * Math.cos(ang)).toFixed(1) + "," + (cy + 12 * Math.sin(ang)).toFixed(1));
+    }
+    $("cup").setAttribute("points", pts.join(" "));
+    return g;
+  }
+  function setBall(x, y) {
+    $("ball").setAttribute("cx", px(x));
+    $("ball").setAttribute("cy", py(y));
+  }
+
+  function drawGuide() {
+    var g = $("guide");
+    g.textContent = "";
+    var th = state.angle, f = flight(th, V0), color = COLORS[th];
+    var beta = rad(90 + th);
+    var rx = px(f.xr), ry = py(f.yr);
+    // ghost arm at the stop position and the stop bar
+    var ge = armGeom(beta);
+    el("line", { class: "ghost", x1: px(ge.short[0]), y1: py(ge.short[1]), x2: px(ge.tip[0]), y2: py(ge.tip[1]) }, g);
+    var sb = [0.062 * Math.cos(beta - rad(4)), PY + 0.062 * Math.sin(beta - rad(4))];
+    el("circle", { class: "stopbar", cx: px(sb[0]), cy: py(sb[1]), r: 5 }, g);
+    // horizontal reference and direction arrow
+    el("line", { x1: rx, y1: ry, x2: rx + 0.5 * S, y2: ry, stroke: "var(--muted)", "stroke-width": 2, "stroke-dasharray": "2 6" }, g);
+    var len = 0.5;
+    var ex = rx + len * S * Math.cos(rad(th)), ey = ry - len * S * Math.sin(rad(th));
+    el("line", { class: "guide", x1: rx, y1: ry, x2: ex, y2: ey, stroke: color }, g);
+    var ah = rad(th), hs = 14;
+    el("polygon", {
+      points: ex + "," + ey + " " +
+        (ex - hs * Math.cos(ah - 0.4)) + "," + (ey + hs * Math.sin(ah - 0.4)) + " " +
+        (ex - hs * Math.cos(ah + 0.4)) + "," + (ey + hs * Math.sin(ah + 0.4)),
+      fill: color
+    }, g);
+    // angle arc
+    var pts = [], R = 0.2 * S;
+    for (var i = 0; i <= 12; i++) {
+      var a = rad(th) * i / 12;
+      pts.push((i ? "L" : "M") + (rx + R * Math.cos(a)).toFixed(1) + " " + (ry - R * Math.sin(a)).toFixed(1));
+    }
+    el("path", { d: pts.join(" "), fill: "none", stroke: color, "stroke-width": 3 }, g);
+    var mid = rad(th) / 2;
+    var tx = rx + (R + 24) * Math.cos(mid), ty = ry - (R + 24) * Math.sin(mid);
+    var lab = el("text", { class: "lbl halo", x: tx, y: ty + 7, "text-anchor": "middle", "font-weight": "700", style: "fill:var(--ink)" }, g);
+    lab.textContent = th + "°";
+  }
+
+  function showRest() {
+    setArm(BETA0);
+    drawGuide();
+  }
+
+  function redrawTrails() {
+    var tr = $("trails"), ld = $("landings");
+    tr.textContent = ""; ld.textContent = "";
+    var showAll = $("optAll").checked;
+    ANGLES.forEach(function (a) {
+      state.trials[a].forEach(function (t, i) {
+        var isLast = state.last && state.last.a === a && state.last.i === i;
+        if (showAll || isLast) {
+          el("path", { d: ptsToD(t.pts), fill: "none", stroke: COLORS[a], "stroke-width": 2.5, opacity: isLast ? 0 : 0.5, "stroke-linecap": "round" }, tr);
+        }
+        shapeAt(SHAPES[a], px(t.d / 100), Y0 - 9, 6.5, COLORS[a], ld, { opacity: isLast ? 1 : 0.8 });
+      });
+    });
+  }
+
+  /* ---------- launch ---------- */
+  function totalShots() { return ANGLES.reduce(function (n, a) { return n + state.trials[a].length; }, 0); }
+
+  var auto = null;
+  function stopAuto() { if (auto) { clearInterval(auto); auto = null; } }
+  function fireAll() {
+    var a = state.angle;
+    if (auto || state.busy || state.trials[a].length >= N) return;
+    auto = setInterval(function () {
+      if (state.busy) return;
+      if (state.angle !== a || state.trials[a].length >= N) { stopAuto(); refreshControls(); return; }
+      launch();
+    }, 250);
+    refreshControls();
+  }
+
+  function launch() {
+    var a = state.angle;
+    if (state.busy || state.trials[a].length >= N) return;
+    state.busy = true;
+    lockPrediction();
+    refreshControls();
+    var noise = $("optNoise").checked;
+    var v = V0 * (noise ? 1 + (Math.random() + Math.random() - 1) * 0.04 : 1);
+    var f = flight(a, v);
+    var pts = samplePath(f);
+    var D = Math.round(f.D * 100);
+    var slow = $("optSlow").checked ? 0.4 : 1;
+    var betaEnd = rad(90 + a);
+    var tA = 0.2 / slow;
+    $("lastLabel").textContent = "";
+    $("trailNow").setAttribute("d", "");
+    $("trailNow").setAttribute("stroke", COLORS[a]);
+    state.last = null;
+    redrawTrails();
+    $("guide").textContent = "";
+    drawGuideStopOnly(betaEnd);
+
+    function finish() {
+      var trial = { d: D, pts: pts, v: v };
+      state.trials[a].push(trial);
+      state.last = { a: a, i: state.trials[a].length - 1 };
+      setBall(f.xr + f.vx * f.T, 0);
+      $("ball").setAttribute("cy", py(0.0) - 7);
+      $("trailNow").setAttribute("d", ptsToD(pts));
+      redrawTrails();
+      var lx = px(D / 100);
+      $("lastLabel").setAttribute("x", Math.min(Math.max(lx, 50), 760));
+      $("lastLabel").setAttribute("y", Y0 - 28);
+      $("lastLabel").textContent = D + " cm";
+      state.busy = false;
+      var n = state.trials[a].length;
+      var msg = a + "° 第 " + n + " 次：" + D + " 公分。";
+      if (n >= N) {
+        var next = ANGLES.filter(function (x) { return state.trials[x].length < N; })[0];
+        if (next) { state.angle = next; msg += a + "° 已投滿 5 次，換 " + next + "°。"; }
+        else msg += "三個角度都投完了。";
+      }
+      $("status").textContent = msg;
+      renderAll();
+      setTimeout(function () { setArm(BETA0); drawGuide(); }, slow < 1 ? 900 : 450);
+    }
+
+    if (reduced) { setArm(betaEnd); finish(); return; }
+
+    var start = null;
+    function frame(now) {
+      if (start === null) start = now;
+      var t = (now - start) / 1000;
+      if (t < tA) {
+        var p = t / tA;
+        var e = Math.pow(p, 1.4);
+        var beta = BETA0 + (betaEnd - BETA0) * e;
+        setArm(beta);
+        requestAnimationFrame(frame);
+        return;
+      }
+      setArm(betaEnd);
+      var tt = (t - tA) * slow;
+      if (tt >= f.T) { finish(); return; }
+      var x = f.xr + f.vx * tt, y = f.yr + f.vy * tt - 0.5 * G * tt * tt;
+      setBall(x, Math.max(y, 0));
+      var cur = [];
+      for (var i = 0; i < pts.length; i++) {
+        if (pts[i][0] <= x) cur.push(pts[i]);
+      }
+      cur.push([x, Math.max(y, 0)]);
+      $("trailNow").setAttribute("d", ptsToD(cur));
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  function drawGuideStopOnly(beta) {
+    var g = $("guide");
+    var sb = [0.062 * Math.cos(beta - rad(4)), PY + 0.062 * Math.sin(beta - rad(4))];
+    el("circle", { class: "stopbar", cx: px(sb[0]), cy: py(sb[1]), r: 5 }, g);
+  }
+
+  /* ---------- UI ---------- */
+  function stats(a) {
+    var arr = state.trials[a].map(function (t) { return t.d; });
+    if (!arr.length) return null;
+    var sum = arr.reduce(function (s, x) { return s + x; }, 0);
+    return { n: arr.length, mean: sum / arr.length, min: Math.min.apply(null, arr), max: Math.max.apply(null, arr) };
+  }
+
+  function buildAngles() {
+    var box = $("angles");
+    box.textContent = "";
+    ANGLES.forEach(function (a) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "angle";
+      b.setAttribute("role", "radio");
+      b.dataset.a = a;
+      var top = document.createElement("div");
+      top.className = "a-top";
+      top.appendChild(shapeIcon(SHAPES[a], COLORS[a], 14));
+      var v = document.createElement("span");
+      v.className = "a-val";
+      v.textContent = a + "°";
+      top.appendChild(v);
+      b.appendChild(top);
+      var dots = document.createElement("div");
+      dots.className = "dots";
+      for (var i = 0; i < N; i++) dots.appendChild(document.createElement("i"));
+      b.appendChild(dots);
+      b.addEventListener("click", function () {
+        if (state.busy) return;
+        state.angle = a;
+        renderAll();
+      });
+      box.appendChild(b);
+    });
+    var pr = $("pred");
+    pr.textContent = "";
+    ANGLES.forEach(function (a) {
+      var l = document.createElement("label");
+      var inp = document.createElement("input");
+      inp.type = "radio"; inp.name = "pred"; inp.value = a; inp.id = "pred" + a;
+      inp.addEventListener("change", function () { state.pred = a; });
+      l.appendChild(inp);
+      l.appendChild(shapeIcon(SHAPES[a], COLORS[a], 14));
+      var s = document.createElement("span");
+      s.className = "num";
+      s.textContent = a + "°";
+      l.appendChild(s);
+      pr.appendChild(l);
+    });
+  }
+
+  function lockPrediction() {
+    var pr = $("pred");
+    pr.classList.add("locked");
+    pr.querySelectorAll("input").forEach(function (i) { i.disabled = true; });
+    $("predHint").textContent = state.pred ? "已鎖定：" + state.pred + "°" : "沒有預測，也可以繼續";
+  }
+
+  function refreshControls() {
+    var a = state.angle;
+    document.querySelectorAll(".angle").forEach(function (b) {
+      var ang = +b.dataset.a;
+      b.setAttribute("aria-checked", ang === a ? "true" : "false");
+      b.disabled = state.busy;
+      var dots = b.querySelectorAll(".dots i");
+      var n = state.trials[ang].length;
+      dots.forEach(function (d, i) {
+        d.classList.toggle("on", i < n);
+        d.style.background = i < n ? COLORS[ang] : "transparent";
+      });
+    });
+    $("fire").disabled = state.busy || state.trials[a].length >= N;
+    $("fireAll").disabled = state.busy || state.trials[a].length >= N || !!auto;
+    $("fire").textContent = state.busy ? "投射中" : "發射";
+    $("progress").textContent = "已投 " + totalShots() + " / 15 次";
+  }
+
+  function renderTable() {
+    var th = $("thead");
+    th.textContent = "";
+    var tr = document.createElement("tr");
+    var h0 = document.createElement("th"); h0.textContent = "次數"; h0.scope = "col"; tr.appendChild(h0);
+    ANGLES.forEach(function (a) {
+      var h = document.createElement("th"); h.scope = "col";
+      var w = document.createElement("span"); w.className = "th-in";
+      w.appendChild(shapeIcon(SHAPES[a], COLORS[a], 12));
+      var t = document.createElement("span"); t.className = "num"; t.textContent = a + "°";
+      w.appendChild(t); h.appendChild(w); tr.appendChild(h);
+    });
+    th.appendChild(tr);
+    var tb = $("tbody");
+    tb.textContent = "";
+    for (var i = 0; i < N; i++) {
+      var r = document.createElement("tr");
+      var c0 = document.createElement("td"); c0.textContent = "第 " + (i + 1) + " 次"; r.appendChild(c0);
+      ANGLES.forEach(function (a) {
+        var c = document.createElement("td");
+        var t = state.trials[a][i];
+        if (t) {
+          c.textContent = t.d;
+          if (state.last && state.last.a === a && state.last.i === i) c.className = "new";
+        } else { c.textContent = "—"; c.className = "empty"; }
+        r.appendChild(c);
+      });
+      tb.appendChild(r);
+    }
+    var rs = document.createElement("tr"); rs.className = "sum";
+    var rr = document.createElement("tr"); rr.className = "rng";
+    var s0 = document.createElement("td"); s0.textContent = "平均"; rs.appendChild(s0);
+    var r0 = document.createElement("td"); r0.textContent = "最大減最小"; rr.appendChild(r0);
+    ANGLES.forEach(function (a) {
+      var st = stats(a);
+      var c = document.createElement("td"), d = document.createElement("td");
+      if (st) { c.textContent = st.mean.toFixed(1); } else { c.textContent = "—"; c.className = "empty"; }
+      if (st && st.n > 1) { d.textContent = st.max - st.min; } else { d.textContent = "—"; d.className = "empty"; }
+      rs.appendChild(c); rr.appendChild(d);
+    });
+    tb.appendChild(rs); tb.appendChild(rr);
+  }
+
+  function renderLegend() {
+    var lg = $("legend");
+    lg.textContent = "";
+    ANGLES.forEach(function (a) {
+      var s = document.createElement("span");
+      s.appendChild(shapeIcon(SHAPES[a], COLORS[a], 14));
+      s.appendChild(document.createTextNode(a + "°"));
+      lg.appendChild(s);
+    });
+    var s2 = document.createElement("span");
+    s2.style.color = "var(--muted)";
+    s2.textContent = "小點：每一次　大符號：5 次平均　連線：平均";
+    lg.appendChild(s2);
+  }
+
+  function renderChart() {
+    var svg = $("chart");
+    svg.textContent = "";
+    var W = Math.max(300, Math.round(chartbox.clientWidth || 720));
+    var narrow = W < 520;
+    var H = narrow ? 300 : 340, ml = narrow ? 56 : 58, mr = narrow ? 14 : 20, mt = 26, mb = 52;
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    var pw = W - ml - mr, ph = H - mt - mb;
+    var all = [];
+    ANGLES.forEach(function (a) { state.trials[a].forEach(function (t) { all.push(t.d); }); });
+    var ymax = Math.max(300, Math.ceil((all.length ? Math.max.apply(null, all) : 0) / 50) * 50);
+    var Y = function (v) { return mt + ph - ph * v / ymax; };
+    var X = function (i) { return ml + pw * (i * 2 + 1) / 6; };
+    for (var v = 0; v <= ymax; v += 50) {
+      el("line", { class: "grid", x1: ml, y1: Y(v), x2: W - mr, y2: Y(v) }, svg);
+      var t = el("text", { x: ml - 10, y: Y(v) + 5, "text-anchor": "end" }, svg);
+      t.textContent = v;
+    }
+    el("line", { class: "axis", x1: ml, y1: Y(0), x2: W - mr, y2: Y(0) }, svg);
+    ANGLES.forEach(function (a, i) {
+      var tt = el("text", { x: X(i), y: Y(0) + 26, "text-anchor": "middle", "font-weight": "500", style: "fill:var(--ink)" }, svg);
+      tt.textContent = a + "°";
+    });
+    var xt = el("text", { class: "axt", x: ml + pw / 2, y: H - 6, "text-anchor": "middle" }, svg);
+    xt.textContent = "投射角度";
+    var yt = el("text", { class: "axt", x: 12, y: mt + ph / 2, "text-anchor": "middle", transform: "rotate(-90 12 " + (mt + ph / 2) + ")" }, svg);
+    yt.textContent = "距離（公分）";
+
+    if (!all.length) {
+      var em = el("text", { x: ml + pw / 2, y: mt + ph / 2, "text-anchor": "middle", style: "font-size:17px" }, svg);
+      em.textContent = "投射之後，這裡會畫出每個角度的平均距離";
+      return;
+    }
+    var means = [];
+    ANGLES.forEach(function (a, i) {
+      var st = stats(a);
+      if (st) means.push([X(i), Y(st.mean)]);
+    });
+    if (means.length > 1) {
+      el("polyline", { class: "mline", points: means.map(function (p) { return p[0] + "," + p[1]; }).join(" ") }, svg);
+    }
+    var hits = [];
+    ANGLES.forEach(function (a, i) {
+      var arr = state.trials[a];
+      arr.forEach(function (t, j) {
+        var x = X(i) + (j - 2) * (narrow ? 8 : 13), y = Y(t.d);
+        el("circle", { cx: x, cy: y, r: 4.5, fill: COLORS[a], opacity: 0.55 }, svg);
+        hits.push([x, y, a + "° 第 " + (j + 1) + " 次：" + t.d + " cm"]);
+      });
+    });
+    ANGLES.forEach(function (a, i) {
+      var st = stats(a);
+      if (!st) return;
+      var x = X(i), y = Y(st.mean);
+      shapeAt(SHAPES[a], x, y, 10, COLORS[a], svg);
+      var lb = el("text", { class: "mval", x: x, y: y - 20, "text-anchor": "middle" }, svg);
+      lb.textContent = st.mean.toFixed(0);
+      hits.push([x, y, a + "° 平均：" + st.mean.toFixed(1) + " cm（" + st.n + " 次）"]);
+    });
+    hits.forEach(function (h) {
+      var c = el("circle", { cx: h[0], cy: h[1], r: 14, fill: "transparent", "data-tip": h[2], style: "cursor:default" }, svg);
+    });
+  }
+
+  function renderConclusion() {
+    var box = $("concl");
+    var done = ANGLES.every(function (a) { return state.trials[a].length >= N; });
+    box.hidden = !done;
+    if (!done) return;
+    var ms = ANGLES.map(function (a) { return { a: a, m: stats(a).mean }; }).sort(function (x, y) { return y.m - x.m; });
+    $("conclMain").textContent = "平均最遠的是 " + ms[0].a + "°（" + ms[0].m.toFixed(1) + " cm）。由遠到近：" +
+      ms.map(function (x) { return x.a + "°"; }).join("、") + "。";
+    var p = state.pred;
+    $("conclPred").textContent = p
+      ? (p === ms[0].a ? "你的預測是 " + p + "°，和這次的結果一樣。" : "你的預測是 " + p + "°，和這次的結果不同。是什麼讓你的想法改變？")
+      : "這次沒有先預測。下一次可以先寫下想法再投。";
+  }
+
+  var tipEl = $("tip");
+  var chartbox = $("chartbox");
+  function showTip(e) {
+    var t = e.target && e.target.getAttribute && e.target.getAttribute("data-tip");
+    if (!t) { tipEl.hidden = true; return; }
+    var r = chartbox.getBoundingClientRect();
+    tipEl.textContent = t;
+    tipEl.style.left = (e.clientX - r.left) + "px";
+    tipEl.style.top = (e.clientY - r.top) + "px";
+    tipEl.hidden = false;
+  }
+  $("chart").addEventListener("pointermove", showTip);
+  $("chart").addEventListener("pointerdown", showTip);
+  $("chart").addEventListener("pointerleave", function () { tipEl.hidden = true; });
+
+  function renderAll() {
+    refreshControls();
+    renderTable();
+    renderChart();
+    renderConclusion();
+    if (!state.busy) { setArm(BETA0); drawGuide(); }
+  }
+
+  /* ---------- copy / reset ---------- */
+  function tsv() {
+    var lines = [["角度(°)", "第1次(cm)", "第2次(cm)", "第3次(cm)", "第4次(cm)", "第5次(cm)", "平均(cm)"].join("\t")];
+    ANGLES.forEach(function (a) {
+      var row = [a];
+      for (var i = 0; i < N; i++) row.push(state.trials[a][i] ? state.trials[a][i].d : "");
+      var st = stats(a);
+      row.push(st ? st.mean.toFixed(1) : "");
+      lines.push(row.join("\t"));
+    });
+    return lines.join("\n");
+  }
+  var toastTimer;
+  function toast(msg) {
+    $("toast").textContent = msg;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { $("toast").textContent = ""; }, 3500);
+  }
+  function fallbackCopy(text) {
+    $("copybox").hidden = false;
+    var ta = $("copytext");
+    ta.value = text;
+    ta.focus();
+    ta.select();
+    toast("請按 Ctrl+C（Mac 按 ⌘C）複製選取的文字");
+  }
+  $("copy").addEventListener("click", function () {
+    var text = tsv();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        $("copybox").hidden = true;
+        toast("已複製。到試算表 A1 儲存格貼上。");
+      }, function () { fallbackCopy(text); });
+    } else fallbackCopy(text);
+  });
+  var resetArmed = false, resetTimer;
+  $("reset").addEventListener("click", function () {
+    if (state.busy) return;
+    var b = $("reset");
+    if (!resetArmed) {
+      resetArmed = true;
+      b.textContent = "再按一次確認清除";
+      b.classList.add("warn");
+      resetTimer = setTimeout(disarm, 3500);
+      return;
+    }
+    disarm();
+    stopAuto();
+    state.trials = { 40: [], 60: [], 80: [] };
+    state.angle = 40; state.last = null; state.pred = null;
+    var pr = $("pred");
+    pr.classList.remove("locked");
+    pr.querySelectorAll("input").forEach(function (i) { i.disabled = false; i.checked = false; });
+    $("predHint").textContent = "第一次發射前可以改";
+    $("trailNow").setAttribute("d", "");
+    $("lastLabel").textContent = "";
+    $("copybox").hidden = true;
+    $("status").textContent = "已清除。先選好角度，再按「發射」。";
+    redrawTrails();
+    renderAll();
+  });
+  function disarm() {
+    resetArmed = false;
+    clearTimeout(resetTimer);
+    var b = $("reset");
+    b.textContent = "全部重來";
+    b.classList.remove("warn");
+  }
+
+  var lastW = 0;
+  window.addEventListener("resize", function () {
+    var w = chartbox.clientWidth;
+    if (w !== lastW) { lastW = w; renderChart(); }
+  });
+  $("fire").addEventListener("click", launch);
+  $("fireAll").addEventListener("click", fireAll);
+  $("optAll").addEventListener("change", redrawTrails);
+
+  /* ---------- init ---------- */
+  buildScene();
+  buildAngles();
+  renderLegend();
+  renderAll();
+})();
+</script>
+
+</body></html>
