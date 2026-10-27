@@ -141,11 +141,12 @@ class CatapultGame {
 
   resize() {
     const rect = this.canvas.parentElement.getBoundingClientRect();
+    const h = window.innerWidth >= 1024 ? 480 : 420;
     this.canvas.width = rect.width * window.devicePixelRatio;
-    this.canvas.height = 420 * window.devicePixelRatio;
+    this.canvas.height = h * window.devicePixelRatio;
     this.ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
     this.width = rect.width;
-    this.height = 420;
+    this.height = h;
     this.groundY = this.height - 50;
     if (this.target) {
       this.target.y = this.groundY - this.target.height;
@@ -154,7 +155,7 @@ class CatapultGame {
 
   setNewTarget() {
     const minDistance = 250;
-    const maxDistance = Math.min(this.width - 90, 800);
+    const maxDistance = Math.min(this.width - 100, Math.max(800, this.width * 0.85));
     this.target.x = minDistance + Math.random() * (maxDistance - minDistance);
     this.target.width = 40 + Math.random() * 20;
     this.target.height = 50 + Math.random() * 30;

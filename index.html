@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="科技領域教材教法_張宗智、吳立安、黃勁允、翁苙維 - 拋物線上的科學家：投石戰車探究與角度大解密公開教案與互動遊戲">
-  <title>科技領域教材教法_張宗智、吳立安、黃勁允、翁苙維</title>
+  <meta name="description" content="拋物線上的科學家：投石戰車探究與角度大解密 - 科技領域教材教法 · 張宗智、吳立安、黃勁允、翁苙維">
+  <title>拋物線上的科學家：投石戰車探究與角度大解密 | 科技領域教材教法</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -48,7 +48,7 @@
       --shadow-lg: 0 10px 25px -3px rgb(0 0 0 / 0.1);
       --shadow-drawer: -8px 0 24px 0 rgb(0 0 0 / 0.12);
       
-      --max-reading-width: 940px;
+      --max-reading-width: min(95vw, 1580px);
     }
 
     [data-theme="dark"] {
@@ -281,7 +281,7 @@
     }
 
     .nav-title-text {
-      max-width: 420px;
+      max-width: 650px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -541,10 +541,12 @@
     }
 
     .hero-subtitle {
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       font-weight: 600;
       color: var(--color-primary);
+      margin-top: 0.25rem;
       margin-bottom: 1.25rem;
+      letter-spacing: 0.02em;
     }
 
     .hero-desc {
@@ -726,14 +728,19 @@
       border: 1.5px solid var(--color-border);
       border-radius: var(--radius-sm);
       background-color: var(--color-surface);
+      width: 100%;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
     }
 
     table {
       width: 100%;
+      min-width: 100%;
       border-collapse: collapse;
       text-align: left;
       font-size: 0.98rem;
-      line-height: 1.82;
+      line-height: 1.75;
+      table-layout: auto;
     }
 
     th {
@@ -741,19 +748,37 @@
       color: var(--color-text);
       font-weight: 700 !important;
       font-size: 1.02rem;
-      padding: 1.1rem 1.25rem;
-      border-bottom: 1.5px solid var(--color-border);
+      padding: 0.95rem 1.25rem;
+      border-bottom: 2px solid var(--color-border);
       border-right: 1px solid var(--color-border);
+      white-space: nowrap;
+      word-break: keep-all;
       vertical-align: middle;
+      letter-spacing: 0.015em;
+    }
+
+    th:last-child {
+      border-right: none;
     }
 
     td {
-      padding: 1.1rem 1.25rem;
+      padding: 1.05rem 1.25rem;
       border-bottom: 1px solid var(--color-border);
       border-right: 1px solid var(--color-border);
       vertical-align: top;
-      color: var(--color-text);
-      line-height: 1.82;
+      word-break: normal;
+    }
+
+    td:last-child {
+      border-right: none;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:nth-child(even) {
+      background-color: var(--color-surface-muted);
     }
 
     th:last-child, td:last-child {
@@ -929,6 +954,12 @@
       border-radius: var(--radius-sm);
       border: 1.5px solid var(--color-border);
       touch-action: none;
+    }
+
+    @media (min-width: 1024px) {
+      #catapultCanvas {
+        height: 480px;
+      }
     }
 
     [data-theme="dark"] #catapultCanvas {
@@ -1439,7 +1470,7 @@
         </button>
 
         <a href="#" onclick="navigateToSection('overview'); return false;" class="nav-brand">
-          <span class="nav-title-text">科技領域教材教法_張宗智、吳立安、黃勁允、翁苙維</span>
+          <span class="nav-title-text">拋物線上的科學家：投石戰車探究與角度大解密</span>
           <span class="nav-badge">108 課綱</span>
         </a>
       </div>
@@ -1468,7 +1499,7 @@
             <a href="#act4" class="dropdown-item" onclick="navigateToSection('act4'); event.preventDefault();">第 4 節：彈性調校篇</a>
             <a href="#act5" class="dropdown-item" onclick="navigateToSection('act5'); event.preventDefault();">第 5 節：數據發表篇</a>
             <a href="#feedback" class="dropdown-item" onclick="navigateToSection('feedback'); event.preventDefault();">六、教學回饋與安全規範</a>
-            <div class="dropdown-header">七、完整版探究學習單與互評表</div>
+            <div class="dropdown-header">七、探究學習單與互評表</div>
             <a href="#appendix1" class="dropdown-item" onclick="navigateToSection('appendix1'); event.preventDefault();">附錄一：數位模擬預測單</a>
             <a href="#appendix2" class="dropdown-item" onclick="navigateToSection('appendix2'); event.preventDefault();">附錄二：實體組裝測試單</a>
             <a href="#appendix3" class="dropdown-item" onclick="navigateToSection('appendix3'); event.preventDefault();">附錄三：成果分享互評單</a>
@@ -1655,7 +1686,7 @@
         <p><strong>課程背景：</strong>本網站為115學年度第一學期科技領域教材教法課程成果</p>
         <p><strong>指導老師：</strong>顏榮泉老師</p>
         <p><strong>設計製作團隊：</strong>張宗智、吳立安、黃勁允、翁苙維</p>
-        <p><strong>版本日期：</strong>109 年 6 月 21 日修正版（科技教材教法教案_完整版 17 頁全案）</p>
+        <p><strong>課程規格：</strong>國小自然領域 1 節 + 科技領域 4 節跨領域統整教案（含探究學習單全套）</p>
         <p><strong>課程節數：</strong>自然領域 1 節 + 科技領域 4 節，共 5 節（200 分鐘）</p>
         <p><strong>核心素養：</strong>A2 系統思考與解決問題、C2 人際關係與團隊合作</p>
       </div>
@@ -1846,8 +1877,8 @@
       <!-- Hero Card (教案基本資料與專案摘要) -->
       <section class="hero-card" id="overview">
         <div class="hero-pretitle">115學年度第一學期科技領域教材教法課程成果 · 指導老師：顏榮泉老師</div>
-        <h1 class="hero-title">科技領域教材教法_張宗智、吳立安、黃勁允、翁苙維</h1>
-        <div class="hero-subtitle">教案名稱：拋物線上的科學家：投石戰車探究與角度大解密</div>
+        <h1 class="hero-title">拋物線上的科學家：投石戰車探究與角度大解密</h1>
+        <div class="hero-subtitle">科技領域教材教法 · 張宗智、吳立安、黃勁允、翁苙維</div>
         <p class="hero-desc">
           本課程旨在引導六年級學生透過投石戰車的動手實作與電腦虛擬模擬，理解彈性位能、動能轉換及槓桿原理。課程結合運算思維、數據記錄與折線圖分析，在團隊合作中探究最佳拋射角度與拋射距離優化。
         </p>
@@ -1932,10 +1963,10 @@
             <table>
               <thead>
                 <tr>
-                  <th style="width: 26%">學習表現 \ 學習內容</th>
-                  <th style="width: 25%">科議 N-Ⅲ-1：科技的基本特性<br>自 INb-Ⅲ-4：力可藉由簡單機械傳遞</th>
-                  <th style="width: 24%">科議 P-Ⅲ-1：基本的造形與設計</th>
-                  <th style="width: 25%">科議 P-Ⅲ-2：工具與材料的使用方法</th>
+                  <th style="min-width: 200px;">學習表現 \ 學習內容</th>
+                  <th style="min-width: 250px;">科議 N-Ⅲ-1：科技的基本特性<br>自 INb-Ⅲ-4：力可藉由簡單機械傳遞</th>
+                  <th style="min-width: 220px;">科議 P-Ⅲ-1：基本的造形與設計</th>
+                  <th style="min-width: 240px;">科議 P-Ⅲ-2：工具與材料的使用方法</th>
                   <th style="width: 25%">資議 D-Ⅲ-2：系統化資料管理方法</th>
                 </tr>
               </thead>
@@ -2066,9 +2097,9 @@
             <table>
               <thead>
                 <tr>
-                  <th style="width: 8%">項次</th>
-                  <th style="width: 32%">以學習表現作為評量標準</th>
-                  <th style="width: 30%">對應之學習內容類別</th>
+                  <th style="min-width: 70px; text-align:center;">項次</th>
+                  <th style="min-width: 300px;">以學習表現作為評量標準</th>
+                  <th style="min-width: 280px;">對應之學習內容類別</th>
                   <th style="width: 30%">具體評量方式與評量依據</th>
                 </tr>
               </thead>
@@ -2571,7 +2602,7 @@
                     <th style="width: 15%;">發射角度</th>
                     <th style="width: 18%;">彈丸材質</th>
                     <th style="width: 15%;">施加力道</th>
-                    <th style="width: 18%;">拋射距離 (m)</th>
+                    <th style="min-width: 140px;">拋射距離 (m)</th>
                     <th>軌跡特徵與現象觀察</th>
                   </tr>
                 </thead>
@@ -2722,8 +2753,8 @@
                     <th style="width: 12%;">測試角度</th>
                     <th style="width: 16%;">拋射物材質</th>
                     <th style="width: 18%;">橡皮筋配置</th>
-                    <th style="width: 14%;">第 1 次 (cm)</th>
-                    <th style="width: 14%;">第 2 次 (cm)</th>
+                    <th style="min-width: 120px;">第 1 次 (cm)</th>
+                    <th style="min-width: 120px;">第 2 次 (cm)</th>
                     <th style="width: 14%;">平均 (cm)</th>
                     <th>軌跡觀察與分析</th>
                   </tr>
@@ -2933,10 +2964,10 @@
               <table>
                 <thead>
                   <tr>
-                    <th style="width: 18%;">評量向度</th>
-                    <th style="width: 28%;">A級 / 優良</th>
+                    <th style="min-width: 160px;">評量向度</th>
+                    <th style="min-width: 260px;">A級 / 優良</th>
                     <th style="width: 28%;">B級 / 通過</th>
-                    <th>C級 / 再加油</th>
+                    <th style="min-width: 260px;">C級 / 再加油</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -2974,12 +3005,12 @@
               <table>
                 <thead>
                   <tr>
-                    <th style="width: 14%;">評估組別</th>
-                    <th style="width: 18%;">上台台風</th>
-                    <th style="width: 18%;">口語表達</th>
-                    <th style="width: 18%;">紀錄資料</th>
-                    <th style="width: 18%;">物理現象解析</th>
-                    <th>具體回饋與建議</th>
+                    <th style="min-width: 110px;">評估組別</th>
+                    <th style="min-width: 150px;">上台台風</th>
+                    <th style="min-width: 150px;">口語表達</th>
+                    <th style="min-width: 150px;">紀錄資料</th>
+                    <th style="min-width: 160px;">物理現象解析</th>
+                    <th style="min-width: 260px;">具體回饋與建議</th>
                   </tr>
                 </thead>
                 <tbody>
