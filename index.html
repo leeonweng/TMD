@@ -1655,6 +1655,238 @@
       box-shadow: var(--shadow-sm);
     }
 
+    /* ==========================================================================
+       Apple-Style Scrollytelling & Scroll-Driven Animation System
+       ========================================================================== */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(32px) scale(0.985);
+      filter: blur(3px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform, filter;
+    }
+
+    .scroll-reveal.is-revealed {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+
+    /* Staggered card animation within revealed section */
+    .scroll-reveal.is-revealed .card,
+    .scroll-reveal.is-revealed .framework-card,
+    .scroll-reveal.is-revealed .activity-flow-card,
+    .scroll-reveal.is-revealed .rubric-table-wrapper {
+      animation: appleCardFadeIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @keyframes appleCardFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Parallax for background SVG blueprint illustrations */
+    .site-bg-illustrations {
+      will-change: transform;
+      transition: transform 0.12s linear;
+    }
+
+    /* ==========================================================================
+       Right-Side Scroll Progress Bar (Apple Design Language)
+       ========================================================================== */
+    /* Mobile Top Progress Line Indicator */
+    .mobile-scroll-progress-line {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3.5px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--color-primary), #38bdf8);
+      z-index: 1000;
+      transition: width 0.08s ease-out;
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-scroll-progress-line {
+        display: block;
+      }
+    }
+
+    /* Desktop Floating Vertical Navigator */
+    .scroll-progress-nav {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 95;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px 7px;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(203, 213, 225, 0.65);
+      border-radius: var(--radius-full);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+      user-select: none;
+      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s, border-color 0.25s;
+    }
+
+    [data-theme="dark"] .scroll-progress-nav {
+      background: rgba(17, 24, 39, 0.75);
+      border-color: rgba(51, 65, 85, 0.65);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    @media (max-width: 860px) {
+      .scroll-progress-nav {
+        display: none !important;
+      }
+    }
+
+    /* Percentage Badge */
+    .scroll-nav-percent {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+
+    /* Vertical Track Container */
+    .scroll-nav-track {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 13px;
+      padding: 6px 0;
+    }
+
+    /* Vertical background rail */
+    .scroll-nav-rail {
+      position: absolute;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: var(--color-border-subtle);
+      border-radius: 9999px;
+      z-index: 1;
+    }
+
+    .scroll-nav-fill {
+      position: absolute;
+      top: 10px;
+      width: 2.5px;
+      height: 0%;
+      background: var(--color-primary);
+      border-radius: 9999px;
+      z-index: 2;
+      transition: height 0.08s ease-out;
+    }
+
+    /* Milestone Dots */
+    .scroll-nav-dot {
+      position: relative;
+      z-index: 3;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      cursor: pointer;
+      padding: 0;
+      outline: none;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.25s ease,
+                  background-color 0.25s ease,
+                  box-shadow 0.25s ease;
+    }
+
+    .scroll-nav-dot:hover {
+      border-color: var(--color-primary);
+      transform: scale(1.35);
+    }
+
+    .scroll-nav-dot.active {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 4px var(--color-primary-light);
+      transform: scale(1.22);
+    }
+
+    /* Tooltip on Hover / Focus */
+    .scroll-nav-dot .scroll-tooltip {
+      position: absolute;
+      right: calc(100% + 12px);
+      top: 50%;
+      transform: translateY(-50%) translateX(6px);
+      background: var(--color-tooltip-bg);
+      color: var(--color-tooltip-text);
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      padding: 5px 11px;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+      transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .scroll-nav-dot .scroll-tooltip::after {
+      content: '';
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent transparent var(--color-tooltip-bg);
+    }
+
+    .scroll-nav-dot:hover .scroll-tooltip,
+    .scroll-nav-dot:focus-visible .scroll-tooltip {
+      opacity: 1;
+      transform: translateY(-50%) translateX(0);
+    }
+
+    /* Scroll To Top Button */
+    .scroll-nav-top-btn {
+      margin-top: 6px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.2s ease;
+    }
+
+    .scroll-nav-top-btn:hover {
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+      background: var(--color-primary-light);
+      transform: translateY(-2px);
+    }
+
   </style>
 </head>
 <body>
@@ -1841,6 +2073,48 @@
     </svg>
 
   </div>
+
+  <!-- Top Mobile Scroll Progress Bar -->
+  <div class="mobile-scroll-progress-line" id="mobileScrollProgressLine" aria-hidden="true"></div>
+
+  <!-- Right-Side Floating Scroll Progress Navigator (Apple Design Language) -->
+  <nav class="scroll-progress-nav" id="scrollProgressNav" aria-label="網頁閱讀進度與章節導覽">
+    <div class="scroll-nav-percent" id="scrollNavPercent">0%</div>
+    <div class="scroll-nav-track">
+      <div class="scroll-nav-rail"></div>
+      <div class="scroll-nav-fill" id="scrollNavFill"></div>
+
+      <button type="button" class="scroll-nav-dot active" data-target="overview" aria-label="前往：教案概述與基本資料">
+        <span class="scroll-tooltip">教案概述與基本資料</span>
+      </button>
+      <button type="button" class="scroll-nav-dot" data-target="matrix" aria-label="前往：一、雙向細目表">
+        <span class="scroll-tooltip">一、雙向細目表</span>
+      </button>
+      <button type="button" class="scroll-nav-dot" data-target="summary" aria-label="前往：二、專題摘要與 STEAM 架構">
+        <span class="scroll-tooltip">二、專題摘要與 STEAM 架構</span>
+      </button>
+      <button type="button" class="scroll-nav-dot" data-target="evaluation" aria-label="前往：三、評量方式表">
+        <span class="scroll-tooltip">三、評量方式表</span>
+      </button>
+      <button type="button" class="scroll-nav-dot" data-target="framework" aria-label="前往：四、5 節課 STEM PBL 架構">
+        <span class="scroll-tooltip">四、5 節課 STEM PBL 架構</span>
+      </button>
+      <button type="button" class="scroll-nav-dot" data-target="feedback" aria-label="前往：六、教學回饋與安全規範">
+        <span class="scroll-tooltip">六、教學回饋與安全規範</span>
+      </button>
+      <button type="button" class="scroll-nav-dot" data-target="appendix1" aria-label="前往：七、附錄探究學習單">
+        <span class="scroll-tooltip">七、附錄探究學習單</span>
+      </button>
+      <button type="button" class="scroll-nav-dot" data-target="downloads" aria-label="前往：八、成果檔案下載專區">
+        <span class="scroll-tooltip">八、成果檔案下載專區</span>
+      </button>
+    </div>
+    <button type="button" class="scroll-nav-top-btn" id="scrollNavTopBtn" aria-label="返回頁首" data-tooltip="返回頁首" data-tooltip-pos="left">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"></polyline>
+      </svg>
+    </button>
+  </nav>
 
   <!-- ==========================================================================
        Top Navigation Bar (功能列 - 支援桌面滿版與手機橫向滑動操作列)
@@ -2336,7 +2610,7 @@
     <div class="layout-container">
       
       <!-- Hero Card (教案基本資料與專案摘要) -->
-      <section class="hero-card" id="overview">
+      <section class="hero-card scroll-reveal" id="overview">
         <div class="hero-pretitle">115學年度第一學期科技領域教材教法課程成果 · 指導老師：顏榮泉老師</div>
         <h1 class="hero-title">拋物線上的科學家：投石戰車探究與角度大解密</h1>
         <div class="hero-subtitle">科技領域教材教法 · 張宗智、吳立安、黃勁允、翁苙維</div>
@@ -2404,7 +2678,7 @@
       </div>
 
       <!-- 一、雙向細目表（摺疊收合） -->
-      <details class="accordion-item" id="matrix" open>
+      <details class="accordion-item scroll-reveal" id="matrix" open>
         <summary class="accordion-summary">
           <div class="accordion-title-group">
             <h2 class="accordion-title">一、雙向細目表</h2>
@@ -2477,7 +2751,7 @@
       </details>
 
       <!-- 二、專題摘要與 STEAM 架構（摺疊收合） -->
-      <details class="accordion-item" id="summary" open>
+      <details class="accordion-item scroll-reveal" id="summary" open>
         <summary class="accordion-summary">
           <div class="accordion-title-group">
             <h2 class="accordion-title">二、專題摘要與 STEAM 架構</h2>
@@ -2533,7 +2807,7 @@
       </details>
 
       <!-- 三、評量方式表（摺疊收合） -->
-      <details class="accordion-item" id="evaluation" open>
+      <details class="accordion-item scroll-reveal" id="evaluation" open>
         <summary class="accordion-summary">
           <div class="accordion-title-group">
             <h2 class="accordion-title">三、評量方式表</h2>
@@ -2602,7 +2876,7 @@
       </details>
 
       <!-- 四、5 節課 STEM PBL 架構（摺疊收合） -->
-      <details class="accordion-item" id="framework" open>
+      <details class="accordion-item scroll-reveal" id="framework" open>
         <summary class="accordion-summary">
           <div class="accordion-title-group">
             <h2 class="accordion-title">四、5 節課 STEM PBL 架構</h2>
@@ -2973,7 +3247,7 @@
       </div>
 
       <!-- 六、教學回饋與安全規範（摺疊收合） -->
-      <details class="accordion-item" id="feedback" open>
+      <details class="accordion-item scroll-reveal" id="feedback" open>
         <summary class="accordion-summary">
           <div class="accordion-title-group">
             <h2 class="accordion-title">六、教學回饋與安全規範</h2>
@@ -3011,7 +3285,7 @@
       </details>
 
       <!-- 七、附錄一：探究學習單（一）數位模擬與拋射預測 -->
-      <details class="accordion-item" id="appendix1" open>
+      <details class="accordion-item scroll-reveal" id="appendix1" open>
         <summary class="accordion-summary">
           <div class="accordion-title-group">
             <h2 class="accordion-title">七、附錄一：探究學習單（一）數位模擬與拋射預測</h2>
@@ -3557,7 +3831,7 @@
       </details>
 
       <!-- 八、課程成果檔案與資源下載專區（摺疊收合） -->
-      <details class="accordion-item" id="downloads" open>
+      <details class="accordion-item scroll-reveal" id="downloads" open>
         <summary class="accordion-summary">
           <div class="accordion-title-group">
             <h2 class="accordion-title">八、課程成果檔案與資源下載專區</h2>
@@ -4236,12 +4510,17 @@
       const gameBtn = document.getElementById('navGameBtn');
       const drawerLesson = document.getElementById('drawerLessonLink');
       const drawerGame = document.getElementById('drawerGameLink');
+      const scrollNav = document.getElementById('scrollProgressNav');
 
       if (viewName === 'game') {
         if (lessonBtn) lessonBtn.classList.remove('active');
         if (gameBtn) gameBtn.classList.add('active');
         if (drawerLesson) drawerLesson.classList.remove('active');
         if (drawerGame) drawerGame.classList.add('active');
+        if (scrollNav) {
+          scrollNav.style.opacity = '0';
+          scrollNav.style.pointerEvents = 'none';
+        }
 
         initCatapultGame();
         setTimeout(() => {
@@ -4254,6 +4533,10 @@
         if (gameBtn) gameBtn.classList.remove('active');
         if (drawerLesson) drawerLesson.classList.add('active');
         if (drawerGame) drawerGame.classList.remove('active');
+        if (scrollNav) {
+          scrollNav.style.opacity = '1';
+          scrollNav.style.pointerEvents = 'auto';
+        }
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
@@ -4268,6 +4551,89 @@
         window.print();
       }, 350);
     }
+
+    // ==========================================================================
+    // Apple-Style Scrollytelling, Parallax & Right-Side Scroll Navigator
+    // ==========================================================================
+    const scrollFill = document.getElementById('scrollNavFill');
+    const scrollPercent = document.getElementById('scrollNavPercent');
+    const mobileLine = document.getElementById('mobileScrollProgressLine');
+    const bgIllustrations = document.querySelector('.site-bg-illustrations');
+    const scrollDots = document.querySelectorAll('.scroll-nav-dot');
+
+    function updateScrollProgress() {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollY = window.scrollY || window.pageYOffset;
+      const progress = docHeight > 0 ? Math.min(100, Math.max(0, (scrollY / docHeight) * 100)) : 0;
+      const rounded = Math.round(progress);
+
+      if (scrollFill) scrollFill.style.height = `${progress}%`;
+      if (scrollPercent) scrollPercent.textContent = `${rounded}%`;
+      if (mobileLine) mobileLine.style.width = `${progress}%`;
+
+      // Apple-style subtle parallax on blueprint illustrations
+      if (bgIllustrations) {
+        bgIllustrations.style.transform = `translate3d(0, -${scrollY * 0.045}px, 0)`;
+      }
+    }
+
+    window.addEventListener('scroll', updateScrollProgress, { passive: true });
+    window.addEventListener('resize', updateScrollProgress, { passive: true });
+
+    // Scroll to Top button in Navigator
+    const topBtn = document.getElementById('scrollNavTopBtn');
+    if (topBtn) {
+      topBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    // Click dot to navigate & auto expand
+    scrollDots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const targetId = dot.getAttribute('data-target');
+        if (targetId) {
+          navigateToSection(targetId);
+        }
+      });
+    });
+
+    // Apple Scrollytelling Intersection Observer for smooth entrance animations
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+        }
+      });
+    }, {
+      threshold: 0.05,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // Active Section Tracker for Progress Rail Dots
+    const trackedSectionIds = ['overview', 'matrix', 'summary', 'evaluation', 'framework', 'feedback', 'appendix1', 'downloads'];
+    const activeSectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          scrollDots.forEach(d => {
+            d.classList.toggle('active', d.getAttribute('data-target') === id);
+          });
+        }
+      });
+    }, {
+      threshold: 0.2,
+      rootMargin: '-10% 0px -45% 0px'
+    });
+
+    trackedSectionIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) activeSectionObserver.observe(el);
+    });
 
     // ==========================================================================
     // CSV Data Export Helpers
@@ -4304,6 +4670,7 @@
     // Default initialization
     document.addEventListener('DOMContentLoaded', () => {
       switchView('lesson');
+      updateScrollProgress();
     });
   </script>
 </body>
