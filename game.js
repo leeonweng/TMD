@@ -1,7 +1,7 @@
 /**
  * 投石戰車探究與拋物線攻城挑戰小遊戲
  * 依據國小科技領域教案《拋物線上的科學家：投石戰車探究與角度大解密》研發
- * 實體工程設計：本組專屬雷切卡榫投石戰車（3mm 椴木層積板、三段限位卡槽 45°/60°/75°、止擋橫桿、前後雙輪輻條、高張力橡皮筋動力）
+ * 實體工程設計：本組專屬雷切卡榫投石戰車（依據雷切圖檔與實體組裝影片，車身朝左、向前左方投射、3mm 椴木卡榫底盤、三段限位卡槽 45°/60°/75°、止擋橫桿、前後雙輪輻條、高張力橡皮筋動力）
  */
 
 class CatapultGame {
@@ -17,8 +17,9 @@ class CatapultGame {
     this.scale = 4.5; // pixels per meter
     
     // Origin of catapult (ground x, y)
+    // 依據小組實體雷切設計與組裝示範影片：車頭朝左，向左前方拋射
     this.groundY = 0;
-    this.catapultX = 120;
+    this.catapultX = 0;
     
     // State
     this.mode = 'challenge'; // 'challenge' or 'lab'
@@ -28,18 +29,19 @@ class CatapultGame {
     this.isLaunching = false;
     
     // Mechanical Lever Arm Motion State (本組專屬雷切機構運動系統)
-    // States: 'ready' (cocked back, rubber band stretched), 'swinging' (rapid acceleration), 'recoil' (impacts stopper bar with damped vibration), 'stopped', 'resetting' (smooth reload)
+    // States: 'ready' (後仰待發，擺臂臥於後方車斗，橡皮筋拉緊蓄能), 'swinging' (釋放卡榫，彈力扭矩高速向前上方甩臂), 'recoil' (撞擊止擋橫桿，高頻震顫並於切線釋放拋射物), 'stopped', 'resetting' (平滑回擺重新裝填)
     this.armState = 'ready';
-    this.cockedAngleRad = -0.32; // ~ -18.3° (cocked position)
-    this.currentArmAngleRad = this.cockedAngleRad;
-    this.targetLaunchAngleRad = (this.angle * Math.PI) / 180;
+    this.cockedPhi = 0.08; // ~4.6°（朝右下方微傾臥於後方底盤）
+    this.currentArmPhi = this.cockedPhi;
+    this.targetLaunchRad = (this.angle * Math.PI) / 180;
+    this.targetPhi = Math.PI - this.targetLaunchRad; // 朝左上方仰角（例如 45° 對應 135°）
     this.swingTime = 0;
-    this.swingDuration = 0.13; // seconds for swift forward stroke
+    this.swingDuration = 0.13; // 秒：爆發揮臂衝程
     this.recoilTime = 0;
-    this.recoilAmplitude = 0.09; // radians vibration amplitude
+    this.recoilAmplitude = 0.09; // 弧度：木質撞擊反彈震幅
     this.resetTime = 0;
-    this.resetDuration = 0.45; // seconds to smoothly return to cocked
-    this.pendingProjectile = null; // held in cup until arm strikes stopper crossbar
+    this.resetDuration = 0.45; // 秒：回位平滑裝填
+    this.pendingProjectile = null; // 暫存於彈射籃內之砲彈
     
     // Current projectile
     this.projectile = null;
@@ -51,8 +53,8 @@ class CatapultGame {
     // Particles
     this.particles = [];
     
-    // Target Castle / Bullseye
-    this.target = { x: 380, y: 0, width: 45, height: 60, active: true };
+    // Target Castle / Bullseye (目標城堡位於左側發射靶區)
+    this.target = { x: 180, y: 0, width: 45, height: 60, active: true };
     
     // Audio Context (Synthesized SFX)
     this.audioCtx = null;
@@ -150,7 +152,6 @@ class CatapultGame {
     this.ensureAudio();
     const ctx = this.audioCtx;
     
-    // Noise buffer for explosion
     const bufferSize = Math.floor(ctx.sampleRate * 0.4);
     const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const data = buffer.getChannelData(0);
@@ -206,26 +207,32 @@ class CatapultGame {
     this.width = rect.width;
     this.height = h;
     this.groundY = this.height - 50;
+    
+    // Catapult placed on the RIGHT side, facing LEFT towards target
+    this.catapultX = Math.max(380, this.width - 150);
+    
     if (this.target) {
       this.target.y = this.groundY - this.target.height;
     }
   }
 
   setNewTarget() {
-    const minDistance = 250;
-    const maxDistance = Math.min(this.width - 100, Math.max(800, this.width * 0.85));
-    this.target.x = minDistance + Math.random() * (maxDistance - minDistance);
+    const minDistance = 220;
+    const maxDistance = Math.max(minDistance + 40, this.catapultX - 80);
+    const targetDistance = minDistance + Math.random() * (maxDistance - minDistance);
     this.target.width = 40 + Math.random() * 20;
     this.target.height = 50 + Math.random() * 30;
+    this.target.x = Math.max(30, this.catapultX - targetDistance);
     this.target.y = this.groundY - this.target.height;
     this.target.active = true;
   }
 
   setAngle(deg) {
     this.angle = Math.max(10, Math.min(85, deg));
-    this.targetLaunchAngleRad = (this.angle * Math.PI) / 180;
+    this.targetLaunchRad = (this.angle * Math.PI) / 180;
+    this.targetPhi = Math.PI - this.targetLaunchRad;
     if (this.armState === 'stopped') {
-      this.currentArmAngleRad = this.targetLaunchAngleRad;
+      this.currentArmPhi = this.targetPhi;
     }
     const angleInput = document.getElementById('angleInput');
     const angleVal = document.getElementById('angleVal');
@@ -269,7 +276,8 @@ class CatapultGame {
     this.isLaunching = true;
     this.armState = 'swinging';
     this.swingTime = 0;
-    this.targetLaunchAngleRad = (this.angle * Math.PI) / 180;
+    this.targetLaunchRad = (this.angle * Math.PI) / 180;
+    this.targetPhi = Math.PI - this.targetLaunchRad;
     
     // Material characteristics
     let mass = 1.0;
@@ -292,16 +300,17 @@ class CatapultGame {
       radius = 6;
     }
 
-    const rad = this.targetLaunchAngleRad;
+    const rad = this.targetLaunchRad;
     const v0 = this.power;
-    const vx = v0 * Math.cos(rad);
+    // Toward the LEFT (negative vx) and UPWARD (negative vy)
+    const vx = -v0 * Math.cos(rad);
     const vy = -v0 * Math.sin(rad);
 
-    // Pivot point of arm in canvas space (laser-cut assembly alignment)
-    const pivotX = this.catapultX + 8;
+    // Pivot point of arm in canvas space (catapult facing left)
+    const pivotX = this.catapultX - 25;
     const pivotY = this.groundY - 44;
-    const armLength = 68; // matches load arm length to cup
-    const startX = pivotX + armLength * Math.cos(rad);
+    const armLength = 72; // matches load arm length to cup
+    const startX = pivotX - armLength * Math.cos(rad);
     const startY = pivotY - armLength * Math.sin(rad);
 
     this.pendingProjectile = {
@@ -336,15 +345,15 @@ class CatapultGame {
     if (this.armState === 'swinging') {
       this.swingTime += dt;
       const progress = Math.min(1.0, this.swingTime / this.swingDuration);
-      // Accelerated swing driven by rubber band tension torque: E(t) = t^1.8
+      // Accelerating swing: arm rotates counter-clockwise from cocked position in rear bed up to stopper pin
       const ease = Math.pow(progress, 1.8);
-      this.currentArmAngleRad = this.cockedAngleRad + (this.targetLaunchAngleRad - this.cockedAngleRad) * ease;
+      this.currentArmPhi = this.cockedPhi + (this.targetPhi - this.cockedPhi) * ease;
 
       if (progress >= 1.0) {
-        // Impact with active stopper bar!
+        // Impact with active stopper bar crossbar pin!
         this.armState = 'recoil';
         this.recoilTime = 0;
-        this.currentArmAngleRad = this.targetLaunchAngleRad;
+        this.currentArmPhi = this.targetPhi;
         this.playWoodClackSound();
 
         // Release projectile at tangential velocity at the exact impact moment
@@ -359,22 +368,22 @@ class CatapultGame {
       // High-frequency damped wood vibration recoil
       const decay = Math.exp(-20 * this.recoilTime);
       const vibration = Math.sin(60 * this.recoilTime) * this.recoilAmplitude * decay;
-      this.currentArmAngleRad = this.targetLaunchAngleRad - Math.abs(vibration);
+      this.currentArmPhi = this.targetPhi + Math.abs(vibration);
 
       if (this.recoilTime > 0.35) {
         this.armState = 'stopped';
-        this.currentArmAngleRad = this.targetLaunchAngleRad;
+        this.currentArmPhi = this.targetPhi;
       }
     } else if (this.armState === 'resetting') {
       this.resetTime += dt;
       const progress = Math.min(1.0, this.resetTime / this.resetDuration);
-      // Smooth cubic ease return to cocked position
+      // Smooth cubic ease return to cocked position in rear bed
       const ease = progress < 0.5 ? 4 * progress * progress * progress : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-      this.currentArmAngleRad = this.targetLaunchAngleRad + (this.cockedAngleRad - this.targetLaunchAngleRad) * ease;
+      this.currentArmPhi = this.targetPhi + (this.cockedPhi - this.targetPhi) * ease;
 
       if (progress >= 1.0) {
         this.armState = 'ready';
-        this.currentArmAngleRad = this.cockedAngleRad;
+        this.currentArmPhi = this.cockedPhi;
         this.isLaunching = false;
       }
     }
@@ -411,7 +420,7 @@ class CatapultGame {
     p.vx += ax * dt;
     p.vy += ay * dt;
 
-    p.x += p.vx * this.scale * dt;
+    p.x += p.vx * this.scale * dt; // moves left as vx < 0
     p.y += p.vy * this.scale * dt;
 
     p.trail.push({ x: p.x, y: p.y });
@@ -422,7 +431,7 @@ class CatapultGame {
       p.maxHeight = currentHeight;
     }
 
-    // Check collision with Target (in Challenge Mode)
+    // Check collision with Target (in Challenge Mode, target is on the left)
     if (this.mode === 'challenge' && this.target.active) {
       if (
         p.x >= this.target.x &&
@@ -444,7 +453,7 @@ class CatapultGame {
           showToast(`完美命中靶心！得分 +${addScore}，晉級下一關！`);
         }
         
-        // Schedule mechanical arm to smoothly reload for next stage
+        // Schedule mechanical arm to reload smoothly
         setTimeout(() => {
           if (this.armState === 'stopped' || this.armState === 'recoil') {
             this.armState = 'resetting';
@@ -469,7 +478,7 @@ class CatapultGame {
       this.createExplosion(p.x, p.y, '#cbd5e1');
       this.playHitSound();
       
-      const distance = (p.x - p.startX) / this.scale;
+      const distance = (p.startX - p.x) / this.scale; // positive distance flown to the left
       this.logTrial(p, false);
 
       // Save trail in lab mode
@@ -497,7 +506,7 @@ class CatapultGame {
 
   logTrial(p, hit) {
     const flightTime = ((performance.now() - p.startTime) / 1000).toFixed(2);
-    const distance = Math.max(0, (p.x - p.startX) / this.scale).toFixed(1);
+    const distance = Math.max(0, (p.startX - p.x) / this.scale).toFixed(1);
     const maxH = Math.max(0, p.maxHeight).toFixed(1);
 
     const record = {
@@ -550,7 +559,7 @@ class CatapultGame {
     this.pendingProjectile = null;
     this.isLaunching = false;
     this.armState = 'ready';
-    this.currentArmAngleRad = this.cockedAngleRad;
+    this.currentArmPhi = this.cockedPhi;
     this.setNewTarget();
     this.updateUI();
     if (typeof showToast === 'function') {
@@ -573,47 +582,49 @@ class CatapultGame {
     const gy = this.groundY;
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
 
-    // Group specs coordinates
-    const pivotX = x + 8;
+    // 依據組別雷切設計與組裝示範影片：
+    // 車頭朝左，向左前方發射；
+    // 支點與限位側板弧形立柱位於前方（左側），投射臂向後方（右側）躺平於車斗。
+    const pivotX = x - 25;
     const pivotY = gy - 44;
-    const loadArmLen = 68;
-    const anchorX = x + 48;
-    const anchorY = gy - 24;
+    const loadArmLen = 72;
+    const anchorX = x - 50;
+    const anchorY = gy - 26;
 
-    // 1. High-Tension Rubber Band (連線：擺臂後端施力孔 至 前置錨定柱)
-    // Short effort arm extends 16px backwards relative to arm orientation:
-    const curAngle = this.currentArmAngleRad;
-    const effortX = pivotX - 16 * Math.cos(curAngle);
-    const effortY = pivotY + 16 * Math.sin(curAngle);
+    // 1. High-Tension Rubber Band（高張力橡皮筋連線：前置固定立柱至主臂施力點）
+    // 擺臂施力掛點隨角度動態旋轉
+    const hookDist = 26;
+    const hookX = pivotX + hookDist * Math.cos(this.currentArmPhi);
+    const hookY = pivotY - hookDist * Math.sin(this.currentArmPhi);
 
     ctx.save();
     ctx.strokeStyle = '#ef4444';
     ctx.lineWidth = 3.2;
     ctx.beginPath();
     ctx.moveTo(anchorX, anchorY);
-    const midX = (anchorX + effortX) / 2;
-    const midY = (anchorY + effortY) / 2 + 3;
-    ctx.quadraticCurveTo(midX, midY, effortX, effortY);
+    const midX = (anchorX + hookX) / 2;
+    const midY = (anchorY + hookY) / 2 + 2;
+    ctx.quadraticCurveTo(midX, midY, hookX, hookY);
     ctx.stroke();
     ctx.restore();
 
-    // 2. Chassis Base (榫卯底盤 - 3mm 椴木雷切卡榫工法)
+    // 2. Chassis Wooden Base（榫卯底盤：3mm 椴木雷切卡榫縱樑）
     ctx.save();
     ctx.fillStyle = '#b45309';
     ctx.strokeStyle = '#78350f';
     ctx.lineWidth = 2;
-    // Main longitudinal chassis beam
-    ctx.fillRect(x - 45, gy - 24, 100, 14);
-    ctx.strokeRect(x - 45, gy - 24, 100, 14);
+    // 車底盤主樑由前（x - 55）延伸至後（x + 65）
+    ctx.fillRect(x - 55, gy - 24, 120, 14);
+    ctx.strokeRect(x - 55, gy - 24, 120, 14);
 
-    // Finger joint / tenon notches
+    // 榫眼凹槽卡榫特徵
     ctx.fillStyle = '#78350f';
-    ctx.fillRect(x - 20, gy - 22, 10, 10);
-    ctx.fillRect(x + 15, gy - 22, 10, 10);
-    ctx.fillRect(x + 36, gy - 22, 10, 10);
+    ctx.fillRect(x - 35, gy - 22, 10, 10);
+    ctx.fillRect(x + 5, gy - 22, 10, 10);
+    ctx.fillRect(x + 45, gy - 22, 10, 10);
     ctx.restore();
 
-    // 3. Front Rubber Band Anchor Post (金屬/木質固定柱)
+    // 3. Front Rubber Band Anchor Post（金屬/木質前置固定柱）
     ctx.save();
     ctx.fillStyle = '#64748b';
     ctx.strokeStyle = '#334155';
@@ -626,31 +637,34 @@ class CatapultGame {
     ctx.fill();
     ctx.restore();
 
-    // 4. Laser-Cut Side Plate (雷切側支架 - 240×140mm 弧形外廓，含 45°/60°/75° 角度卡槽)
+    // 4. Laser-Cut Side Plate（多角度限位側板：對標雷切圖檔 Part 4）
+    // 前方（左側）為三段角度卡槽高拱架，後方（右側）為水平延伸車斗
     ctx.save();
     ctx.fillStyle = isDark ? '#d97706' : '#fef3c7';
     ctx.strokeStyle = '#92400e';
     ctx.lineWidth = 2;
 
     ctx.beginPath();
-    ctx.moveTo(x - 22, gy - 24);
-    ctx.lineTo(x + 42, gy - 24);
-    ctx.lineTo(x + 42, gy - 40);
-    // Curved arched top containing angle notches
-    ctx.quadraticCurveTo(x + 38, gy - 74, pivotX - 5, gy - 74);
-    ctx.quadraticCurveTo(x - 22, gy - 62, x - 22, gy - 24);
+    ctx.moveTo(x + 60, gy - 24);
+    ctx.lineTo(x - 52, gy - 24);
+    ctx.lineTo(x - 52, gy - 50);
+    // 前端向左上方拱起的高弧形限位柱
+    ctx.quadraticCurveTo(x - 50, gy - 82, pivotX - 8, gy - 80);
+    // 斜下坡度連接至後方平直底盤
+    ctx.quadraticCurveTo(pivotX + 15, gy - 40, x + 60, gy - 30);
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
 
-    // Notches for 75°, 60°, 45°
-    const slotRadius = 38;
+    // 限位卡槽：75°、60°、45°（朝左上方開展）
+    const slotRadius = 36;
     const angles = [75, 60, 45];
     angles.forEach(deg => {
       const aRad = (deg * Math.PI) / 180;
-      const notchX1 = pivotX + (slotRadius - 7) * Math.cos(aRad);
+      // 朝左上方向量：(-cos, -sin)
+      const notchX1 = pivotX - (slotRadius - 7) * Math.cos(aRad);
       const notchY1 = pivotY - (slotRadius - 7) * Math.sin(aRad);
-      const notchX2 = pivotX + (slotRadius + 5) * Math.cos(aRad);
+      const notchX2 = pivotX - (slotRadius + 5) * Math.cos(aRad);
       const notchY2 = pivotY - (slotRadius + 5) * Math.sin(aRad);
       
       ctx.beginPath();
@@ -661,18 +675,18 @@ class CatapultGame {
       ctx.lineCap = 'round';
       ctx.stroke();
 
-      // Mini angle markings on plate
+      // 微型刻度標籤
       ctx.fillStyle = deg === this.angle ? '#1d4ed8' : '#92400e';
       ctx.font = 'bold 9px sans-serif';
       ctx.textAlign = 'center';
-      const textX = pivotX + (slotRadius + 14) * Math.cos(aRad);
+      const textX = pivotX - (slotRadius + 14) * Math.cos(aRad);
       const textY = pivotY - (slotRadius + 14) * Math.sin(aRad) + 3;
       ctx.fillText(`${deg}°`, textX, textY);
     });
 
-    // Active Stopper Crossbar Pin (止擋橫桿插銷)
-    const activeRad = this.targetLaunchAngleRad;
-    const stopPinX = pivotX + slotRadius * Math.cos(activeRad);
+    // 止擋橫桿實體插銷（Stopper Crossbar Pin）
+    const activeRad = this.targetLaunchRad;
+    const stopPinX = pivotX - slotRadius * Math.cos(activeRad);
     const stopPinY = pivotY - slotRadius * Math.sin(activeRad);
     ctx.fillStyle = '#3b82f6';
     ctx.strokeStyle = '#1e3a8a';
@@ -687,59 +701,48 @@ class CatapultGame {
     ctx.fill();
     ctx.restore();
 
-    // 5. Rotating Catapult Lever Arm (一體成型雷切主臂 - 施力臂:抗力臂 = 1:4)
+    // 5. Rotating Catapult Lever Arm（一體成型雷切主臂：對標雷切圖檔 Part 8）
     ctx.save();
     ctx.translate(pivotX, pivotY);
-    ctx.rotate(-this.currentArmAngleRad);
+    // Canvas 逆時針旋轉為負角度
+    ctx.rotate(-this.currentArmPhi);
 
-    // Effort arm (rear short lever: length 20px)
-    ctx.fillStyle = '#b45309';
+    // 投射長臂主幹（負載臂：長度 72px）
+    ctx.fillStyle = '#d97706';
     ctx.strokeStyle = '#78350f';
     ctx.lineWidth = 2;
     ctx.beginPath();
     if (ctx.roundRect) {
-      ctx.roundRect(-20, -4, 20, 8, 3);
+      ctx.roundRect(0, -4, 72, 8, 3);
     } else {
-      ctx.rect(-20, -4, 20, 8);
+      ctx.rect(0, -4, 72, 8);
     }
     ctx.fill();
     ctx.stroke();
 
-    // Tension hole on short arm
-    ctx.fillStyle = '#1e293b';
-    ctx.beginPath();
-    ctx.arc(-16, 0, 3, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Load arm (front long lever: length 68px)
-    ctx.fillStyle = '#d97706';
-    ctx.beginPath();
-    if (ctx.roundRect) {
-      ctx.roundRect(0, -4, 68, 8, 3);
-    } else {
-      ctx.rect(0, -4, 68, 8);
-    }
-    ctx.fill();
-    ctx.stroke();
-
-    // Laser cut weight-reducing slots / tenon details on arm
+    // 雷切減重卡槽裝飾
     ctx.fillStyle = isDark ? '#1e293b' : '#fef3c7';
     ctx.fillRect(16, -2, 14, 4);
     ctx.fillRect(36, -2, 14, 4);
 
-    // Payload Basket / Cup at the end of load arm
+    // 前端 T 字型垂直止擋突緣（對標雷切圖檔 Part 8 前端十字翼片）
+    ctx.fillStyle = '#b45309';
+    ctx.fillRect(-15, -12, 12, 24);
+    ctx.strokeRect(-15, -12, 12, 24);
+
+    // 圓形彈射籃（Payload Cup：直徑 18px，雷切一體圓形簍空）
     ctx.fillStyle = '#92400e';
     ctx.strokeStyle = '#451a03';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.arc(68, -4, 9, Math.PI, 0, false);
-    ctx.lineTo(77, 4);
-    ctx.lineTo(59, 4);
+    ctx.arc(72, -4, 9, Math.PI, 0, false);
+    ctx.lineTo(81, 4);
+    ctx.lineTo(63, 4);
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
 
-    // Draw projectile inside cup if not yet launched
+    // 待發射時，彈射籃內就座之實體球體（乒乓球 / 黏土球 / 彈珠）
     if (this.armState === 'ready' || this.armState === 'swinging' || !this.projectile || !this.projectile.alive) {
       if (!this.projectile || !this.projectile.alive || this.armState === 'swinging') {
         let pColor = '#f59e0b';
@@ -751,7 +754,7 @@ class CatapultGame {
         ctx.strokeStyle = '#0f172a';
         ctx.lineWidth = 1.5;
         ctx.beginPath();
-        ctx.arc(68, -9, pRadius, 0, Math.PI * 2);
+        ctx.arc(72, -9, pRadius, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
       }
@@ -759,7 +762,7 @@ class CatapultGame {
 
     ctx.restore();
 
-    // 6. Axle Pivot Point (支點金屬軸心)
+    // 6. Axle Pivot Point（低摩擦力金屬轉軸心支點）
     ctx.save();
     ctx.fillStyle = '#475569';
     ctx.strokeStyle = '#0f172a';
@@ -774,10 +777,10 @@ class CatapultGame {
     ctx.fill();
     ctx.restore();
 
-    // 7. Dual 4-Spoke Wooden Wheels (前後雙輪 4 輻條結構)
+    // 7. Dual 4-Spoke Wooden Wheels（前後雙輪 4 輻條結構）
     const drawSpokeWheel = (wx, wy) => {
       ctx.save();
-      // Outer rim
+      // 外層輪圈
       ctx.fillStyle = '#475569';
       ctx.strokeStyle = '#1e293b';
       ctx.lineWidth = 2.5;
@@ -786,7 +789,7 @@ class CatapultGame {
       ctx.fill();
       ctx.stroke();
 
-      // 4 Crossed spokes
+      // 4 根十字交叉輻條
       ctx.strokeStyle = '#94a3b8';
       ctx.lineWidth = 1.8;
       ctx.beginPath();
@@ -796,7 +799,7 @@ class CatapultGame {
       ctx.moveTo(wx - 7, wy + 7); ctx.lineTo(wx + 7, wy - 7);
       ctx.stroke();
 
-      // Inner hub
+      // 輪轂中心木盤
       ctx.fillStyle = '#d97706';
       ctx.strokeStyle = '#78350f';
       ctx.lineWidth = 1.5;
@@ -805,7 +808,7 @@ class CatapultGame {
       ctx.fill();
       ctx.stroke();
 
-      // Axle center pin
+      // 車軸金屬插銷
       ctx.fillStyle = '#0f172a';
       ctx.beginPath();
       ctx.arc(wx, wy, 2, 0, Math.PI * 2);
@@ -813,31 +816,31 @@ class CatapultGame {
       ctx.restore();
     };
 
-    drawSpokeWheel(x - 32, gy - 12);
-    drawSpokeWheel(x + 40, gy - 12);
+    drawSpokeWheel(x - 38, gy - 12);
+    drawSpokeWheel(x + 48, gy - 12);
 
-    // 8. STEM Leverage Annotations (支點、施力點、負載點、限位卡槽) in Lab Mode
+    // 8. STEM Leverage Annotations（實驗室模式：槓桿三要素與限位標註）
     if (this.mode === 'lab') {
       ctx.save();
       ctx.font = 'bold 11px sans-serif';
 
-      // Pivot badge
+      // 支點
       ctx.fillStyle = '#0284c7';
-      ctx.fillText('支點 (Pivot)', pivotX - 35, pivotY - 12);
+      ctx.fillText('支點 (Pivot)', pivotX - 25, pivotY - 12);
 
-      // Effort badge
+      // 施力點
       ctx.fillStyle = '#dc2626';
-      ctx.fillText('施力點 (Effort)', effortX - 42, effortY + 16);
+      ctx.fillText('施力點 (Effort)', hookX - 10, hookY + 16);
 
-      // Load badge (near tip of arm)
-      const tipX = pivotX + loadArmLen * Math.cos(curAngle);
-      const tipY = pivotY - loadArmLen * Math.sin(curAngle);
+      // 負載點（彈射籃端點）
+      const basketCanvasX = pivotX + loadArmLen * Math.cos(this.currentArmPhi);
+      const basketCanvasY = pivotY - loadArmLen * Math.sin(this.currentArmPhi);
       ctx.fillStyle = '#16a34a';
-      ctx.fillText('負載點 (Load)', tipX + 8, tipY - 8);
+      ctx.fillText('負載點 (Load)', basketCanvasX - 20, basketCanvasY - 10);
 
-      // Stopper crossbar note
+      // 止擋橫桿
       ctx.fillStyle = '#2563eb';
-      ctx.fillText(`止擋橫桿 (${this.angle}°)`, stopPinX + 8, stopPinY + 4);
+      ctx.fillText(`止擋橫桿 (${this.angle}°)`, stopPinX - 60, stopPinY - 8);
 
       ctx.restore();
     }
@@ -879,8 +882,8 @@ class CatapultGame {
     ctx.arc(targetCenterX, targetCenterY, 4, 0, Math.PI * 2);
     ctx.fill();
 
-    // Distance marker
-    const dist = Math.round((t.x - this.catapultX) / this.scale);
+    // Distance marker (measured from catapultX to target)
+    const dist = Math.round((this.catapultX - (t.x + t.width / 2)) / this.scale);
     ctx.fillStyle = '#64748b';
     ctx.font = '11px sans-serif';
     ctx.textAlign = 'center';
@@ -903,13 +906,13 @@ class CatapultGame {
     ctx.fillStyle = sky;
     ctx.fillRect(0, 0, this.width, this.groundY);
 
-    // Distance Grid lines (every 10 meters)
+    // Distance Grid lines (every 10 meters, measured leftward from catapult)
     ctx.strokeStyle = isDark ? '#334155' : '#e2e8f0';
     ctx.lineWidth = 1;
     ctx.setLineDash([4, 4]);
     for (let d = 10; d <= 150; d += 10) {
-      const px = this.catapultX + d * this.scale;
-      if (px > this.width) break;
+      const px = this.catapultX - d * this.scale;
+      if (px < 0) break;
       ctx.beginPath();
       ctx.moveTo(px, 0);
       ctx.lineTo(px, this.groundY);
@@ -952,7 +955,7 @@ class CatapultGame {
       this.drawTarget();
     }
 
-    // Draw catapult with laser-cut components & mechanical arm
+    // Draw catapult with laser-cut components & mechanical arm facing LEFT
     this.drawCatapult();
 
     // Draw active flying projectile & trail

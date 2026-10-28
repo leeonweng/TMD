@@ -6,9 +6,11 @@
       .card-bg { fill: #f8fafc; stroke: #e2e8f0; stroke-width: 1.5; rx: 8px; }
       .wood { fill: #d97706; stroke: #92400e; stroke-width: 2.5; stroke-linejoin: round; }
       .wood-light { fill: #fef3c7; stroke: #b45309; stroke-width: 2; stroke-linejoin: round; }
+      .wood-ghost { fill: #fef3c7; stroke: #d97706; stroke-width: 1.8; stroke-dasharray: 4 3; opacity: 0.65; }
       .wood-dark { fill: #b45309; stroke: #78350f; stroke-width: 2; }
       .metal { fill: #64748b; stroke: #334155; stroke-width: 2; }
-      .rubber { stroke: #ef4444; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 6 3; }
+      .rubber { stroke: #ef4444; stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: 6 3; }
+      .rubber-ghost { stroke: #ef4444; stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 4 3; opacity: 0.5; }
       .vector-line { stroke: #2563eb; stroke-width: 2.5; stroke-dasharray: 5 4; }
       .label-box { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.2; rx: 4px; }
       .label-text { font-size: 13px; font-weight: 700; fill: #1e293b; }
@@ -36,136 +38,159 @@
   <!-- Header Area -->
   <g transform="translate(50, 45)">
     <text class="title" x="0" y="0">科技領域教材教法 · 投石戰車結構組裝完成示意圖</text>
-    <text class="subtitle" x="0" y="26">工程設計：雷切卡榫組裝、三段可調仰角（45° / 60° / 75°）與槓桿三要素配置圖解</text>
+    <text class="subtitle" x="0" y="26">工程設計：雷切卡榫組裝、車頭朝左左向拋射、三段可調仰角（45° / 60° / 75°）與槓桿三要素配置圖解</text>
   </g>
 
   <!-- Left Main Panel: Side Elevation Assembly View -->
   <g transform="translate(50, 95)">
     <rect width="680" height="655" class="card-bg" />
-    <text x="25" y="35" style="font-size: 16px; font-weight: 800; fill: #0f172a;">一、投石戰車側面組裝全覽圖（側視機構圖）</text>
-    <text x="25" y="55" style="font-size: 12px; fill: #64748b;">標註槓桿動力機構、雷切角度定位卡槽、旋轉軸心與拋射角度控制</text>
+    <text x="25" y="35" style="font-size: 16px; font-weight: 800; fill: #0f172a;">一、投石戰車側面組裝全覽圖（車身朝左 · 左向發射機構）</text>
+    <text x="25" y="55" style="font-size: 12px; fill: #64748b;">標註槓桿動力機構、雷切角度定位卡槽、旋轉軸心與向左拋射角度控制</text>
 
     <!-- Ground Level -->
     <line x1="30" y1="560" x2="650" y2="560" stroke="#94a3b8" stroke-width="2.5" />
     <text x="610" y="580" style="font-size: 11px; fill: #94a3b8; font-weight: 600;">地面基準線</text>
 
-    <!-- Wheels (Front & Rear) -->
-    <g transform="translate(180, 560)">
+    <!-- Wheels (Front Wheel Left, Rear Wheel Right) -->
+    <!-- Front Wheel (Left) -->
+    <g transform="translate(260, 560)">
       <circle cx="0" cy="0" r="28" fill="#475569" stroke="#1e293b" stroke-width="3" />
       <circle cx="0" cy="0" r="12" fill="#94a3b8" stroke="#334155" stroke-width="2" />
       <circle cx="0" cy="0" r="4" fill="#0f172a" />
       <!-- spokes -->
       <line x1="-20" y1="0" x2="20" y2="0" stroke="#334155" stroke-width="2" />
       <line x1="0" y1="-20" x2="0" y2="20" stroke="#334155" stroke-width="2" />
+      <text x="0" y="42" text-anchor="middle" style="font-size: 10px; font-weight: 700; fill: #64748b;">前輪（車頭）</text>
     </g>
-    <g transform="translate(480, 560)">
+    <!-- Rear Wheel (Right) -->
+    <g transform="translate(520, 560)">
       <circle cx="0" cy="0" r="28" fill="#475569" stroke="#1e293b" stroke-width="3" />
       <circle cx="0" cy="0" r="12" fill="#94a3b8" stroke="#334155" stroke-width="2" />
       <circle cx="0" cy="0" r="4" fill="#0f172a" />
       <line x1="-20" y1="0" x2="20" y2="0" stroke="#334155" stroke-width="2" />
       <line x1="0" y1="-20" x2="0" y2="20" stroke="#334155" stroke-width="2" />
+      <text x="0" y="42" text-anchor="middle" style="font-size: 10px; font-weight: 700; fill: #64748b;">後輪（車尾）</text>
     </g>
 
     <!-- Chassis Wooden Base (榫卯底盤) -->
-    <rect x="120" y="520" width="420" height="24" class="wood" rx="4" />
+    <rect x="200" y="520" width="370" height="24" class="wood" rx="4" />
     <!-- Mortise tenon joints on base -->
-    <rect x="160" y="524" width="16" height="16" fill="#78350f" />
-    <rect x="420" y="524" width="16" height="16" fill="#78350f" />
+    <rect x="230" y="524" width="16" height="16" fill="#78350f" />
+    <rect x="340" y="524" width="16" height="16" fill="#78350f" />
+    <rect x="490" y="524" width="16" height="16" fill="#78350f" />
 
-    <!-- Laser-cut Side Plate (雷切側支架) -->
-    <!-- Profile based on actual laser cut screenshot: curved top with angle slots, front axle hole, bottom tenons -->
-    <path d="M 200 520 
-             L 440 520 
-             L 440 430 
-             C 440 330, 360 250, 270 250 
-             C 210 250, 170 300, 160 380 
-             L 160 520 
+    <!-- Laser-cut Side Plate (雷切側支架：對標雷切圖檔 Part 4) -->
+    <!-- Upright tower at front (LEFT), slope dropping to rear horizontal bed (RIGHT) -->
+    <path d="M 220 520 
+             L 550 520 
+             L 550 470 
+             C 450 455, 360 410, 320 330 
+             C 300 290, 260 250, 220 280 
+             C 195 300, 195 370, 200 450 
+             L 200 520 
              Z" 
           class="wood-light" />
 
-    <!-- Angle Notches on the Curved Top of Side Plate -->
-    <!-- 75 deg slot -->
-    <line x1="285" y1="250" x2="295" y2="280" stroke="#78350f" stroke-width="6" stroke-linecap="round" />
-    <text x="305" y="265" style="font-size: 11px; font-weight: 700; fill: #b45309;">75° 卡槽</text>
-    
-    <!-- 60 deg slot -->
-    <line x1="335" y1="270" x2="335" y2="305" stroke="#78350f" stroke-width="6" stroke-linecap="round" />
-    <text x="350" y="285" style="font-size: 11px; font-weight: 700; fill: #b45309;">60° 卡槽</text>
+    <!-- Front Rubber Band Anchor Post (橡皮筋前置固定柱 - 車頭左側) -->
+    <rect x="215" y="495" width="12" height="25" class="metal" rx="2" />
+    <circle cx="221" cy="505" r="5" fill="#ef4444" />
+    <text x="210" y="490" style="font-size: 10px; font-weight: 700; fill: #ef4444;">前動力錨柱</text>
 
-    <!-- 45 deg slot (active position with stopper bar) -->
-    <line x1="390" y1="315" x2="375" y2="345" stroke="#78350f" stroke-width="6" stroke-linecap="round" />
-    <text x="405" y="325" style="font-size: 11px; font-weight: 800; fill: #2563eb;">45° 卡槽（最佳發射角）</text>
-
-    <!-- Active Stopper Bar (止擋木桿) inserted in 45° slot -->
-    <circle cx="378" cy="342" r="9" class="metal" />
-    <circle cx="378" cy="342" r="3" fill="#ffffff" />
-
-    <!-- Axle Pivot Point (支點) -->
-    <g transform="translate(230, 460)">
+    <!-- Axle Pivot Point (支點: 位於前方立柱下方) -->
+    <g transform="translate(290, 440)">
       <circle cx="0" cy="0" r="16" class="metal" />
       <circle cx="0" cy="0" r="6" fill="#ffffff" />
       <circle cx="0" cy="0" r="2" fill="#0f172a" />
     </g>
 
-    <!-- Rubber Band Anchor Post (橡皮筋前置固定柱) -->
-    <rect x="470" y="505" width="14" height="24" class="metal" rx="3" />
-    <circle cx="477" cy="515" r="5" fill="#ef4444" />
+    <!-- Angle Notches on the Upright Tower (朝向左上方 75° / 60° / 45°) -->
+    <!-- Radius from pivot (290, 440) = 135px -->
+    <!-- 75 deg slot: dx = -135*cos(75°) = -34.9, dy = -135*sin(75°) = -130.4 -> (255.1, 309.6) -->
+    <line x1="260" y1="325" x2="250" y2="295" stroke="#78350f" stroke-width="6" stroke-linecap="round" />
+    <text x="240" y="285" style="font-size: 11px; font-weight: 700; fill: #b45309;">75° 限位槽</text>
 
-    <!-- Catapult Arm (投石擺臂 - 組裝於支點，揚起到45度發射位置) -->
-    <!-- Arm extends from short lever (rear) through pivot to payload cup (front-top) -->
-    <g transform="translate(230, 460) rotate(-45)">
-      <!-- Rear short lever (施力臂) -->
-      <path d="M -70 -12 L 0 -12 L 0 12 L -70 12 C -78 12 -84 6 -84 0 C -84 -6 -78 -12 -70 -12 Z" class="wood" />
-      <circle cx="-60" cy="0" r="6" class="metal" />
-      <!-- Long throwing lever (負載臂) -->
-      <rect x="0" y="-12" width="280" height="24" class="wood" rx="4" />
-      <!-- Payload Basket / Cup at the end -->
-      <path d="M 260 -12 L 310 -12 C 322 -12 330 -2 330 12 L 260 12 Z" fill="#92400e" stroke="#78350f" stroke-width="2" />
-      <!-- Projectile Ball in Cup (乒乓球/彈珠) -->
-      <circle cx="285" cy="-22" r="15" fill="#ffffff" stroke="#0284c7" stroke-width="2.5" />
-      <text x="285" y="-18" text-anchor="middle" style="font-size: 10px; font-weight: 800; fill: #0284c7;">拋射物</text>
+    <!-- 60 deg slot: dx = -135*cos(60°) = -67.5, dy = -135*sin(60°) = -116.9 -> (222.5, 323.1) -->
+    <line x1="235" y1="335" x2="215" y2="310" stroke="#78350f" stroke-width="6" stroke-linecap="round" />
+    <text x="175" y="305" style="font-size: 11px; font-weight: 700; fill: #b45309;">60° 限位槽</text>
+
+    <!-- 45 deg slot: dx = -135*cos(45°) = -95.5, dy = -135*sin(45°) = -95.5 -> (194.5, 344.5) -->
+    <line x1="210" y1="360" x2="185" y2="335" stroke="#78350f" stroke-width="6" stroke-linecap="round" />
+    <text x="105" y="340" style="font-size: 11px; font-weight: 800; fill: #2563eb;">45° 限位卡槽（最佳射程）</text>
+
+    <!-- Active Stopper Bar Pin (止擋木桿插銷) inserted in 45° slot -->
+    <circle cx="195" cy="345" r="9" class="metal" />
+    <circle cx="195" cy="345" r="3" fill="#ffffff" />
+    <text x="195" y="365" text-anchor="middle" style="font-size: 10px; font-weight: 700; fill: #1e3a8a;">止擋橫桿</text>
+
+    <!-- Ghosted Cocked Arm (待發狀態: 擺臂臥於後方車斗 0° 待發，高張力蓄能) -->
+    <g transform="translate(290, 440) rotate(5)">
+      <rect x="0" y="-8" width="230" height="16" class="wood-ghost" rx="3" />
+      <circle cx="215" cy="0" r="16" fill="none" stroke="#d97706" stroke-width="1.8" stroke-dasharray="3 3" />
+      <circle cx="215" cy="0" r="8" fill="#e2e8f0" opacity="0.6" />
+      <text x="160" y="24" style="font-size: 10px; font-weight: 600; fill: #94a3b8;">（待發位置：臥於後方車斗）</text>
+    </g>
+    <!-- Stretched rubber band when cocked (ghosted) -->
+    <path d="M 221 505 Q 260 520 370 445" fill="none" class="rubber-ghost" />
+
+    <!-- Active Catapult Throwing Arm (揚起至 45° 撞擊止擋位置，向左上方發射) -->
+    <!-- Arm extends from pivot (290, 440) at angle 135° (pointing UP-LEFT) -->
+    <g transform="translate(290, 440) rotate(-135)">
+      <!-- Main throwing lever -->
+      <rect x="0" y="-10" width="225" height="20" class="wood" rx="4" />
+      <!-- Effort tie-point hole (施力孔) -->
+      <circle cx="45" cy="0" r="5" class="metal" />
+      <circle cx="45" cy="0" r="2" fill="#ffffff" />
+      <!-- Payload Basket / Cup at tip -->
+      <path d="M 210 -12 L 245 -12 C 255 -12 260 -2 260 12 L 210 12 Z" fill="#92400e" stroke="#78350f" stroke-width="2" />
+      <!-- Projectile (乒乓球) seated in basket -->
+      <circle cx="230" cy="-18" r="14" fill="#ffffff" stroke="#0284c7" stroke-width="2.5" />
+      <text x="230" y="-14" text-anchor="middle" style="font-size: 9px; font-weight: 800; fill: #0284c7;">拋射物</text>
     </g>
 
-    <!-- Tension Rubber Band (高張力橡皮筋連線: 從擺臂施力孔連至前錨柱) -->
-    <!-- In rotate(-45), (-60, 0) rotated by -45 deg from (230, 460): -->
-    <!-- x = 230 - 60*cos(-45) = 230 - 42.4 = 187.6 -->
-    <!-- y = 460 - 60*sin(-45) = 460 + 42.4 = 502.4 -->
-    <path d="M 188 502 Q 330 540 477 515" fill="none" class="rubber" />
-    <!-- Tension force arrow -->
-    <line x1="240" y1="510" x2="300" y2="515" stroke="#ef4444" stroke-width="2" marker-end="url(#red-arrow)" />
-    <text x="250" y="535" style="font-size: 11px; font-weight: 700; fill: #ef4444;">彈性拉力方向</text>
+    <!-- Elastic Rubber Band in Active Launch State (連至施力孔) -->
+    <!-- Effort hole is at dx = 45*cos(135°) = -31.8, dy = -45*sin(135°) = -31.8 -> (258.2, 408.2) -->
+    <path d="M 221 505 Q 235 460 258 408" fill="none" class="rubber" />
+    <line x1="242" y1="470" x2="230" y2="495" stroke="#ef4444" stroke-width="2" marker-end="url(#red-arrow)" />
+    <text x="175" y="475" style="font-size: 11px; font-weight: 700; fill: #ef4444;">彈力拉緊方向</text>
 
-    <!-- Launch Trajectory Vector (拋射瞬時速度切線向量) -->
-    <!-- At 45 deg arm stop, projectile flies at 45 deg elevation -->
-    <line x1="430" y1="260" x2="570" y2="120" class="vector-line" marker-end="url(#arrow)" />
-    <text x="500" y="170" style="font-size: 13px; font-weight: 800; fill: #2563eb;">初速度向量 V₀ (45° 仰角)</text>
-    <path d="M 470 260 A 40 40 0 0 0 458 232" fill="none" stroke="#2563eb" stroke-width="2" />
-    <text x="475" y="245" style="font-size: 12px; font-weight: 800; fill: #2563eb;">45°</text>
-    <line x1="430" y1="260" x2="520" y2="260" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3 3" />
+    <!-- Launch Trajectory Vector V0 (45° 仰角向左前方發射) -->
+    <!-- Basket release position: dx = 230*cos(135°) = -162.6, dy = -230*sin(135°) = -162.6 -> (127.4, 277.4) -->
+    <!-- Ball center: (115, 265) -->
+    <line x1="115" y1="265" x2="25" y2="175" class="vector-line" marker-end="url(#arrow)" />
+    <text x="20" y="160" style="font-size: 13px; font-weight: 800; fill: #2563eb;">初速度向量 V₀ (45° 仰角向左)</text>
+    
+    <!-- 45 deg angle arc -->
+    <line x1="115" y1="265" x2="35" y2="265" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3 3" />
+    <path d="M 75 265 A 40 40 0 0 1 87 237" fill="none" stroke="#2563eb" stroke-width="2" />
+    <text x="65" y="250" style="font-size: 12px; font-weight: 800; fill: #2563eb;">45°</text>
+
+    <!-- Arm Swing Direction Arc (揮臂運動軌跡：由後向前逆時針高速甩臂) -->
+    <path d="M 440 420 A 180 180 0 0 0 170 300" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5 3" />
+    <text x="330" y="360" style="font-size: 11px; font-weight: 700; fill: #d97706;">甩臂旋轉軌跡（由後向前逆時針）</text>
 
     <!-- Leverage Elements Callout Badges -->
     <!-- 1. 支點 Pivot Callout -->
-    <g transform="translate(100, 390)">
+    <g transform="translate(340, 450)">
       <rect width="115" height="48" class="badge-pivot" rx="6" />
       <text x="10" y="20" class="label-text" style="fill: #0369a1;">● 支點 (Pivot)</text>
-      <text x="10" y="38" class="label-desc" style="fill: #0c4a6e;">低摩擦力金屬軸心</text>
-      <line x1="80" y1="48" x2="128" y2="68" stroke="#0284c7" stroke-width="2" marker-end="url(#arrow)" />
+      <text x="10" y="38" class="label-desc" style="fill: #0c4a6e;">低摩擦力旋轉金屬軸</text>
+      <line x1="0" y1="24" x2="-35" y2="-5" stroke="#0284c7" stroke-width="2" marker-end="url(#arrow)" />
     </g>
 
     <!-- 2. 施力點 Effort Callout -->
-    <g transform="translate(60, 580)">
+    <g transform="translate(270, 340)">
       <rect width="115" height="48" class="badge-effort" rx="6" />
       <text x="10" y="20" class="label-text" style="fill: #b91c1c;">● 施力點 (Effort)</text>
-      <text x="10" y="38" class="label-desc" style="fill: #7f1d1d;">橡皮筋彈性位能</text>
-      <line x1="115" y1="580" x2="185" y2="505" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="2 2" />
+      <text x="10" y="38" class="label-desc" style="fill: #7f1d1d;">橡皮筋彈性位能掛孔</text>
+      <line x1="0" y1="35" x2="-10" y2="55" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="2 2" />
     </g>
 
     <!-- 3. 負載點 Load Callout -->
-    <g transform="translate(460, 60)">
+    <g transform="translate(40, 80)">
       <rect width="115" height="48" class="badge-load" rx="6" />
       <text x="10" y="20" class="label-text" style="fill: #15803d;">● 負載點 (Load)</text>
-      <text x="10" y="38" class="label-desc" style="fill: #14532d;">拋射籃與投射物</text>
-      <line x1="510" y1="108" x2="445" y2="235" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="2 2" />
+      <text x="10" y="38" class="label-desc" style="fill: #14532d;">拋射籃與投射彈丸</text>
+      <line x1="60" y1="48" x2="105" y2="245" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="2 2" />
     </g>
   </g>
 
@@ -190,9 +215,9 @@
 
     <g transform="translate(20, 185)" style="font-size: 12.5px; fill: #334155; line-height: 1.6;">
       <text x="0" y="0">✔ <tspan font-weight="700">精準卡榫固定</tspan>：木板公差密合，無需螺絲即可穩固。</text>
-      <text x="0" y="24">✔ <tspan font-weight="700">三段角度限位槽</tspan>：插銷切換 45°、60°、75°。</text>
-      <text x="0" y="48">✔ <tspan font-weight="700">槓桿比最優化</tspan>：力臂:抗力臂 = 1 : 4，放大末端速度。</text>
-      <text x="0" y="72">✔ <tspan font-weight="700">組裝安全檢核</tspan>：旋轉軸心水平無卡阻，發射區嚴禁站人。</text>
+      <text x="0" y="24">✔ <tspan font-weight="700">三段角度限位槽</tspan>：前方立柱插銷切換 45°、60°、75°。</text>
+      <text x="0" y="48">✔ <tspan font-weight="700">逆時針甩臂衝程</tspan>：車斗後方平躺待發，向前上方發射。</text>
+      <text x="0" y="72">✔ <tspan font-weight="700">組裝安全檢核</tspan>：旋轉軸心水平無卡阻，左前方發射區嚴禁站人。</text>
     </g>
 
     <!-- Sub-card 2: Package & Download Info -->
@@ -205,15 +230,15 @@
       <g transform="translate(20, 75)">
         <circle cx="12" cy="12" r="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5" />
         <text x="12" y="16" text-anchor="middle" style="font-size: 11px; font-weight: 700; fill: #0369a1;">1</text>
-        <text x="32" y="16" style="font-size: 13px; font-weight: 700; fill: #0f172a;">多角度限位側板 × 2 片</text>
-        <text x="32" y="34" style="font-size: 11.5px; fill: #64748b;">尺寸 240×140mm，含 3 段止擋卡槽與軸孔</text>
+        <text x="32" y="16" style="font-size: 13px; font-weight: 700; fill: #0f172a;">多角度限位側板 × 2 片（Part 4）</text>
+        <text x="32" y="34" style="font-size: 11.5px; fill: #64748b;">尺寸 240×140mm，含 3 段止擋卡槽與軸孔，朝左配置</text>
       </g>
 
       <!-- Part 2: Throwing Arm -->
       <g transform="translate(20, 130)">
         <circle cx="12" cy="12" r="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5" />
         <text x="12" y="16" text-anchor="middle" style="font-size: 11px; font-weight: 700; fill: #0369a1;">2</text>
-        <text x="32" y="16" style="font-size: 13px; font-weight: 700; fill: #0f172a;">高強度投石主臂 × 1 支</text>
+        <text x="32" y="16" style="font-size: 13px; font-weight: 700; fill: #0f172a;">高強度投石主臂 × 1 支（Part 8）</text>
         <text x="32" y="34" style="font-size: 11.5px; fill: #64748b;">長度 280mm，一體成型圓形彈射籃與施力孔</text>
       </g>
 
